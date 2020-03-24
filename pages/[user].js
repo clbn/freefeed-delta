@@ -6,8 +6,8 @@ export const getServerSideProps = async (ctx) => {
   const { user: username } = ctx.query;
 
   const [data1, data2] = await Promise.all([
-    fetcher(`https://freefeed.net/v1/users/${username}`),
-    fetcher(`https://freefeed.net/v2/timelines/${username}?offset=0`)
+    fetcher(`https://freefeed.net/v1/users/${username}`, ctx),
+    fetcher(`https://freefeed.net/v2/timelines/${username}?offset=0`, ctx)
   ]);
 
   return { props: {

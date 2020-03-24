@@ -4,7 +4,7 @@ import fetcher from '../../utils/fetcher';
 export const getServerSideProps = async (ctx) => {
   const { post: postId } = ctx.query;
 
-  const data = await fetcher(`https://freefeed.net/v2/posts/${postId}?maxComments=all`);
+  const data = await fetcher(`https://freefeed.net/v2/posts/${postId}?maxComments=all`, ctx);
 
   return { props: {
     post: data.posts || {}

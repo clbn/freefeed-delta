@@ -2,7 +2,7 @@ import fetcher from '../utils/fetcher';
 import Link from 'next/link';
 
 export const getServerSideProps = async (ctx) => {
-  const data = await fetcher(`https://freefeed.net/v2/timelines/home?offset=0`);
+  const data = await fetcher(`https://freefeed.net/v2/timelines/home?offset=0`, ctx);
 
   return { props: {
     posts: data.posts || []
