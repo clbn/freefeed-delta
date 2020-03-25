@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import fetcher from '../utils/fetcher';
-import Link from 'next/link';
-import { formatPosts, formatUsers } from '../utils/data-formatters';
+import { formatPosts, formatComments, formatUsers } from '../utils/data-formatters';
+import Post from '../components/Post';
 
 export const getServerSideProps = async (ctx) => {
   const { user: username } = ctx.query;
@@ -12,35 +12,33 @@ export const getServerSideProps = async (ctx) => {
   ]);
 
   const posts = formatPosts(data2.posts);
+  const comments = formatComments(data2.comments);
   const users = formatUsers(data2.users);
 
   return { props: {
     user: data1.users || {},
     posts,
+    comments,
     users
   }};
 };
 
-const User = props => {
+const UserPage = props => {
   const { query: { user: username } } = useRouter();
-  const { user, posts, users } = props;
+  const { user, posts, comments, users } = props;
 
   return <>
     <h1>{username}</h1>
     <p>User: {user.screenName}</p>
     <p>Description: {user.description}</p>
     <ul>
-      {Object.values(posts).map(post => (
-        <li key={post.id}>
-          {post.body}
-          {' - '}
-          <Link href="/[user]" as={`/${users[post.authorId].username}`}><a>{users[post.authorId].displayName}</a></Link>
-          {' - '}
-          <Link href="/[user]/[post]" as={`/${users[post.authorId].username}/${post.id}`}><a>{post.createdAt}</a></Link>
+      {Object.keys(posts).map(postId => (
+        <li key={postId}>
+          <Post postId={postId} post={posts[postId]} comments={comments} users={users}/>
         </li>
       ))}
     </ul>
   </>;
 };
 
-export default User;
+export default UserPage;

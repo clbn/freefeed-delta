@@ -1,36 +1,34 @@
 import fetcher from '../utils/fetcher';
-import Link from 'next/link';
-import { formatPosts, formatUsers } from '../utils/data-formatters';
+import { formatPosts, formatComments, formatUsers } from '../utils/data-formatters';
+import Post from '../components/Post';
 
 export const getServerSideProps = async (ctx) => {
   const data = await fetcher(`https://freefeed.net/v2/timelines/home?offset=0`, ctx);
 
   const posts = formatPosts(data.posts);
+  const comments = formatComments(data.comments);
   const users = formatUsers(data.users);
 
   return { props: {
     posts,
+    comments,
     users
   }};
 };
 
-const Index = props => {
-  const { posts, users } = props;
+const IndexPage = props => {
+  const { posts, comments, users } = props;
 
   return <>
     <h1>Home</h1>
     <ul>
-      {Object.values(posts).map(post => (
-        <li key={post.id}>
-          {post.body}
-          {' - '}
-          <Link href="/[user]" as={`/${users[post.authorId].username}`}><a>{users[post.authorId].displayName}</a></Link>
-          {' - '}
-          <Link href="/[user]/[post]" as={`/${users[post.authorId].username}/${post.id}`}><a>{post.createdAt}</a></Link>
+      {Object.keys(posts).map(postId => (
+        <li key={postId}>
+          <Post postId={postId} post={posts[postId]} comments={comments} users={users}/>
         </li>
       ))}
     </ul>
   </>;
 };
 
-export default Index;
+export default IndexPage;
