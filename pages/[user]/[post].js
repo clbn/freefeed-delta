@@ -13,7 +13,7 @@ export const getServerSideProps = async (ctx) => {
   const users = formatUsers(data.users);
 
   return { props: {
-    post: post || {},
+    post,
     comments,
     users
   }};
@@ -25,7 +25,10 @@ const PostPage = props => {
 
   return <>
     <h1>{username} / {postId}</h1>
-    <Post postId={postId} post={post} comments={comments} users={users}/>
+
+    {post && (
+      <Post postId={postId} post={post} comments={comments} users={users}/>
+    )}
   </>;
 };
 

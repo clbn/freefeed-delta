@@ -19,6 +19,10 @@ export const getServerSideProps = async (ctx) => {
 const IndexPage = props => {
   const { posts, comments, users } = props;
 
+  if (!posts) {
+    return <h1>401 Unauthorized</h1>;
+  }
+
   return <>
     <h1>Home</h1>
     <ul>

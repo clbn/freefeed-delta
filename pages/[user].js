@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import fetcher from '../utils/fetcher';
-import { formatPosts, formatComments, formatUsers } from '../utils/data-formatters';
+import { formatPosts, formatComments, formatUser, formatUsers } from '../utils/data-formatters';
 import Post from '../components/Post';
 
 export const getServerSideProps = async (ctx) => {
@@ -11,12 +11,13 @@ export const getServerSideProps = async (ctx) => {
     fetcher(`https://freefeed.net/v2/timelines/${username}?offset=0`, ctx)
   ]);
 
+  const user = formatUser(data1.users, true);
   const posts = formatPosts(data2.posts);
   const comments = formatComments(data2.comments);
   const users = formatUsers(data2.users);
 
   return { props: {
-    user: data1.users || {},
+    user,
     posts,
     comments,
     users
@@ -29,15 +30,18 @@ const UserPage = props => {
 
   return <>
     <h1>{username}</h1>
-    <p>User: {user.screenName}</p>
-    <p>Description: {user.description}</p>
-    <ul>
-      {Object.keys(posts).map(postId => (
-        <li key={postId}>
-          <Post postId={postId} post={posts[postId]} comments={comments} users={users}/>
-        </li>
-      ))}
-    </ul>
+
+    {user && <>
+      <p>User: {user.displayName}</p>
+      <p>Description: {user.description}</p>
+      <ul>
+        {Object.keys(posts).map(postId => (
+          <li key={postId}>
+            <Post postId={postId} post={posts[postId]} comments={comments} users={users}/>
+          </li>
+        ))}
+      </ul>
+    </>}
   </>;
 };
 
