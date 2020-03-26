@@ -16,7 +16,7 @@ export const formatPost = post => {
   return {
     'body': post.body,
     'authorId': post.createdBy,
-    'createdAt': post.createdAt,
+    'createdAt': +post.createdAt,
     'commentIds': post.comments
   };
 };
@@ -27,7 +27,7 @@ export const formatComment = comment => {
   return {
     'body': comment.body,
     'authorId': comment.createdBy,
-    'createdAt': comment.createdAt,
+    'createdAt': +comment.createdAt,
   };
 };
 
