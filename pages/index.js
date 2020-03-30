@@ -1,6 +1,7 @@
 import fetcher from '../utils/fetcher';
 import { formatPosts, formatComments, formatUsers } from '../utils/data-formatters';
 import Post from '../components/Post';
+import SignIn from '../components/SignIn';
 
 export const getServerSideProps = async (ctx) => {
   const data = await fetcher(`https://freefeed.net/v2/timelines/home?offset=0`, ctx);
@@ -20,7 +21,7 @@ const IndexPage = props => {
   const { posts, comments, users } = props;
 
   if (!posts) {
-    return <h1>401 Unauthorized</h1>;
+    return <SignIn/>;
   }
 
   return <>
