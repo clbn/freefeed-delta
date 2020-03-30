@@ -34,6 +34,15 @@ export default async (req, res) => {
     httpOnly: true
   });
 
+  const redirect = req.body?.redirect; // Used by non-JS clients
+
+  if (redirect) {
+    res.statusCode = 303;
+    res.setHeader('Location', `${req.headers.origin}/`);
+    res.end();
+    return;
+  }
+
   const user = formatUser(data.users);
 
   res.statusCode = 200;
