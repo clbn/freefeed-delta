@@ -12,7 +12,7 @@ const Post = ({ postId, post, comments, users }) => <>
   <ul>
     {post.commentIds.map(commentId => (
       <li key={commentId}>
-        <Comment postId={postId} commentId={commentId} comment={comments[commentId]} users={users}/>
+        <Comment postId={postId} postAuthorId={post.authorId} commentId={commentId} comment={comments[commentId]} users={users}/>
       </li>
     ))}
   </ul>
