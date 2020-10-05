@@ -17,7 +17,8 @@ export const formatPost = post => {
     'body': post.body,
     'authorId': post.createdBy,
     'createdAt': +post.createdAt,
-    'commentIds': post.comments
+    'commentIds': post.comments,
+    'omittedComments': +post.omittedComments
   };
 };
 
