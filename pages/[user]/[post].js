@@ -23,13 +23,15 @@ const PostPage = props => {
   const { query: { user: username, post: postId } } = useRouter();
   const { post, comments, users } = props;
 
-  return <>
-    <h1>{username} / {postId}</h1>
+  return (
+    <main>
+      <h1>{username} / {postId}</h1>
 
-    {post && (
-      <Post postId={postId} post={post} comments={comments} users={users}/>
-    )}
-  </>;
+      {post && (
+        <Post postId={postId} post={post} comments={comments} users={users}/>
+      )}
+    </main>
+  );
 };
 
 export default PostPage;

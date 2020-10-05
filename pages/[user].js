@@ -28,21 +28,20 @@ const UserPage = props => {
   const { query: { user: username } } = useRouter();
   const { user, posts, comments, users } = props;
 
-  return <>
-    <h1>{username}</h1>
+  return (
+    <main>
+      <h1>{username}</h1>
 
-    {user && <>
-      <p>User: {user.displayName}</p>
-      <p>Description: {user.description}</p>
-      <ul>
+      {user && <>
+        <p>Display name: {user.displayName}</p>
+        <p>Description: {user.description}</p>
+
         {Object.keys(posts).map(postId => (
-          <li key={postId}>
-            <Post postId={postId} post={posts[postId]} comments={comments} users={users}/>
-          </li>
+          <Post key={postId} postId={postId} post={posts[postId]} comments={comments} users={users}/>
         ))}
-      </ul>
-    </>}
-  </>;
+      </>}
+    </main>
+  );
 };
 
 export default UserPage;

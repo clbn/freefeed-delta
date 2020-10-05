@@ -24,16 +24,15 @@ const IndexPage = props => {
     return <SignIn/>;
   }
 
-  return <>
-    <h1>Home</h1>
-    <ul>
+  return (
+    <main>
+      <h1>Home</h1>
+
       {Object.keys(posts).map(postId => (
-        <li key={postId}>
-          <Post postId={postId} post={posts[postId]} comments={comments} users={users}/>
-        </li>
+        <Post key={postId} postId={postId} post={posts[postId]} comments={comments} users={users}/>
       ))}
-    </ul>
-  </>;
+    </main>
+  );
 };
 
 export default IndexPage;

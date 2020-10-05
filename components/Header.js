@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const Header = () => (
-  <div>
+  <header>
     <Link href="/">
       <a>Home</a>
     </Link>
@@ -23,7 +23,7 @@ const Header = () => (
         margin-right: 15px;
       }
     `}</style>
-  </div>
+  </header>
 );
 
 export default Header;

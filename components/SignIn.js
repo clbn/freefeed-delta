@@ -24,13 +24,17 @@ export default () => {
     }
   };
 
-  return <>
-    <h1>Sign in</h1>
-    <form onSubmit={handleSubmit} action="/api/signin" method="POST">
-      <input type="text" placeholder="API token" name="token" value={token} onChange={handleChange}/>
-      <input type="hidden" name="redirect" value="1"/>
-      <button type="submit">Sign in</button>
-    </form>
-    <p style={{color: 'red'}}>{error}</p>
-  </>;
+  return (
+    <main>
+      <h1>Sign in</h1>
+
+      <form onSubmit={handleSubmit} action="/api/signin" method="POST">
+        <input type="text" placeholder="API token" name="token" value={token} onChange={handleChange}/>
+        <input type="hidden" name="redirect" value="1"/>
+        <button type="submit">Sign in</button>
+      </form>
+
+      <p style={{color: 'red'}}>{error}</p>
+    </main>
+  );
 };

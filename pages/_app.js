@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import Header from '../components/Header';
+import '../styles/global.css';
 
 NProgress.configure({ showSpinner: false });
 Router.events.on('routeChangeStart', NProgress.start);
