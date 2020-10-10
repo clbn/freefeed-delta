@@ -33,7 +33,7 @@ export const formatAttachment = attachment => {
   const formattedImageSize = (imageSizes.o ? `, ${imageSizes.o.w}×${imageSizes.o.h}px` : '');
   const nameAndSize = fileName + ' (' + formattedFileSize + formattedImageSize + ')';
 
-  let srcSet;
+  let srcSet = null;
   if (imageSizes.t2?.url) {
     srcSet = imageSizes.t2.url + ' 2x';
   } else if (+imageSizes.o?.w <= +imageSizes.t?.w * 2) {
@@ -45,8 +45,8 @@ export const formatAttachment = attachment => {
     nameAndSize,
     src: imageSizes.t?.url || thumbnailUrl,
     srcSet,
-    width: imageSizes.t?.w || imageSizes.o?.w || undefined,
-    height: imageSizes.t?.h || imageSizes.o?.h || undefined,
+    width: imageSizes.t?.w || imageSizes.o?.w || null,
+    height: imageSizes.t?.h || imageSizes.o?.h || null,
   };
 };
 
