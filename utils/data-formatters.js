@@ -17,8 +17,36 @@ export const formatPost = post => {
     'body': post.body,
     'authorId': post.createdBy,
     'createdAt': +post.createdAt,
+    'attachmentIds': post.attachments,
     'commentIds': post.comments,
     'omittedComments': +post.omittedComments
+  };
+};
+
+export const formatAttachment = attachment => {
+  if (!attachment) return null;
+  if (attachment.mediaType !== 'image') return null;
+
+  const { fileName, fileSize, imageSizes, thumbnailUrl, url } = attachment;
+
+  const formattedFileSize = fileSize; // TODO: numeral(fileSize).format('0.[0] b');
+  const formattedImageSize = (imageSizes.o ? `, ${imageSizes.o.w}×${imageSizes.o.h}px` : '');
+  const nameAndSize = fileName + ' (' + formattedFileSize + formattedImageSize + ')';
+
+  let srcSet;
+  if (imageSizes.t2?.url) {
+    srcSet = imageSizes.t2.url + ' 2x';
+  } else if (+imageSizes.o?.w <= +imageSizes.t?.w * 2) {
+    srcSet = (imageSizes.o?.url || url) + ' 2x';
+  }
+
+  return {
+    url: imageSizes.o?.url || url,
+    nameAndSize,
+    src: imageSizes.t?.url || thumbnailUrl,
+    srcSet,
+    width: imageSizes.t?.w || imageSizes.o?.w || undefined,
+    height: imageSizes.t?.h || imageSizes.o?.h || undefined,
   };
 };
 
@@ -49,6 +77,8 @@ export const formatUser = (user, full) => {
 };
 
 export const formatPosts = posts => keyByIdAndMap(posts, formatPost);
+
+export const formatAttachments = attachments => keyByIdAndMap(attachments, formatAttachment);
 
 export const formatComments = comments => keyByIdAndMap(comments, formatComment);
 

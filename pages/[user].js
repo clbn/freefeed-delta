@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import fetcher from '../utils/fetcher';
-import { formatPosts, formatComments, formatUser, formatUsers } from '../utils/data-formatters';
+import { formatAttachments, formatComments, formatPosts, formatUser, formatUsers } from '../utils/data-formatters';
 import Post from '../components/Post';
 
 export const getServerSideProps = async (ctx) => {
@@ -13,12 +13,14 @@ export const getServerSideProps = async (ctx) => {
 
   const user = formatUser(data1.users, true);
   const posts = formatPosts(data2.posts);
+  const attachments = formatAttachments(data2.attachments);
   const comments = formatComments(data2.comments);
   const users = formatUsers(data2.users);
 
   return { props: {
     user,
     posts,
+    attachments,
     comments,
     users
   }};
@@ -26,7 +28,7 @@ export const getServerSideProps = async (ctx) => {
 
 const UserPage = props => {
   const { query: { user: username } } = useRouter();
-  const { user, posts, comments, users } = props;
+  const { user, posts, attachments, comments, users } = props;
 
   return (
     <main>
@@ -37,7 +39,7 @@ const UserPage = props => {
         <p>Description: {user.description}</p>
 
         {Object.keys(posts).map(postId => (
-          <Post key={postId} postId={postId} post={posts[postId]} comments={comments} users={users}/>
+          <Post key={postId} postId={postId} post={posts[postId]} attachments={attachments} comments={comments} users={users}/>
         ))}
       </>}
     </main>
