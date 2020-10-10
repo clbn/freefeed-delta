@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Router from 'next/router'
 import fetch from 'isomorphic-unfetch';
 
-export default () => {
+const SignIn = () => {
   const [token, setToken] = useState('');
   const [error, setError] = useState('');
 
@@ -38,3 +38,5 @@ export default () => {
     </main>
   );
 };
+
+export default SignIn;
