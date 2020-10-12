@@ -3,52 +3,67 @@ import AttachmentImage from './AttachmentImage';
 import Comment from './Comment';
 import Time from './Time';
 
-const Post = ({ postId, post, attachments, comments, users }) => (
-  <article>
-    {post.body}
-    {' - '}
-    <Link href={`/${users[post.authorId].username}`}>
-      <a>{users[post.authorId].displayName}</a>
-    </Link>
-    {' - '}
-    <Link href={`/${users[post.authorId].username}/${postId}`}>
-      <a><Time stamp={post.createdAt}/></a>
-    </Link>
+const Post = ({ postId, post, attachments, comments, users }) => {
+  const authorUrl = `/${users[post.authorId].username}`;
+  const postUrl = `/${users[post.authorId].username}/${postId}`;
 
-    <section className="attachments">
-      {post.attachmentIds.map(attId => (
-        <AttachmentImage key={attId} {...attachments[attId]}/>
-      ))}
-    </section>
+  return (
+    <article>
+      <section>
+        <Link href={authorUrl}>
+          <a>{users[post.authorId].displayName}</a>
+        </Link>
+      </section>
 
-    <ul>
-      {post.commentIds.slice(0, 1).map(commentId => (
-        <li key={commentId}>
-          <Comment postId={postId} postAuthorId={post.authorId} commentId={commentId} comment={comments[commentId]} users={users}/>
-        </li>
-      ))}
+      <section>
+        {post.body}
+      </section>
 
-      {post.omittedComments > 0 && (
-        <li>
-          <Link href={`/${users[post.authorId].username}/${postId}`}>
-            <a>{post.omittedComments} more comments</a>
-          </Link>
-        </li>
-      )}
+      <section className="attachments">
+        {post.attachmentIds.map(attId => (
+          <AttachmentImage key={attId} {...attachments[attId]}/>
+        ))}
+      </section>
 
-      {post.commentIds.slice(1).map(commentId => (
-        <li key={commentId}>
-          <Comment postId={postId} postAuthorId={post.authorId} commentId={commentId} comment={comments[commentId]} users={users}/>
-        </li>
-      ))}
-    </ul>
+      <section>
+        <Link href={postUrl}>
+          <a><Time stamp={post.createdAt}/></a>
+        </Link>
+      </section>
 
-    <style jsx>{`
-      .attachments {
-        margin-right: -0.5rem;
-      }
-    `}</style>
-  </article>
-);
+      <ul>
+        {post.commentIds.slice(0, 1).map(commentId => (
+          <li key={commentId}>
+            <Comment postId={postId} postAuthorId={post.authorId} commentId={commentId} comment={comments[commentId]} users={users}/>
+          </li>
+        ))}
+
+        {post.omittedComments > 0 && (
+          <li>
+            <Link href={postUrl}>
+              <a>{post.omittedComments} more comments</a>
+            </Link>
+          </li>
+        )}
+
+        {post.commentIds.slice(1).map(commentId => (
+          <li key={commentId}>
+            <Comment postId={postId} postAuthorId={post.authorId} commentId={commentId} comment={comments[commentId]} users={users}/>
+          </li>
+        ))}
+      </ul>
+
+      <style jsx>{`
+        article {
+          border-top: 1px solid #eee;
+          padding-top: 1rem;
+        }
+        .attachments {
+          margin-right: -0.5rem;
+        }
+      `}</style>
+    </article>
+  );
+};
 
 export default Post;
