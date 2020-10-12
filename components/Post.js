@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import AttachmentImage from './AttachmentImage';
 import Comment from './Comment';
-import { getFullDate } from '../utils/time';
+import Time from './Time';
 
 const Post = ({ postId, post, attachments, comments, users }) => (
   <article>
@@ -9,7 +9,9 @@ const Post = ({ postId, post, attachments, comments, users }) => (
     {' - '}
     <Link href="/[user]" as={`/${users[post.authorId].username}`}><a>{users[post.authorId].displayName}</a></Link>
     {' - '}
-    <Link href="/[user]/[post]" as={`/${users[post.authorId].username}/${postId}`}><a>{getFullDate(post.createdAt)}</a></Link>
+    <Link href="/[user]/[post]" as={`/${users[post.authorId].username}/${postId}`}>
+      <a><Time stamp={post.createdAt}/></a>
+    </Link>
 
     <section className="attachments">
       {post.attachmentIds.map(attId => (
