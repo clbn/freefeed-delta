@@ -7,9 +7,11 @@ const Post = ({ postId, post, attachments, comments, users }) => (
   <article>
     {post.body}
     {' - '}
-    <Link href="/[user]" as={`/${users[post.authorId].username}`}><a>{users[post.authorId].displayName}</a></Link>
+    <Link href={`/${users[post.authorId].username}`}>
+      <a>{users[post.authorId].displayName}</a>
+    </Link>
     {' - '}
-    <Link href="/[user]/[post]" as={`/${users[post.authorId].username}/${postId}`}>
+    <Link href={`/${users[post.authorId].username}/${postId}`}>
       <a><Time stamp={post.createdAt}/></a>
     </Link>
 
@@ -28,7 +30,9 @@ const Post = ({ postId, post, attachments, comments, users }) => (
 
       {post.omittedComments > 0 && (
         <li>
-          <Link href="/[user]/[post]" as={`/${users[post.authorId].username}/${postId}`}><a>{post.omittedComments} more comments</a></Link>
+          <Link href={`/${users[post.authorId].username}/${postId}`}>
+            <a>{post.omittedComments} more comments</a>
+          </Link>
         </li>
       )}
 
