@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import AttachmentImage from './AttachmentImage';
+import PostLikes from './PostLikes';
 import Comment from './Comment';
 import Time from './Time';
 
@@ -30,6 +31,10 @@ const Post = ({ postId, post, attachments, comments, users }) => {
           <a><Time stamp={post.createdAt}/></a>
         </Link>
       </section>
+
+      {post.likerIds.length > 0 && (
+        <PostLikes likerIds={post.likerIds} omittedLikes={post.omittedLikes} users={users}/>
+      )}
 
       <ul>
         {post.commentIds.slice(0, 1).map(commentId => (

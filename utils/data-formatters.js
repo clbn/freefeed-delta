@@ -18,6 +18,8 @@ export const formatPost = post => {
     'authorId': post.createdBy,
     'createdAt': +post.createdAt,
     'attachmentIds': post.attachments,
+    'likerIds': post.likes,
+    'omittedLikes': +post.omittedLikes,
     'commentIds': post.comments,
     'omittedComments': +post.omittedComments
   };
