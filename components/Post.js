@@ -36,7 +36,7 @@ const Post = ({ postId, post, attachments, comments, users }) => {
         <PostLikes likerIds={post.likerIds} omittedLikes={post.omittedLikes} users={users}/>
       )}
 
-      <ul>
+      <ul className="comments">
         {post.commentIds.slice(0, 1).map(commentId => (
           <li key={commentId}>
             <Comment postId={postId} postAuthorId={post.authorId} commentId={commentId} comment={comments[commentId]} users={users}/>
@@ -44,7 +44,7 @@ const Post = ({ postId, post, attachments, comments, users }) => {
         ))}
 
         {post.omittedComments > 0 && (
-          <li>
+          <li className="more-comments">
             <Link href={postUrl}>
               <a>{post.omittedComments} more comments</a>
             </Link>
@@ -69,6 +69,14 @@ const Post = ({ postId, post, attachments, comments, users }) => {
         }
         .attachments {
           margin-right: -0.5rem;
+        }
+        .comments {
+          list-style: none;
+          padding: 0;
+        }
+        .more-comments {
+          font-style: italic;
+          padding-left: 1.4rem;
         }
       `}</style>
     </article>
