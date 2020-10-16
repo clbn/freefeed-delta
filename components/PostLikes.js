@@ -36,9 +36,9 @@ const PostLikes = ({ likerIds, omittedLikes, users }) => {
       <style jsx>{`
         .likes {
           display: block;
-          margin-top: 0.5rem;
-          margin-left: 1.4rem;
           text-indent: -1.4rem;
+          margin-left: 1.4rem;
+          margin-bottom: 0.5rem;
         }
         ul {
           display: inline;

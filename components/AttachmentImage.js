@@ -7,7 +7,7 @@ const AttachmentImage = ({ url, nameAndSize, src, srcSet, width, height }) => (
         display: inline-block;
         padding: 1px;
         border: 1px solid #ccc;
-        margin: 0.5rem 0.5rem 0 0;
+        margin: 0 0.5rem 0.5rem 0;
 
         min-width: 36px;
         min-height: 36px;

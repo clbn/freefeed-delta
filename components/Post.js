@@ -20,11 +20,13 @@ const Post = ({ postId, post, attachments, comments, users }) => {
         {post.body}
       </section>
 
-      <section className="attachments">
-        {post.attachmentIds.map(attId => (
-          <AttachmentImage key={attId} {...attachments[attId]}/>
-        ))}
-      </section>
+      {post.attachmentIds.length > 0 && (
+        <section className="attachments">
+          {post.attachmentIds.map(attId => (
+            <AttachmentImage key={attId} {...attachments[attId]}/>
+          ))}
+        </section>
+      )}
 
       <section>
         <Link href={postUrl}>
@@ -66,17 +68,23 @@ const Post = ({ postId, post, attachments, comments, users }) => {
         section {
           display: block;
           overflow-wrap: break-word;
+          margin-bottom: 0.5rem;
         }
         .attachments {
+          display: flex;
+          padding: 0.15rem 0;
           margin-right: -0.5rem;
+          margin-bottom: 0;
         }
         .comments {
           list-style: none;
           padding: 0;
+          margin-top: 0;
         }
         .more-comments {
           font-style: italic;
           padding-left: 1.4rem;
+          margin-bottom: 0.5rem;
         }
       `}</style>
     </article>

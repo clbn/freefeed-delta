@@ -40,6 +40,10 @@
 */
 
 /* Layout */
+* {
+  box-sizing: border-box;
+}
+
 article aside {
   background: var(--color-secondary-accent);
   border-left: 4px solid var(--color-secondary);
@@ -209,11 +213,6 @@ mark {
   padding: 0.1rem;
 }
 
-ol li,
-ul li {
-  padding: 0.2rem 0;
-}
-
 p {
   margin: 0.75rem 0;
   padding: 0;
@@ -252,7 +251,6 @@ sup {
 /* Links */
 a {
   color: var(--color-secondary);
-  font-weight: bold;
   text-decoration: none;
 }
 
