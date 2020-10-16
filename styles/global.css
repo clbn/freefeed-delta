@@ -252,7 +252,6 @@ sup {
 /* Links */
 a {
   color: var(--color-secondary);
-  display: inline-block;
   font-weight: bold;
   text-decoration: none;
 }

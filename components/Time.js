@@ -6,7 +6,15 @@ const Time = ({ stamp, short = false }) => {
   const dateRelative = getRelativeDate(stamp, short);
 
   return (
-    <time dateTime={dateISO} title={dateFull}>{dateRelative}</time>
+    <time dateTime={dateISO} title={dateFull}>
+      {dateRelative}
+
+      <style jsx>{`
+        time {
+          white-space: nowrap;
+        }
+      `}</style>
+    </time>
   );
 };
 

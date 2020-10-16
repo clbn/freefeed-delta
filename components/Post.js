@@ -63,6 +63,10 @@ const Post = ({ postId, post, attachments, comments, users }) => {
           border-top: 1px solid #eee;
           padding-top: 1rem;
         }
+        section {
+          display: block;
+          overflow-wrap: break-word;
+        }
         .attachments {
           margin-right: -0.5rem;
         }
