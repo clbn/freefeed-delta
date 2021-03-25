@@ -46,7 +46,7 @@ const Post = ({ id }) => {
       </section>
 
       {post.likerIds.length > 0 && (
-        <PostLikes postId={id}/>
+        <PostLikes postId={id} postUrl={postUrl}/>
       )}
 
       <ul className="comments">

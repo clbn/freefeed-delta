@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { loadMoreLikes } from '../store/actions';
 import { preventDefault } from '../utils/events';
 
-const PostLikes = ({ postId }) => {
+const PostLikes = ({ postId, postUrl }) => {
   const likerIds = useSelector(state => state.posts[postId].likerIds);
   const omittedLikes = useSelector(state => state.posts[postId].omittedLikes);
   const listedUsers = useSelector(state => likerIds.map(id => state.users[id]), shallowEqual);
@@ -31,7 +31,9 @@ const PostLikes = ({ postId }) => {
                 <a>{user.displayName}</a>
               </Link>
             ) : (
-              <a onClick={loadMoreLikesAction}>{omittedLikes} other people</a>
+              <a href={`${postUrl}?likes=all`} onClick={loadMoreLikesAction}>
+                {omittedLikes} other people
+              </a>
             )}
 
             {i < users.length - 2 ? (
