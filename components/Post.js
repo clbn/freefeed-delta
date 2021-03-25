@@ -1,18 +1,23 @@
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
+
 import AttachmentImage from './AttachmentImage';
 import PostLikes from './PostLikes';
 import Comment from './Comment';
 import Time from './Time';
 
-const Post = ({ postId, post, attachments, comments, users }) => {
-  const authorUrl = `/${users[post.authorId].username}`;
-  const postUrl = `/${users[post.authorId].username}/${postId}`;
+const Post = ({ id }) => {
+  const post = useSelector(state => state.posts[id]);
+  const author = useSelector(state => state.users[post.authorId]);
+
+  const authorUrl = `/${author.username}`;
+  const postUrl = `/${author.username}/${id}`;
 
   return (
     <article>
       <section>
         <Link href={authorUrl}>
-          <a>{users[post.authorId].displayName}</a>
+          <a>{author.displayName}</a>
         </Link>
       </section>
 
@@ -23,7 +28,7 @@ const Post = ({ postId, post, attachments, comments, users }) => {
       {post.attachmentIds.length > 0 && (
         <section className="attachments">
           {post.attachmentIds.map(attId => (
-            <AttachmentImage key={attId} {...attachments[attId]}/>
+            <AttachmentImage id={attId} key={attId}/>
           ))}
         </section>
       )}
@@ -35,13 +40,13 @@ const Post = ({ postId, post, attachments, comments, users }) => {
       </section>
 
       {post.likerIds.length > 0 && (
-        <PostLikes likerIds={post.likerIds} omittedLikes={post.omittedLikes} users={users}/>
+        <PostLikes postId={id}/>
       )}
 
       <ul className="comments">
         {post.commentIds.slice(0, 1).map(commentId => (
           <li key={commentId}>
-            <Comment postId={postId} postAuthorId={post.authorId} commentId={commentId} comment={comments[commentId]} users={users}/>
+            <Comment id={commentId} postUrl={postUrl}/>
           </li>
         ))}
 
@@ -55,7 +60,7 @@ const Post = ({ postId, post, attachments, comments, users }) => {
 
         {post.commentIds.slice(1).map(commentId => (
           <li key={commentId}>
-            <Comment postId={postId} postAuthorId={post.authorId} commentId={commentId} comment={comments[commentId]} users={users}/>
+            <Comment id={commentId} postUrl={postUrl}/>
           </li>
         ))}
       </ul>

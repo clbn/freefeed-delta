@@ -1,10 +1,15 @@
+import { useSelector, shallowEqual } from 'react-redux';
 import Link from 'next/link';
 
-const PostLikes = ({ likerIds, omittedLikes, users }) => {
-  const likes = [...likerIds];
+const PostLikes = ({ postId }) => {
+  const likerIds = useSelector(state => state.posts[postId].likerIds);
+  const omittedLikes = useSelector(state => state.posts[postId].omittedLikes);
+  const listedUsers = useSelector(state => likerIds.map(id => state.users[id]), shallowEqual);
+
+  const users = [...listedUsers];
 
   if (omittedLikes) {
-    likes.push('more-likes');
+    users.push({ username: 'more-likes' });
   }
 
   return (
@@ -12,19 +17,19 @@ const PostLikes = ({ likerIds, omittedLikes, users }) => {
       💛
 
       <ul>
-        {likes.map((likerId, i) => (
-          <li key={likerId}>
-            {likerId !== 'more-likes' ? (
-              <Link href={`/${users[likerId].username}`}>
-                <a>{users[likerId].displayName}</a>
+        {users.map((user, i) => (
+          <li key={user.username}>
+            {user.username !== 'more-likes' ? (
+              <Link href={`/${user.username}`}>
+                <a>{user.displayName}</a>
               </Link>
             ) : (
               <b>{omittedLikes} other people</b>
             )}
 
-            {i < likes.length - 2 ? (
+            {i < users.length - 2 ? (
               ', '
-            ) : i === likes.length - 2 ? (
+            ) : i === users.length - 2 ? (
               ' and '
             ) : (
               ' liked this'

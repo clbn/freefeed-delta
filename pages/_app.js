@@ -1,6 +1,9 @@
 import Head from 'next/head';
 import Router from 'next/router';
 import NProgress from 'nprogress';
+import { Provider } from 'react-redux';
+
+import { useStore } from '../store';
 import Header from '../components/Header';
 import '../styles/global.css';
 
@@ -10,6 +13,8 @@ Router.events.on('routeChangeComplete', NProgress.done);
 Router.events.on('routeChangeError', NProgress.done);
 
 function App({ Component, pageProps }) {
+  const store = useStore(pageProps.preloadedState);
+
   return <>
     <style jsx global>{`
       #nprogress {
@@ -32,9 +37,10 @@ function App({ Component, pageProps }) {
       <link rel="icon" href="data:,"/>
     </Head>
 
-    <Header/>
-
-    <Component {...pageProps}/>
+    <Provider store={store}>
+      <Header/>
+      <Component {...pageProps}/>
+    </Provider>
   </>;
 }
 

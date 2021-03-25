@@ -1,28 +1,26 @@
+import { useSelector, shallowEqual } from 'react-redux';
+
 import fetcher from '../utils/fetcher';
-import { formatAttachments, formatComments, formatPosts, formatUsers } from '../utils/data-formatters';
+import { initServerStore } from '../store';
+import { loadHomePage } from '../store/actions';
 import Post from '../components/Post';
 import SignIn from '../components/SignIn';
 
 export const getServerSideProps = async (ctx) => {
   const data = await fetcher(`https://freefeed.net/v2/timelines/home?offset=0`, ctx);
 
-  const posts = formatPosts(data.posts);
-  const attachments = formatAttachments(data.attachments);
-  const comments = formatComments(data.comments);
-  const users = formatUsers(data.users);
+  const store = initServerStore();
+  store.dispatch(loadHomePage({ data }));
 
   return { props: {
-    posts,
-    attachments,
-    comments,
-    users
+    preloadedState: store.getState(),
   }};
 };
 
-const IndexPage = props => {
-  const { posts, attachments, comments, users } = props;
+const IndexPage = () => {
+  const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
 
-  if (!posts) {
+  if (!postIds) {
     return <SignIn/>;
   }
 
@@ -30,8 +28,8 @@ const IndexPage = props => {
     <main>
       <h1>Home</h1>
 
-      {Object.keys(posts).map(postId => (
-        <Post key={postId} postId={postId} post={posts[postId]} attachments={attachments} comments={comments} users={users}/>
+      {postIds.map(postId => (
+        <Post id={postId} key={postId}/>
       ))}
     </main>
   );
