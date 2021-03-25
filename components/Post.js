@@ -1,6 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
+import { loadMoreComments } from '../store/actions';
+import { preventDefault } from '../utils/events';
 import AttachmentImage from './AttachmentImage';
 import PostLikes from './PostLikes';
 import Comment from './Comment';
@@ -9,6 +12,9 @@ import Time from './Time';
 const Post = ({ id }) => {
   const post = useSelector(state => state.posts[id]);
   const author = useSelector(state => state.users[post.authorId]);
+
+  const dispatch = useDispatch();
+  const loadMoreCommentsAction = preventDefault(useCallback(() => dispatch(loadMoreComments(id)), [id]));
 
   const authorUrl = `/${author.username}`;
   const postUrl = `/${author.username}/${id}`;
@@ -52,9 +58,9 @@ const Post = ({ id }) => {
 
         {post.omittedComments > 0 && (
           <li className="more-comments">
-            <Link href={postUrl}>
-              <a>{post.omittedComments} more comments</a>
-            </Link>
+            <a href={postUrl} onClick={loadMoreCommentsAction}>
+              {post.omittedComments} more comments
+            </a>
           </li>
         )}
 

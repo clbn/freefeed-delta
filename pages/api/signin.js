@@ -31,7 +31,7 @@ export default async (req, res) => {
   setCookie({ res }, 'freefeed_authToken', token, {
     maxAge: 30 * 24 * 60 * 60,
     path: '/',
-    httpOnly: true
+    secure: true
   });
 
   const redirect = req.body?.redirect; // Used by non-JS clients
