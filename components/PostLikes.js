@@ -11,7 +11,7 @@ const PostLikes = ({ postId, postUrl }) => {
   const listedUsers = useSelector(state => likerIds.map(id => state.users[id]), shallowEqual);
 
   const dispatch = useDispatch();
-  const loadMoreLikesAction = preventDefault(useCallback(() => dispatch(loadMoreLikes(postId)), [postId]));
+  const loadMoreLikesAction = useCallback(preventDefault(() => dispatch(loadMoreLikes(postId))), [postId]);
 
   const users = [...listedUsers];
 

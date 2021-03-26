@@ -14,7 +14,7 @@ const Post = ({ id }) => {
   const author = useSelector(state => state.users[post.authorId]);
 
   const dispatch = useDispatch();
-  const loadMoreCommentsAction = preventDefault(useCallback(() => dispatch(loadMoreComments(id)), [id]));
+  const loadMoreCommentsAction = useCallback(preventDefault(() => dispatch(loadMoreComments(id))), [id]);
 
   const authorUrl = `/${author.username}`;
   const postUrl = `/${author.username}/${id}`;
