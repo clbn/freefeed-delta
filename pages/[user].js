@@ -1,17 +1,17 @@
 import { useSelector, shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import fetcher from '../utils/fetcher';
 import { initServerStore } from '../store';
-import { loadUserPage } from '../store/actions';
+import { loadUserPage, loadWhoami } from '../store/actions';
 import Post from '../components/Post';
 
 export const getServerSideProps = async ctx => {
-  const { user: username } = ctx.query;
-  const data = await fetcher(`https://freefeed.net/v2/timelines/${username}?offset=0`, ctx);
-
   const store = initServerStore();
-  store.dispatch(loadUserPage({ username, data }));
+
+  await Promise.all([
+    store.dispatch(loadUserPage(ctx)),
+    store.dispatch(loadWhoami(ctx)),
+  ]);
 
   return { props: {
     preloadedState: store.getState(),

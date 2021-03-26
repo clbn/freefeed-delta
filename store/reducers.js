@@ -12,14 +12,18 @@ export const rootReducer = createReducer({}, {
     return payload; // Immer let us do it this way (while `state = payload` won't work)
   },
 
-  [actions.loadHomePage]: (state, { payload: { data } }) => {
+  [actions.loadWhoami.fulfilled]: (state, { payload: { data } }) => {
+    state.me = formatUser(data.users, true);
+  },
+
+  [actions.loadHomePage.fulfilled]: (state, { payload: { data } }) => {
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
     state.posts = formatPosts(data.posts);
     state.users = formatUsers(data.users);
   },
 
-  [actions.loadUserPage]: (state, { payload: { username, data } }) => {
+  [actions.loadUserPage.fulfilled]: (state, { payload: { username, data } }) => {
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
     state.posts = formatPosts(data.posts);
@@ -31,7 +35,7 @@ export const rootReducer = createReducer({}, {
     state.users = users;
   },
 
-  [actions.loadPostPage]: (state, { payload: { postId, data } }) => {
+  [actions.loadPostPage.fulfilled]: (state, { payload: { postId, data } }) => {
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
     state.posts = { [postId]: formatPost(data.posts) };

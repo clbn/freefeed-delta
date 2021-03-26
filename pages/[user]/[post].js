@@ -1,16 +1,16 @@
 import { useRouter } from 'next/router';
 
-import fetcher from '../../utils/fetcher';
 import { initServerStore } from '../../store';
-import { loadPostPage } from '../../store/actions';
+import { loadPostPage, loadWhoami } from '../../store/actions';
 import Post from '../../components/Post';
 
 export const getServerSideProps = async ctx => {
-  const { post: postId, likes: maxLikes } = ctx.query;
-  const data = await fetcher(`https://freefeed.net/v2/posts/${postId}?maxComments=all&maxLikes=${maxLikes}`, ctx);
-
   const store = initServerStore();
-  store.dispatch(loadPostPage({ postId, data }));
+
+  await Promise.all([
+    store.dispatch(loadPostPage(ctx)),
+    store.dispatch(loadWhoami(ctx)),
+  ]);
 
   return { props: {
     preloadedState: store.getState(),
