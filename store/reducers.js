@@ -44,6 +44,7 @@ export const rootReducer = createReducer({}, {
   [actions.loadHomePage.fulfilled]: (state, { payload: { data } }) => {
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
+    data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
     state.posts = formatPosts(data.posts);
     state.users = formatUsers(data.users);
   },
@@ -51,6 +52,7 @@ export const rootReducer = createReducer({}, {
   [actions.loadUserPage.fulfilled]: (state, { payload: { username, data } }) => {
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
+    data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
     state.posts = formatPosts(data.posts);
 
     // Format all users in short form, except the one displayed
@@ -63,6 +65,7 @@ export const rootReducer = createReducer({}, {
   [actions.loadPostPage.fulfilled]: (state, { payload: { postId, data } }) => {
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
+    data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
     state.posts = { [postId]: formatPost(data.posts) };
     state.users = formatUsers(data.users);
   },

@@ -8,6 +8,7 @@ let store;
 const initialState = {
   attachments: {},
   comments: {},
+  feeds: {},
   me: {},
   posts: {},
   users: {},
