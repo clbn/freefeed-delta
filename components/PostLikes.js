@@ -7,6 +7,13 @@ import { preventDefault } from '../utils/events';
 
 const PostLikes = ({ postId, postUrl }) => {
   const likerIds = useSelector(state => state.posts[postId].likerIds);
+  if (likerIds.length === 0) {
+    return false;
+  }
+  return <PostLikesNotEmpty postId={postId} postUrl={postUrl} likerIds={likerIds}/>
+};
+
+const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
   const omittedLikes = useSelector(state => state.posts[postId].omittedLikes);
   const listedUsers = useSelector(state => likerIds.map(id => state.users[id]), shallowEqual);
 

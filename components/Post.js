@@ -47,9 +47,7 @@ const Post = ({ id }) => {
         <PostActions postId={id}/>
       </section>
 
-      {post.likerIds.length > 0 && (
-        <PostLikes postId={id} postUrl={postUrl}/>
-      )}
+      <PostLikes postId={id} postUrl={postUrl}/>
 
       <ul className="comments">
         {post.commentIds.slice(0, 1).map(commentId => (
