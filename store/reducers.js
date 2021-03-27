@@ -14,6 +14,31 @@ export const rootReducer = createReducer({}, {
 
   [actions.loadWhoami.fulfilled]: (state, { payload: { data } }) => {
     state.me = formatUser(data.users, true);
+
+    // Add some users from "subscribers" (that's actually your subscriPTIONs, both people and groups)
+    data.subscribers.forEach(u => {
+      state.users[u.id] = formatUser(u);
+    });
+
+    // Add some users from "users.subscribers" (that's real subscribers, people only)
+    data.users.subscribers.forEach(u => {
+      state.users[u.id] = formatUser(u);
+    });
+
+    // Add some users from "requests" (outcoming subscription requests)
+    data.requests.forEach(u => {
+      state.users[u.id] = formatUser(u);
+    });
+
+    // Add some users from "managedGroups[].requests" (incoming group requests, waiting for your approval)
+    data.managedGroups.forEach(g => {
+      g.requests.forEach(u => {
+        state.users[u.id] = formatUser(u);
+      });
+    });
+
+    // Add me
+    state.users[data.users.id] = formatUser(data.users);
   },
 
   [actions.loadHomePage.fulfilled]: (state, { payload: { data } }) => {
