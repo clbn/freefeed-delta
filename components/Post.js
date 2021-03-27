@@ -1,100 +1,57 @@
-import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
-import { loadMoreComments } from '../store/actions';
-import { preventDefault } from '../utils/events';
-import AttachmentImage from './AttachmentImage';
+import PostAttachments from './PostAttachments';
 import PostActions from './PostActions';
 import PostLikes from './PostLikes';
-import Comment from './Comment';
+import PostComments from './PostComments';
 import Time from './Time';
 
 const Post = ({ id }) => {
-  const post = useSelector(state => state.posts[id]);
-  const author = useSelector(state => state.users[post.authorId]);
+  const authorId = useSelector(state => state.posts[id].authorId);
+  const body = useSelector(state => state.posts[id].body);
+  const createdAt = useSelector(state => state.posts[id].createdAt);
 
-  const dispatch = useDispatch();
-  const loadMoreCommentsAction = useCallback(preventDefault(() => dispatch(loadMoreComments(id))), [id]);
+  const authorUsername = useSelector(state => state.users[authorId].username);
+  const authorDisplayName = useSelector(state => state.users[authorId].displayName);
 
-  const authorUrl = `/${author.username}`;
-  const postUrl = `/${author.username}/${id}`;
+  const authorUrl = `/${authorUsername}`;
+  const postUrl = `/${authorUsername}/${id}`;
 
   return (
     <article>
       <section>
         <Link href={authorUrl}>
-          <a>{author.displayName}</a>
+          <a>{authorDisplayName}</a>
         </Link>
       </section>
 
       <section>
-        {post.body}
+        {body}
       </section>
 
-      {post.attachmentIds.length > 0 && (
-        <section className="attachments">
-          {post.attachmentIds.map(attId => (
-            <AttachmentImage id={attId} key={attId}/>
-          ))}
-        </section>
-      )}
+      <PostAttachments postId={id}/>
 
       <section>
         <Link href={postUrl}>
-          <a><Time stamp={post.createdAt}/></a>
+          <a><Time stamp={createdAt}/></a>
         </Link>
         <PostActions postId={id}/>
       </section>
 
       <PostLikes postId={id} postUrl={postUrl}/>
 
-      <ul className="comments">
-        {post.commentIds.slice(0, 1).map(commentId => (
-          <li key={commentId}>
-            <Comment id={commentId} postUrl={postUrl}/>
-          </li>
-        ))}
-
-        {post.omittedComments > 0 && (
-          <li className="more-comments">
-            <a href={postUrl} onClick={loadMoreCommentsAction}>
-              {post.omittedComments} more comments
-            </a>
-          </li>
-        )}
-
-        {post.commentIds.slice(1).map(commentId => (
-          <li key={commentId}>
-            <Comment id={commentId} postUrl={postUrl}/>
-          </li>
-        ))}
-      </ul>
+      <PostComments postId={id} postUrl={postUrl}/>
 
       <style jsx>{`
         article {
           border-top: 1px solid #eee;
           padding-top: 1rem;
+          padding-bottom: 0.5rem;
         }
         section {
           display: block;
           overflow-wrap: break-word;
-          margin-bottom: 0.5rem;
-        }
-        .attachments {
-          display: flex;
-          padding: 0.15rem 0;
-          margin-right: -0.5rem;
-          margin-bottom: 0;
-        }
-        .comments {
-          list-style: none;
-          padding: 0;
-          margin-top: 0;
-        }
-        .more-comments {
-          font-style: italic;
-          padding-left: 1.4rem;
           margin-bottom: 0.5rem;
         }
       `}</style>
