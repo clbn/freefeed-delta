@@ -66,4 +66,12 @@ export const rootReducer = createReducer({}, {
     });
   },
 
+  [actions.likeUnlikePost.fulfilled]: (state, { payload: { postId, verb } }) => {
+    if (verb === 'like') {
+      state.posts[postId].likerIds.unshift(state.me.id);
+    } else {
+      state.posts[postId].likerIds = state.posts[postId].likerIds.filter(id => id !== state.me.id);
+    }
+  },
+
 });

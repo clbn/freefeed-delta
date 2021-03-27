@@ -1,12 +1,16 @@
 import fetch from 'isomorphic-unfetch';
 import { parseCookies } from 'nookies';
 
-const fetcher = (url, ctx) => {
+const fetcher = (url, options, ctx) => {
   const token = parseCookies(ctx).freefeed_authToken;
 
-  const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+  if (token) {
+    if (!options) options = {};
+    if (!options.headers) options.headers = {};
+    options.headers['Authorization'] = `Bearer ${token}`;
+  }
 
-  return fetch(url, { headers }).then(r => r.json());
+  return fetch(url, options).then(r => r.json());
 };
 
 export default fetcher;

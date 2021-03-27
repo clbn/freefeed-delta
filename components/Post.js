@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { loadMoreComments } from '../store/actions';
 import { preventDefault } from '../utils/events';
 import AttachmentImage from './AttachmentImage';
+import PostActions from './PostActions';
 import PostLikes from './PostLikes';
 import Comment from './Comment';
 import Time from './Time';
@@ -43,6 +44,7 @@ const Post = ({ id }) => {
         <Link href={postUrl}>
           <a><Time stamp={post.createdAt}/></a>
         </Link>
+        <PostActions postId={id}/>
       </section>
 
       {post.likerIds.length > 0 && (
