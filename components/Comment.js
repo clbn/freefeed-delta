@@ -35,9 +35,9 @@ const Comment = ({ id, postUrl }) => {
       <style jsx>{`
         section {
           display: flex;
+          flex-wrap: nowrap; /* forcing children to be in a single line */
           align-items: flex-start; /* vertical alignment */
           justify-content: flex-start; /* horizontal alignment */
-          overflow-wrap: break-word;
           margin-bottom: 0.5rem;
         }
         .icon {
@@ -45,6 +45,8 @@ const Comment = ({ id, postUrl }) => {
         }
         .main {
           flex: 1; /* grow */
+          overflow-wrap: break-word;
+          min-width: 0; /* needs any min-width value for overflow-wrap to work on flex element */
         }
         .author {
           color: #666;

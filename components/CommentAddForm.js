@@ -97,9 +97,9 @@ const CommentAddForm = ({ postId }) => {
       <style jsx>{`
         section {
           display: flex;
+          flex-wrap: nowrap; /* forcing children to be in a single line */
           align-items: flex-start; /* vertical alignment */
           justify-content: flex-start; /* horizontal alignment */
-          overflow-wrap: break-word;
           margin-bottom: 0.5rem;
         }
         .icon {
