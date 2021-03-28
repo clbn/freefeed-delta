@@ -10,7 +10,7 @@ const fetcher = (url, options, ctx) => {
     options.headers['Authorization'] = `Bearer ${token}`;
   }
 
-  return fetch(url, options).then(r => r.json());
+  return fetch(url, options);
 };
 
 export default fetcher;
