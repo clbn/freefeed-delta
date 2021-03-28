@@ -12,7 +12,7 @@ export const rootReducer = createReducer({}, {
     return payload; // Immer let us do it this way (while `state = payload` won't work)
   },
 
-  [actions.loadWhoami.fulfilled]: (state, { payload: { data } }) => {
+  [actions.loadWhoami.fulfilled]: (state, { payload: data }) => {
     state.me = formatUser(data.users, true);
 
     // Add some users from "subscribers" (that's actually your subscriPTIONs, both people and groups)
@@ -41,7 +41,11 @@ export const rootReducer = createReducer({}, {
     state.users[data.users.id] = formatUser(data.users);
   },
 
-  [actions.loadHomePage.fulfilled]: (state, { payload: { data } }) => {
+  [actions.loadWhoami.rejected]: (state, { payload: data }) => {
+    console.log('loadWhoami/rejected', data);
+  },
+
+  [actions.loadHomePage.fulfilled]: (state, { payload: data }) => {
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
     data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
@@ -49,7 +53,12 @@ export const rootReducer = createReducer({}, {
     state.users = formatUsers(data.users);
   },
 
-  [actions.loadUserPage.fulfilled]: (state, { payload: { username, data } }) => {
+  [actions.loadHomePage.rejected]: (state, { payload: data }) => {
+    console.log('loadHomePage/rejected', data);
+  },
+
+  [actions.loadUserPage.fulfilled]: (state, { meta: { arg: ctx }, payload: data }) => {
+    const { user:   username } = ctx.query;
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
     data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
@@ -62,12 +71,23 @@ export const rootReducer = createReducer({}, {
     state.users = users;
   },
 
-  [actions.loadPostPage.fulfilled]: (state, { payload: { postId, data } }) => {
+  [actions.loadUserPage.rejected]: (state, { payload: data }) => {
+    console.log('loadUserPage/rejected', data);
+  },
+
+  [actions.loadPostPage.fulfilled]: (state, { meta: { arg: ctx }, payload: data }) => {
+    const { post: postId } = ctx.query;
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
     data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
     state.posts = { [postId]: formatPost(data.posts) };
     state.users = formatUsers(data.users);
+  },
+
+  [actions.loadPostPage.rejected]: (state, { meta: { arg: ctx }, payload: data }) => {
+    const { post: postId } = ctx.query;
+    state.posts = { [postId]: { errorMessage: data.err } };
+    console.log('loadPostPage/rejected', data);
   },
 
   [actions.loadMoreComments.fulfilled]: (state, { payload: { postId, data } }) => {

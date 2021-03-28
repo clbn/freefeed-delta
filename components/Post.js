@@ -9,6 +9,18 @@ import Time from './Time';
 import CommentAddForm from './CommentAddForm';
 
 const Post = ({ id }) => {
+  const isPostMissing = useSelector(state => state.posts[id] === undefined);
+  const errorMessage = useSelector(state => state.posts[id]?.errorMessage);
+  if (isPostMissing) {
+    return false;
+  }
+  if (errorMessage) {
+    return <div>{errorMessage}</div>;
+  }
+  return <PostNotEmpty id={id}/>;
+};
+
+const PostNotEmpty = ({ id }) => {
   const authorId = useSelector(state => state.posts[id].authorId);
   const body = useSelector(state => state.posts[id].body);
   const createdAt = useSelector(state => state.posts[id].createdAt);

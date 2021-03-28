@@ -9,10 +9,13 @@ const Header = () => {
       <Link href="/">
         <a>Home</a>
       </Link>
-      {' - Logged in as '}
-      <Link href={`/${myUsername}`}>
-        <a>{myUsername}</a>
-      </Link>
+
+      {myUsername && <>
+        {' - Signed in as '}
+        <Link href={`/${myUsername}`}>
+          <a>{myUsername}</a>
+        </Link>
+      </>}
     </header>
   );
 };

@@ -19,9 +19,10 @@ export const getServerSideProps = async ctx => {
 };
 
 const IndexPage = () => {
+  const myId = useSelector(state => state.me.id);
   const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
 
-  if (!postIds) {
+  if (!myId) {
     return <SignIn/>;
   }
 

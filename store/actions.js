@@ -5,26 +5,34 @@ import fetcher from '../utils/fetcher';
 export const setStoreState = createAction('setStoreState');
 export const toggleCommentingPost = createAction('toggleCommentingPost');
 
-export const loadWhoami = createAsyncThunk('loadWhoami', async ctx => {
-  const data = await fetcher('https://freefeed.net/v2/users/whoami', {}, ctx).then(r => r.json());
-  return { data };
+export const loadWhoami = createAsyncThunk('loadWhoami', async (ctx, { rejectWithValue }) => {
+  const response = await fetcher(`https://freefeed.net/v2/users/whoami`, {}, ctx);
+  const data = await response.json();
+  if (!response.ok) return rejectWithValue(data);
+  return data;
 });
 
-export const loadHomePage = createAsyncThunk('loadHomePage', async ctx => {
-  const data = await fetcher(`https://freefeed.net/v2/timelines/home?offset=0`, {}, ctx).then(r => r.json());
-  return { data };
+export const loadHomePage = createAsyncThunk('loadHomePage', async (ctx, { rejectWithValue }) => {
+  const response = await fetcher(`https://freefeed.net/v2/timelines/home?offset=0`, {}, ctx);
+  const data = await response.json();
+  if (!response.ok) return rejectWithValue(data);
+  return data;
 });
 
-export const loadUserPage = createAsyncThunk('loadUserPage', async ctx => {
+export const loadUserPage = createAsyncThunk('loadUserPage', async (ctx, { rejectWithValue }) => {
   const { user: username } = ctx.query;
-  const data = await fetcher(`https://freefeed.net/v2/timelines/${username}?offset=0`, {}, ctx).then(r => r.json());
-  return { username, data };
+  const response = await fetcher(`https://freefeed.net/v2/timelines/${username}?offset=0`, {}, ctx);
+  const data = await response.json();
+  if (!response.ok) return rejectWithValue(data);
+  return data;
 });
 
-export const loadPostPage = createAsyncThunk('loadPostPage', async ctx => {
+export const loadPostPage = createAsyncThunk('loadPostPage', async (ctx, { rejectWithValue }) => {
   const { post: postId, likes: maxLikes } = ctx.query;
-  const data = await fetcher(`https://freefeed.net/v2/posts/${postId}?maxComments=all&maxLikes=${maxLikes}`, {}, ctx).then(r => r.json());
-  return { postId, data };
+  const response = await fetcher(`https://freefeed.net/v2/posts/${postId}?maxComments=all&maxLikes=${maxLikes}`, {}, ctx);
+  const data = await response.json();
+  if (!response.ok) return rejectWithValue(data);
+  return data;
 });
 
 export const loadMoreComments = createAsyncThunk('loadMoreComments', async postId => {
