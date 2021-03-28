@@ -5,40 +5,46 @@ import Time from './Time';
 
 const Comment = ({ id, postUrl }) => {
   const comment = useSelector(state => state.comments[id]);
-  const commentAuthor = useSelector(state => state.users[comment.authorId]);
+  const authorUsername = useSelector(state => state.users[comment.authorId]?.username);
+  const authorDisplayName = useSelector(state => state.users[comment.authorId]?.displayName);
 
   return (
     <section>
-      💬
+      <div className="icon">💬</div>
 
-      <span className="body">{comment.body}</span>
+      <div className="main">
+        {comment.body}
 
-      {commentAuthor && (
-        <span className="author">
+        {authorUsername && (
+          <span className="author">
+            {' -\u00a0'}
+            <Link href={`/${authorUsername}`}>
+              <a>{authorDisplayName}</a>
+            </Link>
+          </span>
+        )}
+
+        <span className="time">
           {' -\u00a0'}
-          <Link href={`/${commentAuthor.username}`}>
-            <a>{commentAuthor.displayName}</a>
+          <Link href={`${postUrl}#comment-${id}`}>
+            <a><Time stamp={comment.createdAt} short/></a>
           </Link>
         </span>
-      )}
-
-      <span className="time">
-        {' -\u00a0'}
-        <Link href={`${postUrl}#comment-${id}`}>
-          <a><Time stamp={comment.createdAt} short/></a>
-        </Link>
-      </span>
+      </div>
 
       <style jsx>{`
         section {
-          display: block;
+          display: flex;
+          align-items: flex-start; /* vertical alignment */
+          justify-content: flex-start; /* horizontal alignment */
           overflow-wrap: break-word;
-          text-indent: -1.4rem;
-          margin-left: 1.4rem;
           margin-bottom: 0.5rem;
         }
-        .body {
-          padding-left: 0.4rem;
+        .icon {
+          flex: 0 0 1.4rem; /* don't grow, don't shrink, stay at 1.4rem */
+        }
+        .main {
+          flex: 1; /* grow */
         }
         .author {
           color: #666;
