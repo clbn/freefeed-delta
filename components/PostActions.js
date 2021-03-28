@@ -15,8 +15,8 @@ const PostActions = ({ postId }) => {
 
   const dispatch = useDispatch();
   const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [postId]);
-  const likePost = useCallback(() => dispatch(likeUnlikePost([postId, 'like'])), [postId]);
-  const unlikePost = useCallback(() => dispatch(likeUnlikePost([postId, 'unlike'])), [postId]);
+  const likePost = useCallback(() => dispatch(likeUnlikePost({ postId, verb: 'like' })), [postId]);
+  const unlikePost = useCallback(() => dispatch(likeUnlikePost({ postId, verb: 'unlike' })), [postId]);
 
   const commentLink = <>
     {areCommentsDisabled && canICommentAnyway && <>

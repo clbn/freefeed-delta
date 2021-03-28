@@ -114,12 +114,22 @@ export const rootReducer = createReducer({}, {
     });
   },
 
-  [actions.likeUnlikePost.fulfilled]: (state, { payload: { postId, verb } }) => {
+  [actions.likeUnlikePost.pending]: (state, { meta: { arg: { postId } } }) => {
+    state.posts[postId].isSendingLike = true;
+  },
+
+  [actions.likeUnlikePost.fulfilled]: (state, { meta: { arg: { postId } }, payload: verb }) => {
+    state.posts[postId].isSendingLike = false;
     if (verb === 'like') {
       state.posts[postId].likerIds.unshift(state.me.id);
     } else {
       state.posts[postId].likerIds = state.posts[postId].likerIds.filter(id => id !== state.me.id);
     }
+  },
+
+  [actions.likeUnlikePost.rejected]: (state, { meta: { arg: { postId } }, payload: data }) => {
+    state.posts[postId].isSendingLike = false;
+    console.log('likeUnlikePost/rejected', data);
   },
 
   [actions.toggleCommentingPost]: (state, { payload: postId }) => {
