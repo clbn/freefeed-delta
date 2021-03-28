@@ -6,6 +6,7 @@ import PostActions from './PostActions';
 import PostLikes from './PostLikes';
 import PostComments from './PostComments';
 import Time from './Time';
+import CommentAddForm from './CommentAddForm';
 
 const Post = ({ id }) => {
   const authorId = useSelector(state => state.posts[id].authorId);
@@ -42,6 +43,8 @@ const Post = ({ id }) => {
       <PostLikes postId={id} postUrl={postUrl}/>
 
       <PostComments postId={id} postUrl={postUrl}/>
+
+      <CommentAddForm postId={id}/>
 
       <style jsx>{`
         article {

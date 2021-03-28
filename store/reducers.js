@@ -102,4 +102,25 @@ export const rootReducer = createReducer({}, {
     }
   },
 
+  [actions.toggleCommentingPost]: (state, { payload: postId }) => {
+    state.posts[postId].isWritingComment = !state.posts[postId].isWritingComment;
+  },
+
+  [actions.addComment.pending]: (state, { meta: { arg: { postId } } }) => {
+    state.posts[postId].isSendingComment = true;
+    state.posts[postId].commentErrorMessage = null;
+  },
+
+  [actions.addComment.fulfilled]: (state, { meta: { arg: { postId } }, payload: data }) => {
+    state.comments[data.comments.id] = formatComment(data.comments);
+    state.posts[postId].commentIds.push(data.comments.id);
+    state.posts[postId].isSendingComment = false;
+    state.posts[postId].isWritingComment = false;
+  },
+
+  [actions.addComment.rejected]: (state, { meta: { arg: { postId } }, payload: data }) => {
+    state.posts[postId].isSendingComment = false;
+    state.posts[postId].commentErrorMessage = data.err;
+  },
+
 });

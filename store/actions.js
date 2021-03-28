@@ -3,6 +3,7 @@ import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import fetcher from '../utils/fetcher';
 
 export const setStoreState = createAction('setStoreState');
+export const toggleCommentingPost = createAction('toggleCommentingPost');
 
 export const loadWhoami = createAsyncThunk('loadWhoami', async ctx => {
   const data = await fetcher('https://freefeed.net/v2/users/whoami', {}, ctx).then(r => r.json());
@@ -39,4 +40,14 @@ export const loadMoreLikes = createAsyncThunk('loadMoreLikes', async postId => {
 export const likeUnlikePost = createAsyncThunk('likeUnlikePost', async ([postId, verb]) => {
   await fetcher(`https://freefeed.net/v1/posts/${postId}/${verb}`, { method: 'POST' }).then(r => r.json());
   return { postId, verb };
+});
+
+export const addComment = createAsyncThunk('addComment', async ({ postId, body }, { rejectWithValue }) => {
+  const response = await fetcher(`https://freefeed.net/v1/comments`, {
+    method: 'POST',
+    body: JSON.stringify({ comment: { postId, body } })
+  });
+  const data = await response.json();
+  if (!response.ok) return rejectWithValue(data);
+  return data;
 });

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { likeUnlikePost } from '../store/actions';
+import { likeUnlikePost, toggleCommentingPost } from '../store/actions';
 import { selectCanIModeratePost } from '../utils/data-selectors';
 
 const PostActions = ({ postId }) => {
@@ -14,7 +14,7 @@ const PostActions = ({ postId }) => {
   const haveILiked = useSelector(state => state.posts[postId].likerIds.includes(myId));
 
   const dispatch = useDispatch();
-  const toggleCommenting = () => null;
+  const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [postId]);
   const likePost = useCallback(() => dispatch(likeUnlikePost([postId, 'like'])), [postId]);
   const unlikePost = useCallback(() => dispatch(likeUnlikePost([postId, 'unlike'])), [postId]);
 
