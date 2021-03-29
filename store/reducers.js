@@ -134,6 +134,7 @@ export const rootReducer = createReducer({}, {
 
   [actions.toggleCommentingPost]: (state, { payload: postId }) => {
     state.posts[postId].isWritingComment = !state.posts[postId].isWritingComment;
+    state.posts[postId].commentErrorMessage = null;
   },
 
   [actions.addComment.pending]: (state, { meta: { arg: { postId } } }) => {

@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { selectCanIModeratePost } from '../utils/data-selectors';
 import { toggleCommentingPost, addComment } from '../store/actions';
+import Throbber from './Throbber';
 
 const CommentAddForm = ({ postId }) => {
   const { route } = useRouter();
@@ -78,6 +79,8 @@ const CommentAddForm = ({ postId }) => {
             rows={2}
             maxLength="3000"/>
 
+          {isSendingComment && <Throbber/>}
+
           {commentErrorMessage && (
             <div className="comment-error-message" role="alert">
               Comment has not been saved. Server response: "{commentErrorMessage}"
@@ -114,6 +117,7 @@ const CommentAddForm = ({ postId }) => {
           font-family: inherit;
           font-size: 1rem;
           padding: 0.25rem;
+          margin: 0.125rem 0 0.5rem 0;
         }
         .add-comment-link {
           font-style: italic;
