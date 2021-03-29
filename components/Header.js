@@ -9,44 +9,80 @@ const Header = () => {
 
   const handleSignout = useCallback(async event => {
     event.preventDefault();
-    const response = await fetch('/api/signout', { method: 'POST' });
-    if (response.ok) {
-      await Router.push('/');
-    } else {
-      const data = await response.json();
-      console.log(data);
+    if (confirm('Are you sure?')) {
+      const response = await fetch('/api/signout', { method: 'POST' });
+      if (response.ok) {
+        await Router.push('/');
+      } else {
+        const data = await response.json();
+        console.log(data);
+      }
     }
   }, []);
 
   return (
     <header>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
-
-      {myUsername && <>
-        {' - Signed in as '}
-        <Link href={`/${myUsername}`}>
-          <a>{myUsername}</a>
+      <h1>
+        <Link href="/">
+          <a>FreeFeed <sup>δ</sup></a>
         </Link>
-        {' - '}
-        <form onSubmit={handleSignout} action="/api/signout" method="POST">
-          <input type="hidden" name="redirect" value="1"/>
-          <button type="submit">Sign out</button>
-        </form>
-      </>}
+      </h1>
+
+      {myUsername && (
+        <div className="profile">
+          {'Signed in as '}
+          <Link href={`/${myUsername}`}>
+            <a>{myUsername}</a>
+          </Link>
+          <form onSubmit={handleSignout} action="/api/signout" method="POST">
+            <input type="hidden" name="redirect" value="1"/>
+            <button type="submit">Sign out</button>
+          </form>
+        </div>
+      )}
 
       <style jsx>{`
-        form {
-          display: inline;
-          border: none;
+        header {
+          display: flex;
+          flex-wrap: nowrap; /* forcing children to be in a single line */
+          align-items: flex-start; /* vertical alignment */
+          justify-content: space-between; /* horizontal alignment */
+          padding-bottom: 0;
+        }
+        h1 {
+          min-width: 10rem;
+          line-height: 2rem;
+        }
+        h1 a {
+          color: black;
+          text-decoration: none;
+        }
+        h1 sup {
+          color: var(--color-secondary);
+          background-color: inherit;
+          font-size: 1.5rem;
+          font-weight: 500;
           padding: 0;
           margin: 0;
+          position: static;
+        }
+        .profile {
+          margin-top: 0.625rem;
+          text-align: right;
+        }
+        form {
+          display: block;
+          min-width: 8rem;
+          text-align: right;
+          border: none;
+          box-shadow: none;
+          padding: 0;
+          margin: 0.5rem 0 0 0;
         }
         button {
           display: inline;
           cursor: pointer;
-          color: #1d66bf;
+          color: var(--color-secondary);
           background-color: inherit;
           border: none;
           font-size: inherit;

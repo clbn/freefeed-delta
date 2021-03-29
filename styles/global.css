@@ -451,3 +451,6 @@ blockquote footer {
 a {
   cursor: pointer;
 }
+h1 {
+  font-weight: 500;
+}
