@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { likeUnlikePost, toggleCommentingPost } from '../store/actions';
 import { selectCanIModeratePost } from '../utils/data-selectors';
+import Throbber from './Throbber';
 
 const PostActions = ({ postId }) => {
   const myId = useSelector(state => state.me.id);
@@ -12,6 +13,7 @@ const PostActions = ({ postId }) => {
 
   const canILike = useSelector(state => myId && (myId !== state.posts[postId].authorId));
   const haveILiked = useSelector(state => state.posts[postId].likerIds.includes(myId));
+  const isSendingLike = useSelector(state => state.posts[postId].isSendingLike);
 
   const dispatch = useDispatch();
   const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [postId]);
@@ -41,6 +43,7 @@ const PostActions = ({ postId }) => {
   return <>
     {commentLink}
     {likeLink}
+    {isSendingLike && <Throbber/>}
   </>
 };
 
