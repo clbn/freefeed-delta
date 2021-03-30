@@ -43,6 +43,8 @@ const Comment = ({ id, postUrl }) => {
         }
         .icon {
           flex: 0 0 1.4rem; /* don't grow, don't shrink, stay at 1.4rem */
+          margin-top: 1px;
+          margin-bottom: -1px;
         }
         .main {
           flex: 1; /* grow */
