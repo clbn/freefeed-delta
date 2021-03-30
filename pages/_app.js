@@ -34,7 +34,9 @@ function App({ Component, pageProps }) {
     <Head>
       <title>Delta</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
-      <link rel="icon" href="data:,"/>
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png"/>
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
+      <link rel="icon" href="/favicon.ico"/>
     </Head>
 
     <Provider store={store}>
