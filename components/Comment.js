@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
+import PieceOfText from './PieceOfText';
 import Time from './Time';
 
 const Comment = ({ id, postUrl }) => {
@@ -13,7 +14,7 @@ const Comment = ({ id, postUrl }) => {
       <div className="icon">💬</div>
 
       <div className="main">
-        {comment.body}
+        <PieceOfText>{comment.body}</PieceOfText>
 
         {authorUsername && (
           <span className="author">

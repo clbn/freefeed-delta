@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
+import PieceOfText from './PieceOfText';
 import PostAttachments from './PostAttachments';
 import PostActions from './PostActions';
 import PostLikes from './PostLikes';
@@ -40,7 +41,7 @@ const PostNotEmpty = ({ id }) => {
       </section>
 
       <section>
-        {body}
+        <PieceOfText>{body}</PieceOfText>
       </section>
 
       <PostAttachments postId={id}/>
