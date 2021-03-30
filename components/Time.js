@@ -6,7 +6,7 @@ const Time = ({ stamp, short = false }) => {
   const dateRelative = getRelativeDate(stamp, short);
 
   return (
-    <time dateTime={dateISO} title={dateFull}>
+    <time dateTime={dateISO} title={dateFull} suppressHydrationWarning>
       {dateRelative}
 
       <style jsx>{`
