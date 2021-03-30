@@ -6,13 +6,11 @@ import { selectCanIModeratePost } from '../utils/data-selectors';
 import Throbber from './Throbber';
 
 const PostActions = ({ postId }) => {
-  const myId = useSelector(state => state.me.id);
-
   const areCommentsDisabled = useSelector(state => state.posts[postId].areCommentsDisabled);
   const canICommentAnyway = useSelector(selectCanIModeratePost(postId));
 
-  const canILike = useSelector(state => myId && (myId !== state.posts[postId].authorId));
-  const haveILiked = useSelector(state => state.posts[postId].likerIds.includes(myId));
+  const canILike = useSelector(state => state.me.id && (state.me.id !== state.posts[postId].authorId));
+  const haveILiked = useSelector(state => state.posts[postId].likerIds.includes(state.me.id));
   const isSendingLike = useSelector(state => state.posts[postId].isSendingLike);
 
   const dispatch = useDispatch();
