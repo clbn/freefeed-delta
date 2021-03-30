@@ -14,6 +14,7 @@ const PostLikes = ({ postId, postUrl }) => {
 };
 
 const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
+  const haveILiked = useSelector(state => state.posts[postId].likerIds.includes(state.me.id));
   const omittedLikes = useSelector(state => state.posts[postId].omittedLikes);
   const listedUsers = useSelector(state => likerIds.map(id => state.users[id]), shallowEqual);
 
@@ -27,8 +28,8 @@ const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
   }
 
   return (
-    <section className="likes">
-      💛
+    <section>
+      <div className={`icon ${haveILiked ? 'liked' : ''}`}>💛</div>
 
       <ul>
         {users.map((user, i) => (
@@ -55,16 +56,27 @@ const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
       </ul>
 
       <style jsx>{`
-        .likes {
-          display: block;
-          text-indent: -1.4rem;
-          margin-left: 1.4rem;
+        section {
+          display: flex;
+          flex-wrap: nowrap; /* forcing children to be in a single line */
+          align-items: flex-start; /* vertical alignment */
+          justify-content: flex-start; /* horizontal alignment */
           margin-bottom: 0.5rem;
         }
+        .icon {
+          flex: 0 0 1.4rem; /* don't grow, don't shrink, stay at 1.4rem */
+          margin-top: 0.5px;
+          margin-bottom: -0.5px;
+          filter: sepia(1);
+        }
+        .icon.liked {
+          filter: sepia(0);
+        }
         ul {
-          display: inline;
-          padding-left: 0.4rem;
+          flex: 1; /* grow */
           text-indent: 0;
+          padding: 0;
+          margin: 0;
         }
         li {
           display: inline;
