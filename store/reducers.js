@@ -58,17 +58,15 @@ export const rootReducer = createReducer({}, {
   },
 
   [actions.loadUserPage.fulfilled]: (state, { meta: { arg: ctx }, payload: data }) => {
-    const { user:   username } = ctx.query;
+    const { user: username } = ctx.query;
     state.attachments = formatAttachments(data.attachments);
     state.comments = formatComments(data.comments);
     data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
     state.posts = formatPosts(data.posts);
-
-    // Format all users in short form, except the one displayed
-    const users = formatUsers(data.users);
-    const displayedUser = data.users.find(u => u.username === username);
-    users[displayedUser.id] = formatUser(displayedUser, true);
-    state.users = users;
+    data.users.forEach(u => {
+      // Format all users in short form, except the one displayed
+      state.users[u.id] = formatUser(u, u.username === username);
+    });
   },
 
   [actions.loadUserPage.rejected]: (state, { payload: data }) => {
