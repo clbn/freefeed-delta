@@ -12,13 +12,15 @@ const PostAttachments = ({ postId }) => {
 
 const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
   return (
-    <section className="attachments">
+    <section>
       {attachmentIds.map(attId => (
         <AttachmentImage id={attId} key={attId}/>
       ))}
 
       <style jsx>{`
-        .attachments {
+        section {
+          grid-area: attachments;
+
           padding: 0.15rem 0;
           margin-right: -0.5rem;
           margin-bottom: 0;

@@ -20,7 +20,7 @@ const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
   const loadMoreCommentsAction = useCallback(preventDefault(() => dispatch(loadMoreComments(postId))), [postId]);
 
   return (
-    <ul className="comments">
+    <ul>
       {commentIds.slice(0, 1).map(commentId => (
         <li key={commentId}>
           <Comment id={commentId} postUrl={postUrl}/>
@@ -42,7 +42,9 @@ const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
       ))}
 
       <style jsx>{`
-        .comments {
+        ul {
+          grid-area: comments;
+
           list-style: none;
           padding: 0;
           margin-top: 0;

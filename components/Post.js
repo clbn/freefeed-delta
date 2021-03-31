@@ -1,6 +1,8 @@
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+import Userpic from './Userpic';
 import PieceOfText from './PieceOfText';
 import PostAttachments from './PostAttachments';
 import PostActions from './PostActions';
@@ -22,6 +24,9 @@ const Post = ({ id }) => {
 };
 
 const PostNotEmpty = ({ id }) => {
+  const { route } = useRouter();
+  const isIndividual = (route === '/[user]/[post]');
+
   const authorId = useSelector(state => state.posts[id].authorId);
   const body = useSelector(state => state.posts[id].body);
   const createdAt = useSelector(state => state.posts[id].createdAt);
@@ -32,21 +37,29 @@ const PostNotEmpty = ({ id }) => {
   const authorUrl = `/${authorUsername}`;
   const postUrl = `/${authorUsername}/${id}`;
 
+  const userpicSize = (isIndividual ? 75 : 50);
+
   return (
     <article>
-      <section>
+      <section className="userpics">
+        <Link href={`/${authorUsername}`}>
+          <a><Userpic id={authorId} size={userpicSize}/></a>
+        </Link>
+      </section>
+
+      <section className="authorship">
         <Link href={authorUrl}>
           <a>{authorDisplayName}</a>
         </Link>
       </section>
 
-      <section>
+      <section className="body">
         <PieceOfText>{body}</PieceOfText>
       </section>
 
       <PostAttachments postId={id}/>
 
-      <section>
+      <section className="actions">
         <Link href={postUrl}>
           <a><Time stamp={createdAt}/></a>
         </Link>
@@ -61,6 +74,17 @@ const PostNotEmpty = ({ id }) => {
 
       <style jsx>{`
         article {
+          display: grid;
+          grid-template-areas: "userpics authorship"
+                               "userpics body"
+                               "userpics attachments"
+                               "userpics actions"
+                               "userpics likes"
+                               "userpics comments"
+                               "userpics comment-add-form";
+          grid-template-columns: auto 1fr; /* left column size is by content, right one takes the rest */
+          column-gap: ${isIndividual ? 0.75 : 0.625}rem;
+
           border-top: 1px solid #eee;
           padding-top: 1rem;
           padding-bottom: 0.5rem;
@@ -70,6 +94,34 @@ const PostNotEmpty = ({ id }) => {
           overflow-wrap: break-word;
           margin-bottom: 0.5rem;
         }
+        .userpics {
+          grid-area: userpics;
+          margin-top: 0.2rem;
+        }
+        .authorship {
+          grid-area: authorship;
+          margin-bottom: 0.2rem;
+          font-size: ${isIndividual ? 1.125 : 1}rem;
+        }
+        .body {
+          grid-area: body;
+          font-size: ${isIndividual ? 1.25 : 1.125}rem;
+        }
+        .actions {
+          grid-area: actions;
+        }
+        
+        @media screen and (max-width: 767px) {
+          article {
+            display: block; /* instead of grid */
+          }
+          .userpics {
+            float: left;
+            margin-right: ${isIndividual ? 0.75 : 0.625}rem;
+            margin-bottom: 0.3rem; /* instead of 0.5rem, for better text wrapping */
+          }
+        }
+
       `}</style>
     </article>
   );

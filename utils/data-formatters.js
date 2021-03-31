@@ -71,6 +71,7 @@ export const formatUser = (user, full) => {
     return {
       ...user,
       displayName: user.screenName,
+      userpicUrl: user.profilePictureLargeUrl,
       administrators: user.administrators || [],
     };
   }
@@ -79,6 +80,7 @@ export const formatUser = (user, full) => {
     username: user.username,
     type: user.type, // 'user' or 'group'
     displayName: user.screenName,
+    userpicUrl: user.profilePictureLargeUrl,
     administrators: user.administrators || [],
   };
 };

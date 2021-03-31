@@ -99,6 +99,8 @@ const CommentAddForm = ({ postId }) => {
 
       <style jsx>{`
         section {
+          grid-area: comment-add-form;
+
           display: flex;
           flex-wrap: nowrap; /* forcing children to be in a single line */
           align-items: flex-start; /* vertical alignment */

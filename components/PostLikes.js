@@ -57,6 +57,8 @@ const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
 
       <style jsx>{`
         section {
+          grid-area: likes;
+
           display: flex;
           flex-wrap: nowrap; /* forcing children to be in a single line */
           align-items: flex-start; /* vertical alignment */
