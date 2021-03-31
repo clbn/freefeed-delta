@@ -22,7 +22,6 @@ const PostPage = () => {
 
   return (
     <main>
-      <h1>{username} / {postId}</h1>
       <Post id={postId}/>
     </main>
   );
