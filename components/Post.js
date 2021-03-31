@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import Userpic from './Userpic';
+import PostAuthorship from './PostAuthorship';
 import PieceOfText from './PieceOfText';
 import PostAttachments from './PostAttachments';
 import PostActions from './PostActions';
@@ -32,9 +33,7 @@ const PostNotEmpty = ({ id }) => {
   const createdAt = useSelector(state => state.posts[id].createdAt);
 
   const authorUsername = useSelector(state => state.users[authorId].username);
-  const authorDisplayName = useSelector(state => state.users[authorId].displayName);
 
-  const authorUrl = `/${authorUsername}`;
   const postUrl = `/${authorUsername}/${id}`;
 
   const userpicSize = (isIndividual ? 75 : 50);
@@ -47,11 +46,7 @@ const PostNotEmpty = ({ id }) => {
         </Link>
       </section>
 
-      <section className="authorship">
-        <Link href={authorUrl}>
-          <a>{authorDisplayName}</a>
-        </Link>
-      </section>
+      <PostAuthorship postId={id}/>
 
       <section className="body">
         <PieceOfText>{body}</PieceOfText>
@@ -97,11 +92,6 @@ const PostNotEmpty = ({ id }) => {
         .userpics {
           grid-area: userpics;
           margin-top: 0.2rem;
-        }
-        .authorship {
-          grid-area: authorship;
-          margin-bottom: 0.2rem;
-          font-size: ${isIndividual ? 1.125 : 1}rem;
         }
         .body {
           grid-area: body;
