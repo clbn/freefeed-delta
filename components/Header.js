@@ -28,7 +28,7 @@ const Header = () => {
         </Link>
       </h1>
 
-      {myUsername && (
+      {myUsername ? (
         <div className="profile">
           {'Signed in as '}
           <Link href={`/${myUsername}`}>
@@ -38,6 +38,12 @@ const Header = () => {
             <input type="hidden" name="redirect" value="1"/>
             <button type="submit">Sign out</button>
           </form>
+        </div>
+      ) : (
+        <div className="profile">
+          <Link href="/">
+            <a>Sign in</a>
+          </Link>
         </div>
       )}
 
