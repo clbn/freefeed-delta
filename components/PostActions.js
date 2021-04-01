@@ -1,11 +1,15 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 import { likeUnlikePost, toggleCommentingPost } from '../store/actions';
 import { selectCanIModeratePost } from '../utils/data-selectors';
+import Time from './Time';
 import Throbber from './Throbber';
 
-const PostActions = ({ postId }) => {
+const PostActions = ({ postId, postUrl }) => {
+  const createdAt = useSelector(state => state.posts[postId].createdAt);
+
   const areCommentsDisabled = useSelector(state => state.posts[postId].areCommentsDisabled);
   const canICommentAnyway = useSelector(selectCanIModeratePost(postId));
 
@@ -38,11 +42,26 @@ const PostActions = ({ postId }) => {
     </>
   );
 
-  return <>
-    {commentLink}
-    {likeLink}
-    {isSendingLike && <Throbber/>}
-  </>
+  return (
+    <section className="actions">
+      <Link href={postUrl}>
+        <a><Time stamp={createdAt}/></a>
+      </Link>
+
+      {commentLink}
+      {likeLink}
+      {isSendingLike && <Throbber/>}
+
+      <style jsx>{`
+        section {
+          grid-area: actions;
+
+          display: block;
+          margin-bottom: 0.5rem;
+        }
+      `}</style>
+    </section>
+  );
 };
 
 export default PostActions;

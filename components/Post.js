@@ -9,7 +9,6 @@ import PostAttachments from './PostAttachments';
 import PostActions from './PostActions';
 import PostLikes from './PostLikes';
 import PostComments from './PostComments';
-import Time from './Time';
 import CommentAddForm from './CommentAddForm';
 
 const Post = ({ id }) => {
@@ -30,7 +29,6 @@ const PostNotEmpty = ({ id }) => {
 
   const authorId = useSelector(state => state.posts[id].authorId);
   const body = useSelector(state => state.posts[id].body);
-  const createdAt = useSelector(state => state.posts[id].createdAt);
 
   const authorUsername = useSelector(state => state.users[authorId].username);
 
@@ -54,12 +52,7 @@ const PostNotEmpty = ({ id }) => {
 
       <PostAttachments postId={id}/>
 
-      <section className="actions">
-        <Link href={postUrl}>
-          <a><Time stamp={createdAt}/></a>
-        </Link>
-        <PostActions postId={id}/>
-      </section>
+      <PostActions postId={id} postUrl={postUrl}/>
 
       <PostLikes postId={id} postUrl={postUrl}/>
 
@@ -96,9 +89,6 @@ const PostNotEmpty = ({ id }) => {
         .body {
           grid-area: body;
           font-size: ${isIndividual ? 1.25 : 1.125}rem;
-        }
-        .actions {
-          grid-area: actions;
         }
         
         @media screen and (max-width: 767px) {
