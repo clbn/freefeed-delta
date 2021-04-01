@@ -36,7 +36,18 @@ const UserPage = () => {
   return (
     <main>
       <h1>{user.displayName}</h1>
-      <p>@{username}</p>
+      <p>
+        @{username}
+
+        {user.isGone ? (
+          ' (deleted account)'
+        ) : user.isPrivate ? (
+          ' (private feed, you need to be a subscriber)'
+        ) : user.isProtected ? (
+          ' (protected feed, you need to sign in)'
+        ) : false}
+      </p>
+
       {user.description && <><PieceOfText isExpanded>{user.description}</PieceOfText><br/><br/></>}
 
       {postIds.map(postId => (

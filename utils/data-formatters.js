@@ -72,6 +72,9 @@ export const formatUser = (user, full) => {
       ...user,
       displayName: user.screenName,
       userpicUrl: user.profilePictureLargeUrl,
+      isGone: !!user.isGone,
+      isPrivate: user.isPrivate === '1',
+      isProtected: user.isProtected === '1',
       administrators: user.administrators || [],
     };
   }
@@ -81,6 +84,9 @@ export const formatUser = (user, full) => {
     type: user.type, // 'user' or 'group'
     displayName: user.screenName,
     userpicUrl: user.profilePictureLargeUrl,
+    isGone: !!user.isGone,
+    isPrivate: user.isPrivate === '1',
+    isProtected: user.isProtected === '1',
     administrators: user.administrators || [],
   };
 };
