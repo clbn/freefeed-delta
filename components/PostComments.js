@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadMoreComments } from '../store/actions';
 import { preventDefault } from '../utils/events';
 import Comment from './Comment';
+import Throbber from './Throbber';
 
 const PostComments = ({ postId, postUrl }) => {
   const commentIds = useSelector(state => state.posts[postId].commentIds);
@@ -15,6 +16,7 @@ const PostComments = ({ postId, postUrl }) => {
 
 const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
   const omittedComments = useSelector(state => state.posts[postId].omittedComments);
+  const isLoadingMoreComments = useSelector(state => state.posts[postId].isLoadingMoreComments);
 
   const dispatch = useDispatch();
   const loadMoreCommentsAction = useCallback(preventDefault(() => dispatch(loadMoreComments(postId))), [postId]);
@@ -32,6 +34,7 @@ const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
           <a href={postUrl} onClick={loadMoreCommentsAction}>
             {omittedComments} more comments
           </a>
+          {isLoadingMoreComments && <Throbber/>}
         </li>
       )}
 

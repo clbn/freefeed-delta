@@ -35,9 +35,11 @@ export const loadPostPage = createAsyncThunk('loadPostPage', async (ctx, { rejec
   return data;
 });
 
-export const loadMoreComments = createAsyncThunk('loadMoreComments', async postId => {
-  const data = await fetcher(`https://freefeed.net/v2/posts/${postId}?maxComments=all`).then(r => r.json());
-  return { postId, data };
+export const loadMoreComments = createAsyncThunk('loadMoreComments', async (postId, { rejectWithValue }) => {
+  const response = await fetcher(`https://freefeed.net/v2/posts/${postId}?maxComments=all`);
+  const data = await response.json();
+  if (!response.ok) return rejectWithValue(data);
+  return data;
 });
 
 export const loadMoreLikes = createAsyncThunk('loadMoreLikes', async (postId, { rejectWithValue }) => {

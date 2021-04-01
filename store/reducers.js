@@ -103,7 +103,13 @@ export const rootReducer = createReducer({}, {
     console.log('loadPostPage/rejected', data);
   },
 
-  [actions.loadMoreComments.fulfilled]: (state, { payload: { postId, data } }) => {
+  [actions.loadMoreComments.pending]: (state, { meta: { arg: postId } }) => {
+    state.posts[postId].isLoadingMoreComments = true;
+  },
+
+  [actions.loadMoreComments.fulfilled]: (state, { meta: { arg: postId }, payload: data }) => {
+    state.posts[postId].isLoadingMoreComments = false;
+
     const { commentIds, omittedComments} = formatPost(data.posts);
     state.posts[postId].commentIds = commentIds;
     state.posts[postId].omittedComments = omittedComments;
@@ -115,6 +121,11 @@ export const rootReducer = createReducer({}, {
     data.users.forEach(c => {
       state.users[c.id] = state.users[c.id] ?? formatUser(c)
     });
+  },
+
+  [actions.loadMoreComments.rejected]: (state, { meta: { arg: postId }, payload: data }) => {
+    state.posts[postId].isLoadingMoreComments = false;
+    console.log('loadMoreComments/rejected', data);
   },
 
   [actions.loadMoreLikes.pending]: (state, { meta: { arg: postId } }) => {
