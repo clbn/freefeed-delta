@@ -4,6 +4,7 @@ import NProgress from 'nprogress';
 import { Provider } from 'react-redux';
 
 import { useStore } from '../store';
+import IconDefinitions from '../components/IconDefinitions';
 import Header from '../components/Header';
 import '../styles/global.css';
 
@@ -38,6 +39,8 @@ function App({ Component, pageProps }) {
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
       <link rel="icon" href="/favicon.ico"/>
     </Head>
+
+    <IconDefinitions/>
 
     <Provider store={store}>
       <Header/>
