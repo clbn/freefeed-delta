@@ -117,7 +117,13 @@ export const rootReducer = createReducer({}, {
     });
   },
 
-  [actions.loadMoreLikes.fulfilled]: (state, { payload: { postId, data } }) => {
+  [actions.loadMoreLikes.pending]: (state, { meta: { arg: postId } }) => {
+    state.posts[postId].isLoadingMoreLikes = true;
+  },
+
+  [actions.loadMoreLikes.fulfilled]: (state, { meta: { arg: postId }, payload: data }) => {
+    state.posts[postId].isLoadingMoreLikes = false;
+
     const { likerIds, omittedLikes } = formatPost(data.posts);
     state.posts[postId].likerIds = likerIds;
     state.posts[postId].omittedLikes = omittedLikes;
@@ -125,6 +131,11 @@ export const rootReducer = createReducer({}, {
     data.users.forEach(c => {
       state.users[c.id] = state.users[c.id] ?? formatUser(c)
     });
+  },
+
+  [actions.loadMoreLikes.rejected]: (state, { meta: { arg: postId }, payload: data }) => {
+    state.posts[postId].isLoadingMoreLikes = false;
+    console.log('loadMoreLikes/rejected', data);
   },
 
   [actions.likeUnlikePost.pending]: (state, { meta: { arg: { postId } } }) => {

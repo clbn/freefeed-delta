@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { loadMoreLikes } from '../store/actions';
 import { preventDefault } from '../utils/events';
+import Throbber from './Throbber';
 
 const PostLikes = ({ postId, postUrl }) => {
   const likerIds = useSelector(state => state.posts[postId].likerIds);
@@ -16,6 +17,7 @@ const PostLikes = ({ postId, postUrl }) => {
 const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
   const haveILiked = useSelector(state => state.posts[postId].likerIds.includes(state.me.id));
   const omittedLikes = useSelector(state => state.posts[postId].omittedLikes);
+  const isLoadingMoreLikes = useSelector(state => state.posts[postId].isLoadingMoreLikes);
   const listedUsers = useSelector(state => likerIds.map(id => state.users[id]), shallowEqual);
 
   const dispatch = useDispatch();
@@ -53,6 +55,8 @@ const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
             )}
           </li>
         ))}
+
+        {isLoadingMoreLikes && <Throbber/>}
       </ul>
 
       <style jsx>{`
