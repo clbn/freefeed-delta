@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { likeUnlikePost, toggleCommentingPost } from '../store/actions';
 import { selectCanIModeratePost } from '../utils/data-selectors';
+import PostVisibilityIcon from './PostVisibilityIcon';
 import Time from './Time';
 import Throbber from './Throbber';
 
@@ -44,8 +45,10 @@ const PostActions = ({ postId, postUrl }) => {
 
   return (
     <section className="actions">
+      <PostVisibilityIcon postId={postId}/>
+
       <Link href={postUrl}>
-        <a><Time stamp={createdAt}/></a>
+        <a className="timestamp"><Time stamp={createdAt}/></a>
       </Link>
 
       {commentLink}
@@ -58,6 +61,9 @@ const PostActions = ({ postId, postUrl }) => {
 
           display: block;
           margin-bottom: 0.5rem;
+        }
+        .timestamp {
+          margin-left: 0.4rem;
         }
       `}</style>
     </section>
