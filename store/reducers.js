@@ -51,6 +51,11 @@ export const rootReducer = createReducer({}, {
     data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
     state.posts = formatPosts(data.posts);
     state.users = formatUsers(data.users);
+
+    // Add some users from "subscribers" (that's the posts' recipients)
+    data.subscribers.forEach(u => {
+      state.users[u.id] = state.users[u.id] || formatUser(u); // TODO: deep-merge instead
+    });
   },
 
   [actions.loadHomePage.rejected]: (state, { payload: data }) => {
@@ -67,6 +72,11 @@ export const rootReducer = createReducer({}, {
       // Format all users in short form, except the one displayed
       state.users[u.id] = formatUser(u, u.username === username);
     });
+
+    // Add some users from "subscribers" (that's the posts' recipients)
+    data.subscribers.forEach(u => {
+      state.users[u.id] = state.users[u.id] || formatUser(u); // TODO: deep-merge instead
+    });
   },
 
   [actions.loadUserPage.rejected]: (state, { payload: data }) => {
@@ -80,6 +90,11 @@ export const rootReducer = createReducer({}, {
     data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
     state.posts = { [postId]: formatPost(data.posts) };
     state.users = formatUsers(data.users);
+
+    // Add some users from "subscribers" (that's the post's recipients)
+    data.subscribers.forEach(u => {
+      state.users[u.id] = state.users[u.id] || formatUser(u); // TODO: deep-merge instead
+    });
   },
 
   [actions.loadPostPage.rejected]: (state, { meta: { arg: ctx }, payload: data }) => {
