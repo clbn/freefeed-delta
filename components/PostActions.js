@@ -60,6 +60,7 @@ const PostActions = ({ postId, postUrl }) => {
           grid-area: actions;
 
           display: block;
+          color: #666;
           margin-bottom: 0.5rem;
         }
         .timestamp {
