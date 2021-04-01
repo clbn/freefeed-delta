@@ -21,6 +21,9 @@
   --width-card-medium: 460px;
   --width-card-wide: 800px;
   --width-content: 42rem;
+
+  --color-icon-heart-primary: #ffb914;
+  --color-icon-heart-secondary: #fff6e0; /* lighten(#ffb914, 40%) */
 }
 
 /*

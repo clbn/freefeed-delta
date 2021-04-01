@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { loadMoreLikes } from '../store/actions';
 import { preventDefault } from '../utils/events';
 import Throbber from './Throbber';
+import Icon from './Icon';
 
 const PostLikes = ({ postId, postUrl }) => {
   const likerIds = useSelector(state => state.posts[postId].likerIds);
@@ -31,7 +32,9 @@ const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
 
   return (
     <section>
-      <div className={`icon ${haveILiked ? 'liked' : ''}`}>💛</div>
+      <div className="icon">
+        <Icon name="heart" className={haveILiked ? 'liked' : ''}/>
+      </div>
 
       <ul>
         {users.map((user, i) => (
@@ -73,10 +76,13 @@ const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
           flex: 0 0 1.4rem; /* don't grow, don't shrink, stay at 1.4rem */
           margin-top: 0.5px;
           margin-bottom: -0.5px;
-          filter: sepia(1);
         }
-        .icon.liked {
-          filter: sepia(0);
+        .icon :global(.icon-heart) {
+          color: var(--color-icon-heart-primary);
+          fill: var(--color-icon-heart-secondary);
+        }
+        .icon :global(.icon-heart.liked) {
+          fill: var(--color-icon-heart-primary);
         }
         ul {
           flex: 1; /* grow */
