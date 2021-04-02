@@ -80,6 +80,7 @@ export const formatUser = (user, full) => {
   }
 
   return {
+    id: user.id,
     username: user.username,
     type: user.type, // 'user' or 'group'
     displayName: user.screenName,

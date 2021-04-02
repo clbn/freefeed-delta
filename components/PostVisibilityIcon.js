@@ -1,11 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 
 import { selectPostRecipients } from '../utils/data-selectors';
 import { visibilityLevels, getPostVisibilityLevel } from '../utils/visibility';
 import Icon from './Icon';
 
 const PostVisibilityIcon = ({ postId }) => {
-  const recipients = useSelector(selectPostRecipients(postId));
+  const recipients = useSelector(selectPostRecipients(postId), shallowEqual);
   const authorId = useSelector(state => state.posts[postId].authorId);
 
   const postLevel = getPostVisibilityLevel(recipients, authorId);

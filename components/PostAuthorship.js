@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -22,7 +22,7 @@ const PostAuthorship = ({ postId }) => {
   const isIndividualPost = (route === '/[user]/[post]');
 
   const authorId = useSelector(state => state.posts[postId].authorId);
-  let recipients = useSelector(selectPostRecipients(postId));
+  let recipients = useSelector(selectPostRecipients(postId), shallowEqual);
 
   const authorUsername = useSelector(state => state.users[authorId].username);
   const authorDisplayName = useSelector(state => state.users[authorId].displayName);

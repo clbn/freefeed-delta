@@ -6,7 +6,7 @@ export const selectPostRecipients = postId => state => {
       const userId = (state.feeds[feedId] || {}).user;
       const feedType = (state.feeds[feedId] || {}).name;
       const isDirectToSelf = (userId === post.authorId && feedType === 'Directs');
-      return isDirectToSelf ? false : { ...state.users[userId], id: userId };
+      return isDirectToSelf ? false : state.users[userId];
     })
     .filter(user => user);
 };
