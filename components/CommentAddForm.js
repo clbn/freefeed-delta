@@ -1,8 +1,10 @@
 import { useCallback, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
+
 import { selectCanIModeratePost } from '../utils/data-selectors';
 import { toggleCommentingPost, addComment } from '../store/actions';
+import Icon from './Icon';
 import Throbber from './Throbber';
 
 const CommentAddForm = ({ postId }) => {
@@ -65,7 +67,9 @@ const CommentAddForm = ({ postId }) => {
 
   return (
     <section>
-      <div className="icon">💬</div>
+      <div className="icon">
+        <Icon name="comment-plus"/>
+      </div>
 
       <div className="main">
         {isWritingComment ? <>
@@ -111,6 +115,10 @@ const CommentAddForm = ({ postId }) => {
           flex: 0 0 1.4rem; /* don't grow, don't shrink, stay at 1.4rem */
           margin-top: 1px;
           margin-bottom: -1px;
+        }
+        .icon :global(.icon-comment-plus) {
+          color: var(--color-icon-comment-primary);
+          fill: white;
         }
         .main {
           flex: 1; /* grow */

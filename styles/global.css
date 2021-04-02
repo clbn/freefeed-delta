@@ -7,7 +7,7 @@
   --color-accent: #118bee15;
   --color-bg: #fff;
   --color-bg-secondary: #e9e9e9;
-  --color-secondary: #1d66bf;
+  --color-secondary: #1d66bf; /* Gamma Blue */
   --color-secondary-accent: #920de90b;
   --color-shadow: #f4f4f4;
   --color-text: #000;
@@ -24,6 +24,13 @@
 
   --color-icon-heart-primary: #ffb914;
   --color-icon-heart-secondary: #fff6e0; /* lighten(#ffb914, 40%) */
+
+  --color-icon-comment-primary: #999;
+  --color-icon-comment-secondary: #eee;
+
+  --color-icon-comment-3: #6394d0; /* stroke for important and mine / desaturate(lighten(#1d66bf, 17%), 20%); */
+  --color-icon-comment-4: #e4edf7; /* fill for important comments / desaturate(lighten(#1d66bf, 50%), 20%); */
+  --color-icon-comment-5: #8aafdc; /* fill for my comments / desaturate(lighten(#1d66bf, 27%), 20%); */
 }
 
 /*

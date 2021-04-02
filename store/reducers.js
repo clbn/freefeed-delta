@@ -15,6 +15,12 @@ export const rootReducer = createReducer({}, {
   [actions.loadWhoami.fulfilled]: (state, { payload: data }) => {
     state.me = formatUser(data.users, true);
 
+    // Replace info from data.users.subscriptions with info from data.subscriptions
+    state.me.subscriptions = [];
+    data.subscriptions.forEach(s => {
+      state.me.subscriptions.push(s.user);
+    });
+
     // Add some users from "subscribers" (that's actually your subscriPTIONs, both people and groups)
     data.subscribers.forEach(u => {
       state.users[u.id] = state.users[u.id] || formatUser(u); // TODO: deep-merge instead

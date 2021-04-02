@@ -1,17 +1,24 @@
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
+import Icon from './Icon';
 import PieceOfText from './PieceOfText';
 import Time from './Time';
 
 const Comment = ({ id, postUrl }) => {
   const comment = useSelector(state => state.comments[id]);
+
+  const amISubscribedToAuthor = useSelector(state => state.me.subscriptions.includes(comment.authorId));
+  const canIEdit = useSelector(state => state.me.id === comment.authorId);
+
   const authorUsername = useSelector(state => state.users[comment.authorId]?.username);
   const authorDisplayName = useSelector(state => state.users[comment.authorId]?.displayName);
 
   return (
     <section>
-      <div className="icon">💬</div>
+      <div className="icon">
+        <Icon name="comment" className={amISubscribedToAuthor ? 'important' : (canIEdit ? 'mine' : '')}/>
+      </div>
 
       <div className="main">
         <PieceOfText>{comment.body}</PieceOfText>
@@ -45,6 +52,18 @@ const Comment = ({ id, postUrl }) => {
           flex: 0 0 1.4rem; /* don't grow, don't shrink, stay at 1.4rem */
           margin-top: 1px;
           margin-bottom: -1px;
+        }
+        .icon :global(.icon-comment) {
+          color: var(--color-icon-comment-primary);
+          fill: var(--color-icon-comment-secondary);
+        }
+        .icon :global(.icon-comment.important) {
+          color: var(--color-icon-comment-3);
+          fill: var(--color-icon-comment-4);
+        }
+        .icon :global(.icon-comment.mine) {
+          color: var(--color-icon-comment-3);
+          fill: var(--color-icon-comment-5);
         }
         .main {
           flex: 1; /* grow */
