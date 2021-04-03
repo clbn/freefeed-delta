@@ -64,7 +64,7 @@ const PostActions = ({ postId, postUrl }) => {
           margin-bottom: 0.5rem;
         }
         .timestamp {
-          margin-left: 0.4rem;
+          margin-left: 0.35rem;
         }
       `}</style>
     </section>

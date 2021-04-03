@@ -1,11 +1,11 @@
 const iconWidths = {
   'envelope': 26 / 28,
   'globe': 24 / 28,
-  'lock': 18 / 28,
+  'lock': 10 / 16,
 };
 
 const Icon = ({ name, title, className }) => {
-  const width = Math.round(iconWidths[name] * 1000.1) / 1000;
+  const width = (Math.round(iconWidths[name] * 1000.1) / 1000) || 1;
 
   return (
     <svg className={'icon-' + name + (className ? ' ' + className : '')}>
