@@ -112,9 +112,7 @@ const CommentAddForm = ({ postId }) => {
           margin-bottom: 0.5rem;
         }
         .icon {
-          flex: 0 0 1.4rem; /* don't grow, don't shrink, stay at 1.4rem */
-          margin-top: 1px;
-          margin-bottom: -1px;
+          flex: 0 0 1.35rem; /* don't grow, don't shrink, stay at 1.35rem */
         }
         .icon :global(.icon-comment-plus) {
           color: var(--color-icon-comment-primary);

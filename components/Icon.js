@@ -17,9 +17,17 @@ const Icon = ({ name, title, className }) => {
       <style jsx>{`
         svg {
           display: inline-block;
+
+          /*
+            Full text height ~= 1em * 1.18. The factor actually depends on 
+            font family, it seems to be somewhere between 1.17 and 1.19.
+            For example: text with "font-size: 16px" and "line-height: 1.5" has 
+            ~19px text height (depending on font family) and 24px line height
+          */
+          height: 1.18em;
           width: 1em;
-          height: 1em;
-          margin-bottom: -0.15em; // vertical-align an inline icon of 1em height in a text
+          vertical-align: text-bottom;
+
           stroke-width: 0;
           stroke: currentColor;
           fill: currentColor;

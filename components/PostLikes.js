@@ -73,9 +73,7 @@ const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
           margin-bottom: 0.5rem;
         }
         .icon {
-          flex: 0 0 1.4rem; /* don't grow, don't shrink, stay at 1.4rem */
-          margin-top: 0.5px;
-          margin-bottom: -0.5px;
+          flex: 0 0 1.35rem; /* don't grow, don't shrink, stay at 1.35rem */
         }
         .icon :global(.icon-heart) {
           color: var(--color-icon-heart-primary);
