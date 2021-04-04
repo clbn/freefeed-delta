@@ -1,6 +1,6 @@
 const iconWidths = {
-  'envelope': 26 / 28,
-  'globe': 24 / 28,
+  'envelope': 15 / 16,
+  'globe': 13 / 16,
   'lock': 10 / 16,
 };
 
