@@ -1,4 +1,5 @@
 const iconWidths = {
+  // When 19px high icon is not 16px wide
   'envelope': 15 / 16,
   'globe': 13 / 16,
   'lock': 10 / 16,
