@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { likeUnlikePost, toggleCommentingPost } from '../store/actions';
 import { selectCanIModeratePost } from '../utils/data-selectors';
+import { preventDefault } from '../utils/events';
 import PostVisibilityIcon from './PostVisibilityIcon';
 import Time from './Time';
 import Throbber from './Throbber';
@@ -20,8 +21,8 @@ const PostActions = ({ postId, postUrl }) => {
 
   const dispatch = useDispatch();
   const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [postId]);
-  const likePost = useCallback(() => dispatch(likeUnlikePost({ postId, verb: 'like' })), [postId]);
-  const unlikePost = useCallback(() => dispatch(likeUnlikePost({ postId, verb: 'unlike' })), [postId]);
+  const likePost = useCallback(preventDefault(() => dispatch(likeUnlikePost({ postId, verb: 'like' }))), [postId]);
+  const unlikePost = useCallback(preventDefault(() => dispatch(likeUnlikePost({ postId, verb: 'unlike' }))), [postId]);
 
   const commentLink = <>
     {areCommentsDisabled && canICommentAnyway && <>
@@ -35,13 +36,15 @@ const PostActions = ({ postId, postUrl }) => {
     </>}
   </>;
 
-  const likeLink = canILike && (
-    haveILiked ? <>
-      {' - '}<a onClick={unlikePost}>Un-like</a>
-    </> : <>
-      {' - '}<a onClick={likePost}>Like</a>
-    </>
-  );
+  const likeLink = canILike && <>
+    {' - '}
+    <form onSubmit={haveILiked ? unlikePost : likePost} action="/api/likePost" method="POST">
+      <input type="hidden" name="postId" value={postId}/>
+      <input type="hidden" name="verb" value={haveILiked ? 'unlike' : 'like'}/>
+      <input type="hidden" name="returnUrl" value={postUrl}/>
+      <button type="submit">{haveILiked ? 'Un-like' : 'Like'}</button>
+    </form>
+  </>;
 
   return (
     <section className="actions">
@@ -65,6 +68,28 @@ const PostActions = ({ postId, postUrl }) => {
         }
         .timestamp {
           margin-left: 0.35rem;
+        }
+        section :global(form) {
+          display: inline;
+          border: none;
+          box-shadow: none;
+          padding: 0;
+          margin: 0;
+        }
+        section :global(button) {
+          display: inline;
+          cursor: pointer;
+          color: var(--color-secondary);
+          background-color: inherit;
+          border: none;
+          font-size: inherit;
+          font-family: inherit;
+          font-weight: inherit;
+          padding: 0;
+          margin: 0;
+        }
+        section :global(button:hover) {
+          text-decoration: underline;
         }
       `}</style>
     </section>
