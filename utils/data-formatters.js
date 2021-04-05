@@ -67,19 +67,7 @@ export const formatComment = comment => {
 export const formatUser = (user, full) => {
   if (!user) return null;
 
-  if (full) {
-    return {
-      ...user,
-      displayName: user.screenName,
-      userpicUrl: user.profilePictureLargeUrl,
-      isGone: !!user.isGone,
-      isPrivate: user.isPrivate === '1',
-      isProtected: user.isProtected === '1',
-      administrators: user.administrators || [],
-    };
-  }
-
-  return {
+  const formattedUser = {
     id: user.id,
     username: user.username,
     type: user.type, // 'user' or 'group'
@@ -90,6 +78,12 @@ export const formatUser = (user, full) => {
     isProtected: user.isProtected === '1',
     administrators: user.administrators || [],
   };
+
+  if (full) {
+    formattedUser.description = user.description;
+  }
+
+  return formattedUser;
 };
 
 export const formatPosts = posts => keyByIdAndMap(posts, formatPost);

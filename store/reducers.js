@@ -13,7 +13,7 @@ export const rootReducer = createReducer({}, {
   },
 
   [actions.loadWhoami.fulfilled]: (state, { payload: data }) => {
-    state.me = formatUser(data.users, true);
+    state.me = formatUser(data.users);
 
     // Replace info from data.users.subscriptions with info from data.subscriptions
     state.me.subscriptions = [];
