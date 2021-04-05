@@ -21,6 +21,7 @@ export const rootReducer = createReducer({}, {
       state.me.subscriptions.push(s.user);
     });
 
+/*
     // Add some users from "subscribers" (that's actually your subscriPTIONs, both people and groups)
     data.subscribers.forEach(u => {
       state.users[u.id] = state.users[u.id] || formatUser(u); // TODO: deep-merge instead
@@ -42,6 +43,7 @@ export const rootReducer = createReducer({}, {
         state.users[u.id] = state.users[u.id] || formatUser(u);
       });
     });
+*/
 
     // Add me
     state.users[data.users.id] = state.users[data.users.id] || formatUser(data.users);
