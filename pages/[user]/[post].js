@@ -1,16 +1,13 @@
 import { useRouter } from 'next/router';
 
 import { initServerStore } from '../../store';
-import { loadPostPage, loadWhoami } from '../../store/actions';
+import { loadPostPage } from '../../store/actions';
 import Post from '../../components/Post';
 
 export const getServerSideProps = async ctx => {
   const store = initServerStore();
 
-  await Promise.all([
-    store.dispatch(loadPostPage(ctx)),
-    store.dispatch(loadWhoami(ctx)),
-  ]);
+  await store.dispatch(loadPostPage(ctx));
 
   return { props: {
     preloadedState: store.getState(),
@@ -18,7 +15,7 @@ export const getServerSideProps = async ctx => {
 };
 
 const PostPage = () => {
-  const { query: { user: username, post: postId } } = useRouter();
+  const { query: { post: postId } } = useRouter();
 
   return (
     <main>

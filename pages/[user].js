@@ -2,17 +2,14 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import { initServerStore } from '../store';
-import { loadUserPage, loadWhoami } from '../store/actions';
+import { loadUserPage } from '../store/actions';
 import PieceOfText from '../components/PieceOfText';
 import Post from '../components/Post';
 
 export const getServerSideProps = async ctx => {
   const store = initServerStore();
 
-  await Promise.all([
-    store.dispatch(loadUserPage(ctx)),
-    store.dispatch(loadWhoami(ctx)),
-  ]);
+  await store.dispatch(loadUserPage(ctx));
 
   return { props: {
     preloadedState: store.getState(),

@@ -1,17 +1,14 @@
 import { useSelector, shallowEqual } from 'react-redux';
 
 import { initServerStore } from '../store';
-import { loadHomePage, loadWhoami } from '../store/actions';
+import { loadHomePage } from '../store/actions';
 import Post from '../components/Post';
 import SignIn from '../components/SignIn';
 
 export const getServerSideProps = async ctx => {
   const store = initServerStore();
 
-  await Promise.all([
-    store.dispatch(loadHomePage(ctx)),
-    store.dispatch(loadWhoami(ctx)),
-  ]);
+  await store.dispatch(loadHomePage(ctx));
 
   return { props: {
     preloadedState: store.getState(),

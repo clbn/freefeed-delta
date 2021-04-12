@@ -1,10 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import * as actions from './actions';
-import {
-  formatAttachments, formatComment, formatComments,
-  formatPost, formatPosts, formatUser, formatUsers
-} from '../utils/data-formatters';
+import { formatComment, formatPost, formatUser } from '../utils/data-formatters';
 
 export const rootReducer = createReducer({}, {
 
@@ -12,97 +9,39 @@ export const rootReducer = createReducer({}, {
     return payload; // Immer let us do it this way (while `state = payload` won't work)
   },
 
-  [actions.loadWhoami.fulfilled]: (state, { payload: data }) => {
-    state.me = formatUser(data.users);
-
-    // Replace info from data.users.subscriptions with info from data.subscriptions
-    state.me.subscriptions = [];
-    data.subscriptions.forEach(s => {
-      state.me.subscriptions.push(s.user);
-    });
-
-/*
-    // Add some users from "subscribers" (that's actually your subscriPTIONs, both people and groups)
-    data.subscribers.forEach(u => {
-      state.users[u.id] = state.users[u.id] || formatUser(u); // TODO: deep-merge instead
-    });
-
-    // Add some users from "users.subscribers" (that's real subscribers, people only)
-    data.users.subscribers.forEach(u => {
-      state.users[u.id] = state.users[u.id] || formatUser(u);
-    });
-
-    // Add some users from "requests" (outcoming subscription requests)
-    data.requests.forEach(u => {
-      state.users[u.id] = state.users[u.id] || formatUser(u);
-    });
-
-    // Add some users from "managedGroups[].requests" (incoming group requests, waiting for your approval)
-    data.managedGroups.forEach(g => {
-      g.requests.forEach(u => {
-        state.users[u.id] = state.users[u.id] || formatUser(u);
-      });
-    });
-*/
-
-    // Add me
-    state.users[data.users.id] = state.users[data.users.id] || formatUser(data.users);
-  },
-
-  [actions.loadWhoami.rejected]: (state, { payload: data }) => {
-    console.log('loadWhoami/rejected', data);
-  },
-
   [actions.loadHomePage.fulfilled]: (state, { payload: data }) => {
-    state.attachments = formatAttachments(data.attachments);
-    state.comments = formatComments(data.comments);
-    data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
-    state.posts = formatPosts(data.posts);
-    state.users = formatUsers(data.users);
-
-    // Add some users from "subscribers" (that's the posts' recipients)
-    data.subscribers.forEach(u => {
-      state.users[u.id] = state.users[u.id] || formatUser(u); // TODO: deep-merge instead
-    });
+    state.me = data.me;
+    state.attachments = data.attachments;
+    state.comments = data.comments;
+    state.feeds = data.feeds;
+    state.posts = data.posts;
+    state.users = data.users;
   },
 
   [actions.loadHomePage.rejected]: (state, { payload: data }) => {
     console.log('loadHomePage/rejected', data);
   },
 
-  [actions.loadUserPage.fulfilled]: (state, { meta: { arg: ctx }, payload: data }) => {
-    const { user: username } = ctx.query;
-    state.attachments = formatAttachments(data.attachments);
-    state.comments = formatComments(data.comments);
-    data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
-    state.posts = formatPosts(data.posts);
-    data.users.forEach(u => {
-      // Format all users in short form, except the one displayed
-      state.users[u.id] = formatUser(u, u.username === username);
-    });
-
-    // Add some users from "subscribers" (that's the posts' recipients)
-    data.subscribers.forEach(u => {
-      state.users[u.id] = state.users[u.id] || formatUser(u); // TODO: deep-merge instead
-    });
+  [actions.loadUserPage.fulfilled]: (state, { payload: data }) => {
+    state.me = data.me;
+    state.attachments = data.attachments;
+    state.comments = data.comments;
+    state.feeds = data.feeds;
+    state.posts = data.posts;
+    state.users = data.users;
   },
 
   [actions.loadUserPage.rejected]: (state, { payload: data }) => {
     console.log('loadUserPage/rejected', data);
   },
 
-  [actions.loadPostPage.fulfilled]: (state, { meta: { arg: ctx }, payload: data }) => {
-    const { post: postId } = ctx.query;
-    state.attachments = formatAttachments(data.attachments);
-    state.comments = formatComments(data.comments);
-    data.subscriptions.forEach(f => { state.feeds[f.id] = f; });
-    state.posts = { [postId]: formatPost(data.posts) };
-    state.users = formatUsers(data.users);
-
-    // Add some users from "subscribers" (that's the post's recipients)
-    data.subscribers.forEach(u => {
-      state.users[u.id] = state.users[u.id] || formatUser(u); // TODO: deep-merge instead
-    });
+  [actions.loadPostPage.fulfilled]: (state, { payload: data }) => {
+    state.me = data.me;
+    state.attachments = data.attachments;
+    state.comments = data.comments;
+    state.feeds = data.feeds;
+    state.posts = data.posts;
+    state.users = data.users;
   },
 
   [actions.loadPostPage.rejected]: (state, { meta: { arg: ctx }, payload: data }) => {
@@ -118,7 +57,7 @@ export const rootReducer = createReducer({}, {
   [actions.loadMoreComments.fulfilled]: (state, { meta: { arg: postId }, payload: data }) => {
     state.posts[postId].isLoadingMoreComments = false;
 
-    const { commentIds, omittedComments} = formatPost(data.posts);
+    const { commentIds, omittedComments } = formatPost(data.posts);
     state.posts[postId].commentIds = commentIds;
     state.posts[postId].omittedComments = omittedComments;
 

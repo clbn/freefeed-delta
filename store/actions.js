@@ -5,15 +5,8 @@ import fetcher from '../utils/fetcher';
 export const setStoreState = createAction('setStoreState');
 export const toggleCommentingPost = createAction('toggleCommentingPost');
 
-export const loadWhoami = createAsyncThunk('loadWhoami', async (ctx, { rejectWithValue }) => {
-  const response = await fetcher(`https://freefeed.net/v2/users/whoami`, {}, ctx);
-  const data = await response.json();
-  if (!response.ok) return rejectWithValue(data);
-  return data;
-});
-
 export const loadHomePage = createAsyncThunk('loadHomePage', async (ctx, { rejectWithValue }) => {
-  const response = await fetcher(`https://freefeed.net/v2/timelines/home?offset=0`, {}, ctx);
+  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/homepage`, {}, ctx);
   const data = await response.json();
   if (!response.ok) return rejectWithValue(data);
   return data;
@@ -21,7 +14,7 @@ export const loadHomePage = createAsyncThunk('loadHomePage', async (ctx, { rejec
 
 export const loadUserPage = createAsyncThunk('loadUserPage', async (ctx, { rejectWithValue }) => {
   const { user: username } = ctx.query;
-  const response = await fetcher(`https://freefeed.net/v2/timelines/${username}?offset=0`, {}, ctx);
+  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/userpage/${username}`, {}, ctx);
   const data = await response.json();
   if (!response.ok) return rejectWithValue(data);
   return data;
@@ -29,7 +22,7 @@ export const loadUserPage = createAsyncThunk('loadUserPage', async (ctx, { rejec
 
 export const loadPostPage = createAsyncThunk('loadPostPage', async (ctx, { rejectWithValue }) => {
   const { post: postId, likes: maxLikes } = ctx.query;
-  const response = await fetcher(`https://freefeed.net/v2/posts/${postId}?maxComments=all&maxLikes=${maxLikes}`, {}, ctx);
+  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/postpage/${postId}?maxLikes=${maxLikes}`, {}, ctx);
   const data = await response.json();
   if (!response.ok) return rejectWithValue(data);
   return data;

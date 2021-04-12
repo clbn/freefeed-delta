@@ -8,7 +8,7 @@ import Time from './Time';
 const Comment = ({ id, postUrl }) => {
   const comment = useSelector(state => state.comments[id]);
 
-  const amISubscribedToAuthor = useSelector(state => state.me.id && state.me.subscriptions.includes(comment.authorId));
+  const amISubscribedToAuthor = useSelector(state => state.users[comment.authorId].amISubscribed);
   const canIEdit = useSelector(state => state.me.id === comment.authorId);
 
   const authorUsername = useSelector(state => state.users[comment.authorId]?.username);
