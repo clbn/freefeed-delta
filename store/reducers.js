@@ -9,39 +9,36 @@ export const rootReducer = createReducer({}, {
     return payload; // Immer let us do it this way (while `state = payload` won't work)
   },
 
-  [actions.loadHomePage.fulfilled]: (state, { payload: data }) => {
-    state.me = data.me;
-    state.attachments = data.attachments;
-    state.comments = data.comments;
-    state.feeds = data.feeds;
-    state.posts = data.posts;
-    state.users = data.users;
+  [actions.loadHomePage.pending]: (state) => {
+    state.isLoadingPage = true;
+  },
+
+  [actions.loadHomePage.fulfilled]: (state, { payload }) => {
+    return payload;
   },
 
   [actions.loadHomePage.rejected]: (state, { payload: data }) => {
     console.log('loadHomePage/rejected', data);
   },
 
-  [actions.loadUserPage.fulfilled]: (state, { payload: data }) => {
-    state.me = data.me;
-    state.attachments = data.attachments;
-    state.comments = data.comments;
-    state.feeds = data.feeds;
-    state.posts = data.posts;
-    state.users = data.users;
+  [actions.loadUserPage.pending]: (state) => {
+    state.isLoadingPage = true;
+  },
+
+  [actions.loadUserPage.fulfilled]: (state, { payload }) => {
+    return payload;
   },
 
   [actions.loadUserPage.rejected]: (state, { payload: data }) => {
     console.log('loadUserPage/rejected', data);
   },
 
-  [actions.loadPostPage.fulfilled]: (state, { payload: data }) => {
-    state.me = data.me;
-    state.attachments = data.attachments;
-    state.comments = data.comments;
-    state.feeds = data.feeds;
-    state.posts = data.posts;
-    state.users = data.users;
+  [actions.loadPostPage.pending]: (state) => {
+    state.isLoadingPage = true;
+  },
+
+  [actions.loadPostPage.fulfilled]: (state, { payload }) => {
+    return payload;
   },
 
   [actions.loadPostPage.rejected]: (state, { meta: { arg: ctx }, payload: data }) => {

@@ -27,7 +27,7 @@ export const initServerStore = () => {
 
 export function useStore(preloadedState) {
   // Server-side
-  // The store is already created and filled with data in getServerSideProps
+  // The store is already created and filled with data in getServerSideProps/getInitialProps
   if (typeof window === 'undefined') {
     // However, it can be undefined on the server start
     if (!store) {
@@ -40,14 +40,32 @@ export function useStore(preloadedState) {
   // The store has to be created (or reset after navigating to another page)
   if (!store) {
     // For initial page load (when there's no store yet),
-    // create the store using data from getServerSideProps (i.e. "hydrate")
+    // create the store using data from getServerSideProps/getInitialProps
     store = createStore(preloadedState);
   } else {
     // After navigating to another page (so the store already exists),
-    // reset it using data from getServerSideProps
-    setTimeout(() => {
-      store.dispatch(setStoreState(preloadedState));
-    }, 0);
+    // reset it using data from getServerSideProps, if there's any
+    // (for getInitialProps-powered pages, though, this is not needed,
+    // so gIP should set preloadedState to null when on client-side)
+    if (preloadedState) {
+      setTimeout(() => {
+        store.dispatch(setStoreState(preloadedState));
+      }, 0);
+    }
   }
   return store;
 }
+
+export const getIsomorphicDataPopulation = reduxAction => async ctx => {
+  // Server-side
+  if (ctx.req) {
+    const store = initServerStore();
+    await store.dispatch(reduxAction(ctx)); // await for results to populate preloadedState before sending response
+    return { preloadedState: store.getState() };
+  }
+
+  // Client-side
+  const store = useStore();
+  store.dispatch(reduxAction(ctx)); // no await, the function must return immediately for proper loading state
+  return { preloadedState: null };
+};

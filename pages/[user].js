@@ -1,25 +1,25 @@
 import { useSelector, shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { initServerStore } from '../store';
+import { getIsomorphicDataPopulation } from '../store';
 import { loadUserPage } from '../store/actions';
 import PieceOfText from '../components/PieceOfText';
 import Post from '../components/Post';
 
-export const getServerSideProps = async ctx => {
-  const store = initServerStore();
-
-  await store.dispatch(loadUserPage(ctx));
-
-  return { props: {
-    preloadedState: store.getState(),
-  }};
-};
-
 const UserPage = () => {
   const { query: { user: username } } = useRouter();
+  const isLoadingPage = useSelector(state => state.isLoadingPage);
   const user = useSelector(state => Object.values(state.users).find(u => u.username === username));
   const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
+
+  if (isLoadingPage) {
+    return (
+      <main>
+        <h1>{user?.displayName || username}</h1>
+        <p>Loading...</p>
+      </main>
+    );
+  }
 
   if (!user) {
     return (
@@ -53,5 +53,7 @@ const UserPage = () => {
     </main>
   );
 };
+
+UserPage.getInitialProps = getIsomorphicDataPopulation(loadUserPage);
 
 export default UserPage;

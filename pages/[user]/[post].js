@@ -1,21 +1,21 @@
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { initServerStore } from '../../store';
+import { getIsomorphicDataPopulation } from '../../store';
 import { loadPostPage } from '../../store/actions';
 import Post from '../../components/Post';
 
-export const getServerSideProps = async ctx => {
-  const store = initServerStore();
-
-  await store.dispatch(loadPostPage(ctx));
-
-  return { props: {
-    preloadedState: store.getState(),
-  }};
-};
-
 const PostPage = () => {
   const { query: { post: postId } } = useRouter();
+  const isLoadingPage = useSelector(state => state.isLoadingPage);
+
+  if (isLoadingPage) {
+    return (
+      <main>
+        <p>Loading...</p>
+      </main>
+    );
+  }
 
   return (
     <main>
@@ -23,5 +23,7 @@ const PostPage = () => {
     </main>
   );
 };
+
+PostPage.getInitialProps = getIsomorphicDataPopulation(loadPostPage);
 
 export default PostPage;
