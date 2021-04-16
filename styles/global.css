@@ -31,6 +31,10 @@
   --color-icon-comment-3: #6394d0; /* stroke for important and mine / desaturate(lighten(#1d66bf, 17%), 20%); */
   --color-icon-comment-4: #e4edf7; /* fill for important comments / desaturate(lighten(#1d66bf, 50%), 20%); */
   --color-icon-comment-5: #8aafdc; /* fill for my comments / desaturate(lighten(#1d66bf, 27%), 20%); */
+
+  --color-dummy-text: #999; /* text in dummy posts / lighten(#000, 60%) */
+  --color-dummy-link: #72a8ea; /* link in dummy posts / lighten(#1d66bf, 25%) */
+  --color-dummy-heart: #ffd77a; /* "heart" in dummy posts / lighten(#ffb914, 20%) */
 }
 
 /*

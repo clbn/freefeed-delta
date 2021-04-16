@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { getIsomorphicDataPopulation } from '../store';
 import { loadUserPage } from '../store/actions';
+import DummyPost from '../components/DummyPost';
 import PieceOfText from '../components/PieceOfText';
 import Post from '../components/Post';
 
@@ -16,7 +17,9 @@ const UserPage = () => {
     return (
       <main>
         <h1>{user?.displayName || username}</h1>
-        <p>Loading...</p>
+        <DummyPost/>
+        <DummyPost/>
+        <DummyPost/>
       </main>
     );
   }

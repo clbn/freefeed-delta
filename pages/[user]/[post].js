@@ -3,23 +3,16 @@ import { useRouter } from 'next/router';
 
 import { getIsomorphicDataPopulation } from '../../store';
 import { loadPostPage } from '../../store/actions';
+import DummyPost from '../../components/DummyPost';
 import Post from '../../components/Post';
 
 const PostPage = () => {
   const { query: { post: postId } } = useRouter();
   const isLoadingPage = useSelector(state => state.isLoadingPage);
 
-  if (isLoadingPage) {
-    return (
-      <main>
-        <p>Loading...</p>
-      </main>
-    );
-  }
-
   return (
     <main>
-      <Post id={postId}/>
+      {isLoadingPage ? <DummyPost/> : <Post id={postId}/>}
     </main>
   );
 };

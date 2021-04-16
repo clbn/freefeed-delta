@@ -2,8 +2,9 @@ import { useSelector, shallowEqual } from 'react-redux';
 
 import { getIsomorphicDataPopulation } from '../store';
 import { loadHomePage } from '../store/actions';
-import Post from '../components/Post';
 import SignIn from '../components/SignIn';
+import DummyPost from '../components/DummyPost';
+import Post from '../components/Post';
 
 const IndexPage = () => {
   const myId = useSelector(state => state.me.id);
@@ -18,7 +19,9 @@ const IndexPage = () => {
     return (
       <main>
         <h1>Home</h1>
-        <p>Loading...</p>
+        <DummyPost/>
+        <DummyPost/>
+        <DummyPost/>
       </main>
     );
   }
