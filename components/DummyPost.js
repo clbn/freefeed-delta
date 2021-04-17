@@ -85,6 +85,10 @@ const DummyPost = () => {
           padding-top: 1rem;
           padding-bottom: 0.5rem;
         }
+        @keyframes twinkle {
+          0% { opacity: 0.5; }
+          100% { opacity: 1; }
+        }
         section {
           display: block;
           color: var(--color-dummy-text);
@@ -98,6 +102,7 @@ const DummyPost = () => {
           grid-area: userpics;
           margin-top: 0.2rem;
           margin-bottom: 0.3rem;
+          animation: twinkle 0.5s infinite alternate;
         }
         section.userpics .userpic {
           background-color: #eee;
@@ -112,15 +117,18 @@ const DummyPost = () => {
           grid-area: authorship;
           font-size: ${isIndividual ? 1.125 : 1}rem;
           margin-bottom: 0.2rem;
+          animation: twinkle 0.6s infinite alternate;
         }
 
         section.body {
           grid-area: body;
           font-size: ${isIndividual ? 1.25 : 1.125}rem;
+          animation: twinkle 0.7s infinite alternate;
         }
 
         section.attachments {
           grid-area: attachments;
+          animation: twinkle 0.8s infinite alternate;
         }
         section.attachments :global(.attachment) {
           display: inline-block;
@@ -133,11 +141,21 @@ const DummyPost = () => {
         section.attachments :global(.attachment-1) { width: 7rem; }
         section.attachments :global(.attachment-2) { width: 9rem; }
 
-        section.actions { grid-area: actions; }
-        section.actions :global(i) { color: #eee; }
+        section.actions {
+          grid-area: actions;
+          animation: twinkle 0.9s infinite alternate;
+        }
+        section.actions :global(i) {
+          color: #eee;
+        }
 
-        section.likes { grid-area: likes; }
-        section.likes :global(i) { color: var(--color-dummy-heart); }
+        section.likes {
+          grid-area: likes;
+          animation: twinkle 1s infinite alternate;
+        }
+        section.likes :global(i) {
+          color: var(--color-dummy-heart);
+        }
 
         @media screen and (max-width: 767px) {
           article {
