@@ -3,8 +3,10 @@ import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
+import Throbber from './Throbber';
 
 const Header = () => {
+  const isLoadingPage = useSelector(state => state.isLoadingPage);
   const myUsername = useSelector(state => state.me.username);
 
   const handleSignout = useCallback(async event => {
@@ -24,7 +26,7 @@ const Header = () => {
     <header>
       <h1>
         <Link href="/">
-          <a>FreeFeed <sup>δ</sup></a>
+          <a>FreeFeed <sup>{isLoadingPage ? <Throbber/> : 'δ'}</sup></a>
         </Link>
       </h1>
 
@@ -71,6 +73,12 @@ const Header = () => {
           padding: 0;
           margin: 0;
           position: static;
+        }
+        h1 sup :global(.throbber) {
+          margin-left: -0.5rem;
+        }
+        h1 sup :global(.throbber div) {
+          background-color: var(--color-secondary);
         }
         .profile {
           margin-top: 0.625rem;

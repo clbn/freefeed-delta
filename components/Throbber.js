@@ -10,32 +10,32 @@ const Throbber = () => (
         position: relative;
         display: inline-block;
         vertical-align: text-bottom;
-        width: 27px;
-        height: 19px;
+        width: 1.6875em;
+        height: 1.1875em;
       }
       .throbber div {
         position: absolute;
-        top: 9.4px;
-        width: 3px;
-        height: 3px;
+        top: 0.5875em;
+        width: 0.1875em;
+        height: 0.1875em;
         border-radius: 50%;
-        background: #333;
+        background-color: #333;
         animation-timing-function: cubic-bezier(0, 1, 1, 0);
       }
       .throbber div:nth-child(1) {
-        left: 6px;
+        left: 0.375em;
         animation: dot-left 0.5s infinite;
       }
       .throbber div:nth-child(2) {
-        left: 6px;
+        left: 0.375em;
         animation: dot-middle 0.5s infinite;
       }
       .throbber div:nth-child(3) {
-        left: 12px;
+        left: 0.75em;
         animation: dot-middle 0.5s infinite;
       }
       .throbber div:nth-child(4) {
-        left: 18px;
+        left: 1.125em;
         animation: dot-right 0.5s infinite;
       }
       @keyframes dot-left {
@@ -44,7 +44,7 @@ const Throbber = () => (
       }
       @keyframes dot-middle {
         0% { transform: translate(0, 0); }
-        100% { transform: translate(6px, 0); }
+        100% { transform: translate(0.375em, 0); }
       }
       @keyframes dot-right {
         0% { transform: scale(1); }
