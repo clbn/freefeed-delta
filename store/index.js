@@ -56,6 +56,8 @@ export function useStore(preloadedState) {
   return store;
 }
 
+let pageLoadingAction = null;
+
 export const getIsomorphicDataPopulation = reduxAction => async ctx => {
   // Server-side
   if (ctx.req) {
@@ -66,6 +68,7 @@ export const getIsomorphicDataPopulation = reduxAction => async ctx => {
 
   // Client-side
   const store = useStore();
-  store.dispatch(reduxAction(ctx)); // no await, the function must return immediately for proper loading state
+  pageLoadingAction?.abort(); // cancel the previous page-loading action in case that's still running
+  pageLoadingAction = store.dispatch(reduxAction(ctx)); // no await, the function must return immediately for proper loading state
   return { preloadedState: null };
 };

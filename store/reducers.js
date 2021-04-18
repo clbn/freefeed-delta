@@ -17,8 +17,11 @@ export const rootReducer = createReducer({}, {
     return payload;
   },
 
-  [actions.loadHomePage.rejected]: (state, { payload: data }) => {
-    console.log('loadHomePage/rejected', data);
+  [actions.loadHomePage.rejected]: (state, { meta: { aborted }, error, payload }) => {
+    if (!aborted) {
+      state.isLoadingPage = false;
+    }
+    console.log('loadHomePage/rejected', aborted ? error : payload);
   },
 
   [actions.loadUserPage.pending]: (state) => {
@@ -29,8 +32,11 @@ export const rootReducer = createReducer({}, {
     return payload;
   },
 
-  [actions.loadUserPage.rejected]: (state, { payload: data }) => {
-    console.log('loadUserPage/rejected', data);
+  [actions.loadUserPage.rejected]: (state, { meta: { aborted }, error, payload }) => {
+    if (!aborted) {
+      state.isLoadingPage = false;
+    }
+    console.log('loadUserPage/rejected', aborted ? error : payload);
   },
 
   [actions.loadPostPage.pending]: (state) => {
@@ -41,10 +47,13 @@ export const rootReducer = createReducer({}, {
     return payload;
   },
 
-  [actions.loadPostPage.rejected]: (state, { meta: { arg: ctx }, payload: data }) => {
-    const { post: postId } = ctx.query;
-    state.posts = { [postId]: { errorMessage: data.err } };
-    console.log('loadPostPage/rejected', data);
+  [actions.loadPostPage.rejected]: (state, { meta: { aborted, arg: ctx }, error, payload }) => {
+    if (!aborted) {
+      const { post: postId } = ctx.query;
+      state.posts = { [postId]: { errorMessage: payload.err ?? 'Unknown error' } };
+      state.isLoadingPage = false;
+    }
+    console.log('loadPostPage/rejected', aborted ? error : payload);
   },
 
   [actions.loadMoreComments.pending]: (state, { meta: { arg: postId } }) => {
