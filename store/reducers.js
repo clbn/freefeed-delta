@@ -63,16 +63,16 @@ export const rootReducer = createReducer({}, {
   [actions.loadMoreComments.fulfilled]: (state, { meta: { arg: postId }, payload: data }) => {
     state.posts[postId].isLoadingMoreComments = false;
 
-    const { commentIds, omittedComments } = formatPost(data.posts);
+    const { commentIds, omittedComments } = data.posts[postId];
     state.posts[postId].commentIds = commentIds;
     state.posts[postId].omittedComments = omittedComments;
 
-    data.comments.forEach(c => {
-      state.comments[c.id] = state.comments[c.id] ?? formatComment(c)
+    Object.entries(data.comments).forEach(([id, comment]) => {
+      state.comments[id] = state.comments[id] ?? comment
     });
 
-    data.users.forEach(c => {
-      state.users[c.id] = state.users[c.id] ?? formatUser(c)
+    Object.entries(data.users).forEach(([id, user]) => {
+      state.users[id] = state.users[id] ?? user
     });
   },
 

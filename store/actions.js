@@ -29,7 +29,7 @@ export const loadPostPage = createAsyncThunk('loadPostPage', async (ctx, { rejec
 });
 
 export const loadMoreComments = createAsyncThunk('loadMoreComments', async (postId, { rejectWithValue }) => {
-  const response = await fetcher(`https://freefeed.net/v2/posts/${postId}?maxComments=all`);
+  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/postpage/${postId}?maxComments=all`);
   const data = await response.json();
   if (!response.ok) return rejectWithValue(data);
   return data;
