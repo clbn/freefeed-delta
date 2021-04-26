@@ -1,20 +1,3 @@
-export const formatPost = post => {
-  if (!post) return null;
-
-  return {
-    body: post.body,
-    authorId: post.createdBy,
-    createdAt: +post.createdAt,
-    recipientFeedIds: post.postedTo,
-    attachmentIds: post.attachments,
-    likerIds: post.likes,
-    omittedLikes: +post.omittedLikes,
-    commentIds: post.comments,
-    omittedComments: +post.omittedComments,
-    areCommentsDisabled: post.commentsDisabled === '1',
-  };
-};
-
 export const formatComment = comment => {
   if (!comment) return null;
 

@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import * as actions from './actions';
-import { formatComment, formatPost, formatUser } from '../utils/data-formatters';
+import { formatComment } from '../utils/data-formatters';
 
 export const rootReducer = createReducer({}, {
 
@@ -88,12 +88,12 @@ export const rootReducer = createReducer({}, {
   [actions.loadMoreLikes.fulfilled]: (state, { meta: { arg: postId }, payload: data }) => {
     state.posts[postId].isLoadingMoreLikes = false;
 
-    const { likerIds, omittedLikes } = formatPost(data.posts);
+    const { likerIds, omittedLikes } = data.posts[postId];
     state.posts[postId].likerIds = likerIds;
     state.posts[postId].omittedLikes = omittedLikes;
 
-    data.users.forEach(c => {
-      state.users[c.id] = state.users[c.id] ?? formatUser(c)
+    Object.entries(data.users).forEach(([id, user]) => {
+      state.users[id] = state.users[id] ?? user
     });
   },
 
