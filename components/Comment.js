@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Icon from './Icon';
 import PieceOfText from './PieceOfText';
 import Time from './Time';
+import CommentLikes from './CommentLikes';
 
 const Comment = ({ id, postUrl }) => {
   const comment = useSelector(state => state.comments[id]);
@@ -38,6 +39,8 @@ const Comment = ({ id, postUrl }) => {
             <a><Time stamp={comment.createdAt} short/></a>
           </Link>
         </span>
+
+        <CommentLikes commentId={id}/>
       </div>
 
       <style jsx>{`
