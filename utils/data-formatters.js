@@ -1,11 +1,18 @@
 export const formatComment = comment => {
   if (!comment) return null;
 
-  return {
+  const formattedComment = {
     body: comment.body,
     authorId: comment.createdBy,
     createdAt: +comment.createdAt,
+    seqNumber: comment.seqNumber,
   };
+
+  if (comment.hideType) formattedComment.hideType = comment.hideType;
+  if (comment.likes) formattedComment.likes = comment.likes;
+  if (comment.hasOwnLike) formattedComment.haveILiked = comment.hasOwnLike;
+
+  return formattedComment;
 };
 
 export const formatUser = (user, full) => {
