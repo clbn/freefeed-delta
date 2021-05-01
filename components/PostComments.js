@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { loadMoreComments } from '../store/actions';
 import { preventDefault } from '../utils/events';
+import { pluralForm } from '../utils/plural';
 import Comment from './Comment';
 import Throbber from './Throbber';
 
@@ -16,6 +17,7 @@ const PostComments = ({ postId, postUrl }) => {
 
 const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
   const omittedComments = useSelector(state => state.posts[postId].omittedComments);
+  const omittedCommentLikes = useSelector(state => state.posts[postId].omittedCommentLikes);
   const isLoadingMoreComments = useSelector(state => state.posts[postId].isLoadingMoreComments);
 
   const dispatch = useDispatch();
@@ -32,7 +34,13 @@ const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
       {omittedComments > 0 && (
         <li className="more-comments">
           <a href={postUrl} onClick={loadMoreCommentsAction}>
-            {omittedComments} more comments
+            <i>{omittedComments} more comments</i>
+
+            {omittedCommentLikes > 0 && (
+              <em>
+                {' with ' + pluralForm(omittedCommentLikes, 'like')}
+              </em>
+            )}
           </a>
           {isLoadingMoreComments && <Throbber/>}
         </li>
@@ -57,6 +65,15 @@ const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
           font-style: italic;
           padding-left: 1.4rem;
           margin-bottom: 0.5rem;
+        }
+        em {
+          color: #bbb;
+        }
+        a:hover {
+          text-decoration: none;
+        }
+        a:hover i {
+          text-decoration: underline;
         }
       `}</style>
     </ul>

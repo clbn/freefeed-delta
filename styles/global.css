@@ -273,10 +273,12 @@ a:hover {
   text-decoration: underline;
 }
 
+/*
 a b,
 a em,
 a i,
 a strong,
+*/
 button {
   border-radius: var(--border-radius);
   display: inline-block;
@@ -304,6 +306,7 @@ button {
   color: var(--color-bg);
 }
 
+/*
 a em,
 a i {
   border: 2px solid var(--color);
@@ -312,6 +315,7 @@ a i {
   display: inline-block;
   padding: 1rem 2rem;
 }
+*/
 
 /* Images */
 figure {
