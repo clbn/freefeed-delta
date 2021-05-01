@@ -1,22 +1,36 @@
-import { useSelector } from 'react-redux';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { likeUnlikeComment } from '../store/actions';
 import Icon from './Icon';
+import Throbber from './Throbber';
 
 const CommentLikes = ({ commentId }) => {
   const likes = useSelector(state => state.comments[commentId].likes || 0);
-  const didILike = useSelector(state => state.comments[commentId].didILike);
+  const canILike = useSelector(state => state.me.id && (state.me.id !== state.comments[commentId].authorId));
+  const haveILiked = useSelector(state => state.comments[commentId].haveILiked);
+  const isSendingLike = useSelector(state => state.comments[commentId].isSendingLike);
+
+  const dispatch = useDispatch();
+  const toggleLike = useCallback(() => {
+    if (!canILike) return;
+    if (isSendingLike) return;
+    return dispatch(likeUnlikeComment({ commentId, verb: haveILiked ? 'unlike' : 'like' }));
+  }, [commentId, canILike, isSendingLike, haveILiked]);
 
   return (
     <section>
       {' -'}
 
-      <span className="trigger" title="Comment likes">
-        <Icon name="heart" className={likes === 0 ? 'zero' : didILike ? 'liked' : ''}/>
+      <span className="trigger" onDoubleClick={toggleLike} title="Comment likes">
+        <Icon name="heart" className={likes === 0 ? 'zero' : haveILiked ? 'liked' : ''}/>
 
         {likes > 0 && (
           <span className="number">{likes}</span>
         )}
       </span>
+
+      {isSendingLike && <Throbber/>}
 
       <style jsx>{`
         section {

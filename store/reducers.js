@@ -120,6 +120,21 @@ export const rootReducer = createReducer({}, {
     console.log('likeUnlikePost/rejected', data);
   },
 
+  [actions.likeUnlikeComment.pending]: (state, { meta: { arg: { commentId } } }) => {
+    state.comments[commentId].isSendingLike = true;
+  },
+
+  [actions.likeUnlikeComment.fulfilled]: (state, { meta: { arg: { commentId, verb } }, payload: data }) => {
+    state.comments[commentId].isSendingLike = false;
+    state.comments[commentId].haveILiked = (verb === 'like');
+    state.comments[commentId].likes = data.likes.length;
+  },
+
+  [actions.likeUnlikeComment.rejected]: (state, { meta: { arg: { commentId } }, payload: data }) => {
+    state.comments[commentId].isSendingLike = false;
+    console.log('likeUnlikeComment/rejected', data);
+  },
+
   [actions.toggleCommentingPost]: (state, { payload: postId }) => {
     state.posts[postId].isWritingComment = !state.posts[postId].isWritingComment;
     state.posts[postId].commentErrorMessage = null;
