@@ -50,9 +50,36 @@ const UserPage = () => {
 
       {user.description && <><PieceOfText isExpanded>{user.description}</PieceOfText><br/><br/></>}
 
+      {user.statistics && (
+        <p className="statistics">
+          <a>{user.statistics.subscriptions} subscriptions</a>{' '}
+          <a>{user.statistics.posts} posts</a>{' '}
+          <a>{user.statistics.comments} comments</a>{' '}
+          <a>{user.statistics.likes} likes</a>{' '}
+          <a>{user.statistics.subscribers} subscribers</a>
+        </p>
+      )}
+
       {postIds.map(postId => (
         <Post id={postId} key={postId}/>
       ))}
+
+      <style jsx>{`
+        .statistics {
+          border-top: 1px solid #eee;
+          line-height: 2.1rem;
+          padding: 0.8rem 0;
+          margin: 0;
+        }
+        a {
+          cursor: inherit;
+          color: inherit;
+          text-decoration: inherit;
+
+          white-space: nowrap;
+          margin-right: 1rem;
+        }
+      `}</style>
     </main>
   );
 };
