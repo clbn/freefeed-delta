@@ -52,11 +52,14 @@ const UserPage = () => {
 
       {user.statistics && (
         <p className="statistics">
-          <a>{user.statistics.subscriptions} subscriptions</a>{' '}
-          <a>{user.statistics.posts} posts</a>{' '}
-          <a>{user.statistics.comments} comments</a>{' '}
-          <a>{user.statistics.likes} likes</a>{' '}
-          <a>{user.statistics.subscribers} subscribers</a>
+          <a>{user.statistics.subscribers} subscribers</a>{' '}
+
+          {user.type === 'user' && <>
+            <a>{user.statistics.subscriptions} subscriptions</a>{' '}
+            <a>{user.statistics.posts} posts</a>{' '}
+            <a>{user.statistics.comments} comments</a>{' '}
+            <a>{user.statistics.likes} likes</a>{' '}
+          </>}
         </p>
       )}
 
