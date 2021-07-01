@@ -2,11 +2,13 @@ import { useSelector, shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
 
 import { getIsomorphicDataPopulation } from '../store';
+import Userpic from '../components/Userpic';
 import { loadUserPage } from '../store/actions';
 import UserFeedStatus from '../components/UserFeedStatus';
 import DummyPost from '../components/DummyPost';
 import PieceOfText from '../components/PieceOfText';
 import Post from '../components/Post';
+import Link from 'next/link';
 import PaginationLinks from '../components/PaginationLinks';
 
 const UserPage = () => {
@@ -14,6 +16,7 @@ const UserPage = () => {
   const isLoadingPage = useSelector(state => state.isLoadingPage);
   const user = useSelector(state => Object.values(state.users).find(u => u.username === username));
   const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
+  const userpicSize = (75);
 
   if (isLoadingPage) {
     return (
@@ -37,20 +40,20 @@ const UserPage = () => {
 
   return (
     <main>
-      <h1>{user.displayName}</h1>
-      <p>
-        @{username}
-
-        {user.isGone ? (
-          ' (deleted account)'
-        ) : user.isPrivate ? (
-          ' (private feed, you need to be a subscriber)'
-        ) : user.isProtected ? (
-          ' (protected feed, you need to sign in)'
-        ) : false}
-      </p>
-
-      {user.description && <><PieceOfText isExpanded>{user.description}</PieceOfText><br/><br/></>}
+      <div className="info">
+        <section className="userpic">
+          <Link href={`/${username}`}>
+            <a><Userpic id={user.id} size={userpicSize}/></a>
+          </Link>
+        </section>
+        <section className="user_data">
+          <h1>{user.displayName}</h1>
+          <div className="username">
+            @{username}
+          </div>
+          <div className="user_description">{user.description && <><PieceOfText isExpanded>{user.description}</PieceOfText></>}</div>
+        </section>
+      </div>
 
       {user.statistics && (
         <p className="statistics">
@@ -78,6 +81,34 @@ const UserPage = () => {
       <PaginationLinks pathname={'/' + username}/>
 
       <style jsx>{`
+        .info {
+          display: inline-flex;
+          flex-flow: row nowrap; 
+          border-top: 1px solid #eee;
+          padding: 0.9rem 0 1.1rem 0;
+          margin: 0;
+          width: 100%;
+        }
+        .userpic {
+          padding-top: 0.2rem;
+        }
+        .user_data {
+          flex-direction: column;
+          margin: 0;
+          padding: 0;
+        }
+        h1 {
+         margin: 0;
+         padding-top: 0.2rem;
+         line-height: 1.5rem;
+        }
+        .username {
+          color: #999;
+          padding-top: 0.5rem;
+        }
+        .user_description {
+          padding: 0.9rem 0 0 0;
+        }
         .statistics, .statuses {
           border-top: 1px solid #eee;
           line-height: 2.1rem;
