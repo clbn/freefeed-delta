@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { getIsomorphicDataPopulation } from '../store';
 import { loadUserPage } from '../store/actions';
+import UserFeedStatus from '../components/User-feed-status';
 import DummyPost from '../components/DummyPost';
 import PieceOfText from '../components/PieceOfText';
 import Post from '../components/Post';
@@ -62,6 +63,14 @@ const UserPage = () => {
           </>}
         </p>
       )}
+
+      <p>
+        <UserFeedStatus isGone={user.isGone}
+                        isPrivate={user.isPrivate}
+                        isProtected={user.isProtected}
+                        isRestricted={user.isRestricted}
+                        type={user.type}/>
+      </p>
 
       {postIds.map(postId => (
         <Post id={postId} key={postId}/>
