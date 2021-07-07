@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { getIsomorphicDataPopulation } from '../store';
 import { loadUserPage } from '../store/actions';
+import UserFeedStatus from '../components/UserFeedStatus';
 import DummyPost from '../components/DummyPost';
 import PieceOfText from '../components/PieceOfText';
 import Post from '../components/Post';
@@ -63,12 +64,16 @@ const UserPage = () => {
         </p>
       )}
 
+      <p className="statuses">
+        <UserFeedStatus {...user}/>
+      </p>
+
       {postIds.map(postId => (
         <Post id={postId} key={postId}/>
       ))}
 
       <style jsx>{`
-        .statistics {
+        .statistics, .statuses {
           border-top: 1px solid #eee;
           line-height: 2.1rem;
           padding: 0.8rem 0;
