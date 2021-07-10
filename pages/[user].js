@@ -1,6 +1,5 @@
 import { useSelector, shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 import { getIsomorphicDataPopulation } from '../store';
 import { loadUserPage } from '../store/actions';
@@ -8,7 +7,8 @@ import UserFeedStatus from '../components/UserFeedStatus';
 import DummyPost from '../components/DummyPost';
 import PieceOfText from '../components/PieceOfText';
 import Post from '../components/Post';
-import React from "react";
+import PaginationLinks from "../components/PaginationLinks";
+import React from 'react';
 
 const UserPage = () => {
   const { query: { user: username, offset } } = useRouter();
@@ -16,17 +16,6 @@ const UserPage = () => {
   const isLoadingPage = useSelector(state => state.isLoadingPage);
   const user = useSelector(state => Object.values(state.users).find(u => u.username === username));
   const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
-  let offset2;
-  if (offset===undefined) {
-    offset2 = 0;
-  } else {
-    offset2 = offset;
-  }
-  let olderLink = "/" + username + "?offset=" + (+offset2 + 30);
-  let newerLink = "/" + username + "?offset=" + (+offset2 - 30);
-
-
-  console.log(offset, +offset);
 
   if (isLoadingPage) {
     return (
@@ -86,21 +75,7 @@ const UserPage = () => {
         <Post id={postId} key={postId}/>
       ))}
 
-      <ul className="pagination">
-        <li className="newer">
-          { offset2 > 0 &&
-            <Link href={newerLink}>
-              ← Newer entries
-            </Link>
-          }
-        </li>{' '}
-
-        <li className="older">
-          <Link href={olderLink}>
-            Older entries →
-          </Link>
-        </li>
-      </ul>
+      <PaginationLinks offset={offset} username={username}/>
 
       <style jsx>{`
         .statistics, .statuses {
@@ -116,20 +91,6 @@ const UserPage = () => {
 
           white-space: nowrap;
           margin-right: 1rem;
-        }
-        .pagination {
-          border-top: 1px solid #eee;
-          line-height: 2.1rem;
-          padding: 0.8rem 0;
-          margin: 0;
-          display: inline-flex;
-          flex-flow: row nowrap;
-          width: 100%;
-          justify-content: space-between;
-        }
-        .newer, .older {
-          list-style-type: none;
-          text-decoration: none;
         }
         
       `}</style>
