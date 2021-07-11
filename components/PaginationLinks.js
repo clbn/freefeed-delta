@@ -18,18 +18,16 @@ const PaginationLinks = ({ offset, username }) => {
 
     <style jsx>{`
       ul {
-        border-top: 1px solid #eee;
-        line-height: 2.1rem;
-        padding: 0.8rem 0;
-        margin: 0;
-        display: inline-flex;
+        display: flex;
         flex-flow: row nowrap;
-        width: 100%;
         justify-content: space-between;
+        
+        border-top: 1px solid #eee;
+        padding: 1rem 0;
+        margin: 0;
       }
       li {
         list-style-type: none;
-        text-decoration: none;
       }
     `}</style>
   </>;
