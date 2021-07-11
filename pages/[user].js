@@ -7,12 +7,10 @@ import UserFeedStatus from '../components/UserFeedStatus';
 import DummyPost from '../components/DummyPost';
 import PieceOfText from '../components/PieceOfText';
 import Post from '../components/Post';
-import PaginationLinks from "../components/PaginationLinks";
-import React from 'react';
+import PaginationLinks from '../components/PaginationLinks';
 
 const UserPage = () => {
   const { query: { user: username, offset } } = useRouter();
-
   const isLoadingPage = useSelector(state => state.isLoadingPage);
   const user = useSelector(state => Object.values(state.users).find(u => u.username === username));
   const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
@@ -92,7 +90,6 @@ const UserPage = () => {
           white-space: nowrap;
           margin-right: 1rem;
         }
-        
       `}</style>
     </main>
   );
