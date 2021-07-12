@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const PaginationLinks = ({ offset, username }) => {
+const PaginationLinks = ({ offset, username, hideOnFirst }) => {
   const normalOffset = +(offset || 0); // normalize offset which can be empty string or undefined
 
   const newerOffset = Math.max(normalOffset - 30, 0);
@@ -8,6 +8,10 @@ const PaginationLinks = ({ offset, username }) => {
 
   const newerLink = '/' + username + (newerOffset ? '?offset=' + newerOffset : '');
   const olderLink = '/' + username + '?offset=' + olderOffset;
+
+  if (hideOnFirst && offset <= 0) {
+    return false;
+  }
 
   return (
     <ul>
