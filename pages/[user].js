@@ -69,6 +69,8 @@ const UserPage = () => {
         <UserFeedStatus {...user}/>
       </p>
 
+      <PaginationLinks offset={offset} username={username} hideOnFirst/>
+
       {postIds.map(postId => (
         <Post id={postId} key={postId}/>
       ))}
