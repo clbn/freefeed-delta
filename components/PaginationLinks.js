@@ -9,7 +9,7 @@ const PaginationLinks = ({ offset, username, hideOnFirst }) => {
   const newerLink = '/' + username + (newerOffset ? '?offset=' + newerOffset : '');
   const olderLink = '/' + username + '?offset=' + olderOffset;
 
-  if (hideOnFirst && offset <= 0) {
+  if (hideOnFirst && !offset) {
     return false;
   }
 
