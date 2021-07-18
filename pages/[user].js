@@ -10,7 +10,7 @@ import Post from '../components/Post';
 import PaginationLinks from '../components/PaginationLinks';
 
 const UserPage = () => {
-  const { query: { user: username, offset } } = useRouter();
+  const { query: { user: username } } = useRouter();
   const isLoadingPage = useSelector(state => state.isLoadingPage);
   const user = useSelector(state => Object.values(state.users).find(u => u.username === username));
   const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
@@ -69,13 +69,13 @@ const UserPage = () => {
         <UserFeedStatus {...user}/>
       </p>
 
-      <PaginationLinks offset={offset} username={username} hideOnFirst/>
+      <PaginationLinks pathname={'/' + username} hideOnFirst/>
 
       {postIds.map(postId => (
         <Post id={postId} key={postId}/>
       ))}
 
-      <PaginationLinks offset={offset} username={username}/>
+      <PaginationLinks pathname={'/' + username}/>
 
       <style jsx>{`
         .statistics, .statuses {
