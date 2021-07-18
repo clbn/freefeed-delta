@@ -7,7 +7,6 @@ import DummyPost from '../components/DummyPost';
 import Post from '../components/Post';
 import PaginationLinks from '../components/PaginationLinks';
 
-
 const IndexPage = () => {
   const myId = useSelector(state => state.me.id);
   const isLoadingPage = useSelector(state => state.isLoadingPage);
@@ -39,7 +38,6 @@ const IndexPage = () => {
       ))}
 
      <PaginationLinks pathname="/"/>
-
     </main>
   );
 };
