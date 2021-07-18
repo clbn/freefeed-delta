@@ -1,7 +1,7 @@
+import { useRouter } from 'next/router';
 import Link from 'next/link';
-import {useRouter} from "next/router";
 
-const PaginationLinks = ({ hideOnFirst, pathname}) => {
+const PaginationLinks = ({ pathname, hideOnFirst }) => {
   const { query: { offset } } = useRouter();
 
   const normalOffset = +(offset || 0); // normalize offset which can be empty string or undefined

@@ -6,7 +6,7 @@ import SignIn from '../components/SignIn';
 import DummyPost from '../components/DummyPost';
 import Post from '../components/Post';
 import PaginationLinks from '../components/PaginationLinks';
-import {useRouter} from "next/router";
+
 
 const IndexPage = () => {
   const myId = useSelector(state => state.me.id);
