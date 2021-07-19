@@ -16,28 +16,21 @@ const IndexPage = () => {
     return <SignIn/>;
   }
 
-  if (isLoadingPage) {
-    return (
-      <main>
-        <h1>Home</h1>
-        <DummyPost/>
-        <DummyPost/>
-        <DummyPost/>
-      </main>
-    );
-  }
-
   return (
     <main>
       <h1>Home</h1>
 
       <PaginationLinks pathname="/" hideOnFirst/>
-
-      {postIds.map(postId => (
-        <Post id={postId} key={postId}/>
-      ))}
-
-     <PaginationLinks pathname="/"/>
+      {isLoadingPage ? (<>
+         <DummyPost/>
+         <DummyPost/>
+         <DummyPost/></>
+      ) : (
+        postIds.map(postId => (
+          <Post id={postId} key={postId}/>
+        ))
+      )}
+      <PaginationLinks pathname="/"/>
     </main>
   );
 };
