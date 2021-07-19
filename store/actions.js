@@ -6,15 +6,16 @@ export const setStoreState = createAction('setStoreState');
 export const toggleCommentingPost = createAction('toggleCommentingPost');
 
 export const loadHomePage = createAsyncThunk('loadHomePage', async (ctx, { rejectWithValue }) => {
-  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/homepage`, {}, ctx);
+  const { offset } = ctx.query;
+  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/homepage?offset=${offset || 0}`, {}, ctx);
   const data = await response.json();
   if (!response.ok) return rejectWithValue(data);
   return data;
 });
 
 export const loadUserPage = createAsyncThunk('loadUserPage', async (ctx, { rejectWithValue }) => {
-  const { user: username } = ctx.query;
-  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/userpage/${username}`, {}, ctx);
+  const { user: username, offset } = ctx.query;
+  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/userpage/${username}?offset=${offset || 0}`, {}, ctx);
   const data = await response.json();
   if (!response.ok) return rejectWithValue(data);
   return data;
