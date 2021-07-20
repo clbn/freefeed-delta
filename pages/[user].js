@@ -1,14 +1,14 @@
 import { useSelector, shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 import { getIsomorphicDataPopulation } from '../store';
-import Userpic from '../components/Userpic';
 import { loadUserPage } from '../store/actions';
+import Userpic from '../components/Userpic';
 import UserFeedStatus from '../components/UserFeedStatus';
 import DummyPost from '../components/DummyPost';
 import PieceOfText from '../components/PieceOfText';
 import Post from '../components/Post';
-import Link from 'next/link';
 import PaginationLinks from '../components/PaginationLinks';
 
 const UserPage = () => {
