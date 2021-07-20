@@ -21,15 +21,17 @@ const IndexPage = () => {
       <h1>Home</h1>
 
       <PaginationLinks pathname="/" hideOnFirst/>
-      {isLoadingPage ? (<>
+
+      {isLoadingPage ? <>
          <DummyPost/>
          <DummyPost/>
-         <DummyPost/></>
-      ) : (
+         <DummyPost/>
+      </> : (
         postIds.map(postId => (
           <Post id={postId} key={postId}/>
         ))
       )}
+
       <PaginationLinks pathname="/"/>
     </main>
   );
