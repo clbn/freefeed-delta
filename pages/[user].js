@@ -16,7 +16,6 @@ const UserPage = () => {
   const isLoadingPage = useSelector(state => state.isLoadingPage);
   const user = useSelector(state => Object.values(state.users).find(u => u.username === username));
   const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
-  const userpicSize = (75);
 
   if (isLoadingPage) {
     return (
@@ -43,15 +42,15 @@ const UserPage = () => {
       <div className="info">
         <section className="userpic">
           <Link href={`/${username}`}>
-            <a><Userpic id={user.id} size={userpicSize}/></a>
+            <a><Userpic id={user.id} size={75}/></a>
           </Link>
         </section>
-        <section className="user_data">
+        <section className="user-data">
           <h1>{user.displayName}</h1>
           <div className="username">
             @{username}
           </div>
-          <div className="user_description">{user.description && <><PieceOfText isExpanded>{user.description}</PieceOfText></>}</div>
+          <div className="user-description">{user.description && <><PieceOfText isExpanded>{user.description}</PieceOfText></>}</div>
         </section>
       </div>
 
@@ -92,7 +91,7 @@ const UserPage = () => {
         .userpic {
           padding-top: 0.2rem;
         }
-        .user_data {
+        .user-data {
           flex-direction: column;
           margin: 0;
           padding: 0;
@@ -106,7 +105,7 @@ const UserPage = () => {
           color: #999;
           padding-top: 0.5rem;
         }
-        .user_description {
+        .user-description {
           padding: 0.9rem 0 0 0;
         }
         .statistics, .statuses {
