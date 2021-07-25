@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Textarea from 'react-textarea-autosize';
 
 const PostAddForm = () => {
   const { query: { offset } } = useRouter();
@@ -9,8 +10,8 @@ const PostAddForm = () => {
 
   return (
     <div className="new-post-area" contentEditable="true">
-    <textarea
-      rows={3}
+    <Textarea
+      minRows={3}
       maxLength="3000"
       defaultValue={''}
       autoFocus
