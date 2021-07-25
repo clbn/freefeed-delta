@@ -5,6 +5,7 @@ import { loadHomePage } from '../store/actions';
 import SignIn from '../components/SignIn';
 import DummyPost from '../components/DummyPost';
 import Post from '../components/Post';
+import PostAddForm from '../components/PostAddForm';
 import PaginationLinks from '../components/PaginationLinks';
 
 const IndexPage = () => {
@@ -19,6 +20,8 @@ const IndexPage = () => {
   return (
     <main>
       <h1>Home</h1>
+
+      <PostAddForm />
 
       <PaginationLinks pathname="/" hideOnFirst/>
 
