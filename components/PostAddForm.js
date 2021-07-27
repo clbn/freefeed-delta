@@ -1,39 +1,35 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Textarea from 'react-textarea-autosize';
 
 const PostAddForm = () => {
   const { query: { offset } } = useRouter();
   const [isExpanded, setExpanded] = useState(false);
-  const handleFocus = useCallback(() => setExpanded(true), [setExpanded]);
-  const handleCancel = useCallback(() => setExpanded(false), [setExpanded]);
-
-  const cancelButton = <a className="cancelButton" onClick={handleCancel}>Cancel</a>;
-  const postButton = <button className="postButton">Post to my feed</button>;
+  const handleFocus = useCallback(() => setExpanded(true), []);
+  const handleCancel = useCallback(() => setExpanded(false), []);
 
   if (offset)  {
     return false;
   }
 
   return (
-    <div className="new-post-area" >
+    <div>
       <Textarea
         minRows={3}
         maxRows={10}
         maxLength="1500"
-        defaultValue={''}
+        defaultValue=""
         onFocus={handleFocus}
       />
       {isExpanded && (
-        <section className="actions">
-          {cancelButton}
-          {postButton}
-        </section>
+        <div className="actions">
+          <button className="cancelButton" onClick={handleCancel}>Cancel</button>
+          <button className="postButton">Post to my feed</button>
+        </div>
       )}
 
       {<style jsx>{`
-        textarea {
+        Textarea {
           display: block;
           width: 100%;
           overflow: hidden;
@@ -50,16 +46,21 @@ const PostAddForm = () => {
         }
         .cancelButton, .postButton {
           font-size: 0.7rem;
-          padding-right: 0.7rem;
-          vertical-align: middle;
-        }
-        .postButton {
           color: inherit;
           font-weight: normal;
           background-color: inherit;
           border: solid 0.1rem #999999;
           padding: 0.1rem 0.2rem;
           margin: 0;
+        }
+        .cancelButton {
+          color: #555599;
+          margin-right: 0.5rem;
+          border: none; 
+          outline: none;
+        }
+        .cancelButton:hover {
+          text-decoration: underline;
         }
       `}</style>}
     </div>
