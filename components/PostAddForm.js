@@ -39,7 +39,6 @@ const PostAddFormNotEmpty = () => {
         div :global(textarea) {
           display: block;
           width: 100%;
-          overflow: hidden;
           font-family: inherit;
           font-size: 1rem;
           padding: 0.25rem;
@@ -48,10 +47,11 @@ const PostAddFormNotEmpty = () => {
         .actions {
           display: flex;
           justify-content: flex-end;
-          margin-bottom: 1rem;
           line-height: 1.3rem;
+          margin-bottom: 1rem;
         }
-        .cancel, .post {
+        .cancel, 
+        .post {
           font-size: 0.7rem;
           color: inherit;
           font-weight: normal;
