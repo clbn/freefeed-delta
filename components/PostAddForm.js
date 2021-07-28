@@ -3,11 +3,12 @@ import { useState, useCallback } from 'react';
 import Textarea from 'react-textarea-autosize';
 
 const PostAddForm = () => {
-  const {query: {offset}} = useRouter();
+  const { query: { offset } } = useRouter();
 
   if (offset) {
     return false;
   }
+
   return <PostAddFormNotEmpty/>
 };
 
@@ -19,30 +20,23 @@ const PostAddFormNotEmpty = () => {
   return (
     <div>
       {!isExpanded ? (
-        <textarea
-          rows="3"
-          onFocus={handleFocus}
-        />
+        <textarea rows="3" onFocus={handleFocus}/>
       ) : <>
         <Textarea
           minRows={3}
           maxRows={10}
-          maxLength="1500"
+          maxLength={3000}
           defaultValue=""
-          autoFocus={true}
+          autoFocus
         />
         <div className="actions">
           <button className="cancel" onClick={handleCancel}>Cancel</button>
           <button className="post">Post to my feed</button>
         </div>
-      </>
-      }
+      </>}
 
-      {<style jsx>{`
-        textarea {
-          
-        }
-        textarea {
+      <style jsx>{`
+        div :global(textarea) {
           display: block;
           width: 100%;
           overflow: hidden;
@@ -75,7 +69,7 @@ const PostAddFormNotEmpty = () => {
         .cancel:hover {
           text-decoration: underline;
         }
-      `}</style>}
+      `}</style>
     </div>
   );
 };
