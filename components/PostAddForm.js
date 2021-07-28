@@ -3,33 +3,46 @@ import { useState, useCallback } from 'react';
 import Textarea from 'react-textarea-autosize';
 
 const PostAddForm = () => {
-  const { query: { offset } } = useRouter();
+  const {query: {offset}} = useRouter();
+
+  if (offset) {
+    return false;
+  }
+  return <PostAddFormNotEmpty/>
+};
+
+const PostAddFormNotEmpty = () => {
   const [isExpanded, setExpanded] = useState(false);
   const handleFocus = useCallback(() => setExpanded(true), []);
   const handleCancel = useCallback(() => setExpanded(false), []);
 
-  if (offset)  {
-    return false;
-  }
-
   return (
     <div>
-      <Textarea
-        minRows={3}
-        maxRows={10}
-        maxLength="1500"
-        defaultValue=""
-        onFocus={handleFocus}
-      />
-      {isExpanded && (
+      {!isExpanded ? (
+        <textarea
+          rows="3"
+          onFocus={handleFocus}
+        />
+      ) : <>
+        <Textarea
+          minRows={3}
+          maxRows={10}
+          maxLength="1500"
+          defaultValue=""
+          autoFocus={true}
+        />
         <div className="actions">
-          <button className="cancelButton" onClick={handleCancel}>Cancel</button>
-          <button className="postButton">Post to my feed</button>
+          <button className="cancel" onClick={handleCancel}>Cancel</button>
+          <button className="post">Post to my feed</button>
         </div>
-      )}
+      </>
+      }
 
       {<style jsx>{`
-        Textarea {
+        textarea {
+          
+        }
+        textarea {
           display: block;
           width: 100%;
           overflow: hidden;
@@ -44,7 +57,7 @@ const PostAddForm = () => {
           margin-bottom: 1rem;
           line-height: 1.3rem;
         }
-        .cancelButton, .postButton {
+        .cancel, .post {
           font-size: 0.7rem;
           color: inherit;
           font-weight: normal;
@@ -53,18 +66,18 @@ const PostAddForm = () => {
           padding: 0.1rem 0.2rem;
           margin: 0;
         }
-        .cancelButton {
+        .cancel {
           color: #555599;
           margin-right: 0.5rem;
           border: none; 
           outline: none;
         }
-        .cancelButton:hover {
+        .cancel:hover {
           text-decoration: underline;
         }
       `}</style>}
     </div>
   );
-}
+};
 
 export default PostAddForm;
