@@ -16,6 +16,11 @@ const PostAddFormNotEmpty = () => {
   const [isExpanded, setExpanded] = useState(false);
   const handleFocus = useCallback(() => setExpanded(true), []);
   const handleCancel = useCallback(() => setExpanded(false), []);
+  const handleKeyUp = useCallback(event => {
+    if (event.key === 'Escape') {
+      handleCancel();
+    }
+  }, [handleCancel]);
 
   return (
     <div>
@@ -28,6 +33,7 @@ const PostAddFormNotEmpty = () => {
           maxLength={3000}
           defaultValue=""
           autoFocus
+          onKeyUp={handleKeyUp}
         />
         <div className="actions">
           <button className="cancel" onClick={handleCancel}>Cancel</button>
