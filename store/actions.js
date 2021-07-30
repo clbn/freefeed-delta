@@ -66,3 +66,13 @@ export const addComment = createAsyncThunk('addComment', async ({ postId, body }
   if (!response.ok) return rejectWithValue(data);
   return data;
 });
+
+export const addPost = createAsyncThunk('addPost', async ({ body, feeds }, { rejectWithValue }) => {
+  const response = await fetcher(`https://freefeed.net/v1/posts`, {
+    method: 'POST',
+    body: JSON.stringify({ post: { body }, meta: { feeds } })
+  });
+  const data = await response.json();
+  if (!response.ok) return rejectWithValue(data);
+  return data;
+});

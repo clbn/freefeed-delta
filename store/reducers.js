@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 
 import * as actions from './actions';
-import { formatComment } from '../utils/data-formatters';
+import { formatPost, formatComment } from '../utils/data-formatters';
 
 export const rootReducer = createReducer({}, {
 
@@ -155,6 +155,22 @@ export const rootReducer = createReducer({}, {
   [actions.addComment.rejected]: (state, { meta: { arg: { postId } }, payload: data }) => {
     state.posts[postId].isSendingComment = false;
     state.posts[postId].commentErrorMessage = data.err;
+  },
+
+  [actions.addPost.pending]: (state) => {
+    // state.posts[postId].isSendingComment = true;
+    // state.posts[postId].commentErrorMessage = null;
+  },
+
+  [actions.addPost.fulfilled]: (state, { payload: data }) => {
+    state.posts[data.posts.id] = formatPost(data.posts);
+    // state.posts[postId].isSendingComment = false;
+    // state.posts[postId].isWritingComment = false;
+  },
+
+  [actions.addPost.rejected]: (state, { payload: data }) => {
+    // state.posts[postId].isSendingComment = false;
+    // state.posts[postId].commentErrorMessage = data.err;
   },
 
 });

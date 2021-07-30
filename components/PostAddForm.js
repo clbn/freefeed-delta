@@ -1,6 +1,9 @@
-import { useState, useCallback } from 'react';
+import {useState, useCallback, useRef} from 'react';
 import { useRouter } from 'next/router';
 import Textarea from 'react-textarea-autosize';
+
+import {addComment, addPost} from '../store/actions';
+import {useDispatch, useSelector} from 'react-redux';
 
 const PostAddForm = () => {
   const { query: { offset } } = useRouter();
@@ -14,6 +17,10 @@ const PostAddForm = () => {
 
 const PostAddFormNotEmpty = () => {
   const [isExpanded, setExpanded] = useState(false);
+  // const [isSendingPost, setSendingPost] = useState(false);
+  const myUsername = useSelector(state => state.me.username);
+
+  const dispatch = useDispatch();
   const handleFocus = useCallback(() => setExpanded(true), []);
   const handleCancel = useCallback(() => setExpanded(false), []);
   const handleKeyUp = useCallback(event => {
@@ -22,8 +29,15 @@ const PostAddFormNotEmpty = () => {
     }
   }, [handleCancel]);
 
+  const textarea = useRef({}); // Textarea DOM element
+
+  const textareaCallbackRef = useCallback(textareaElement => {
+    textarea.current = textareaElement;
+  }, []);
+
   const sendPost = useCallback(() => {
     // TODO: check if already sending, send request, handle the response (collapse the form)
+    dispatch(addPost({ body: textarea.current.value, feeds: [myUsername] }));
   }, []);
 
   const handleKeyDown = useCallback(event => {
@@ -39,6 +53,7 @@ const PostAddFormNotEmpty = () => {
         <textarea rows="3" onFocus={handleFocus}/>
       ) : <>
         <Textarea
+          ref={textareaCallbackRef}
           minRows={3}
           maxRows={10}
           maxLength={3000}
