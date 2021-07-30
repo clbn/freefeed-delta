@@ -22,6 +22,17 @@ const PostAddFormNotEmpty = () => {
     }
   }, [handleCancel]);
 
+  const sendPost = useCallback(() => {
+    // TODO: check if already sending, send request, handle the response (collapse the form)
+  }, []);
+
+  const handleKeyDown = useCallback(event => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      setTimeout(sendPost, 0);
+    }
+  }, []);
+
   return (
     <div>
       {!isExpanded ? (
@@ -34,10 +45,11 @@ const PostAddFormNotEmpty = () => {
           defaultValue=""
           autoFocus
           onKeyUp={handleKeyUp}
+          onKeyDown={handleKeyDown}
         />
         <div className="actions">
           <button className="cancel" onClick={handleCancel}>Cancel</button>
-          <button className="post">Post to my feed</button>
+          <button className="post" onClick={sendPost}>Post to my feed</button>
         </div>
       </>}
 
