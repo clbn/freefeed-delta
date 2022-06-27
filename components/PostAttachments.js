@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 
 import AttachmentImage from './AttachmentImage';
+import AttachmentOther from './AttachmentOther';
 
 const PostAttachments = ({ postId }) => {
   const attachmentIds = useSelector(state => state.posts[postId].attachmentIds);
@@ -32,7 +33,7 @@ const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
       ))}
 
       {otherAttachments.map(attId => (
-        <a href={attachments[attId].url} title={attachments[attId].fileSize + ' b'} target="_blank" rel="noopener">{attachments[attId].fileName}</a>
+        <AttachmentOther id={attId} key={attId}/>
       ))}
 
       <style jsx>{`
@@ -42,14 +43,6 @@ const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
           padding: 0.15rem 0;
           margin-right: -0.5rem;
           margin-bottom: 0;
-        }
-        a {
-          display: block;
-          padding: 1px;
-          margin-bottom: 0.5rem;
-          min-width: 36px;
-          min-height: 1rem;
-          font-size: 0.8rem;
         }
       `}</style>
     </section>
