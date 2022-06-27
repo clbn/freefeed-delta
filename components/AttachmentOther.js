@@ -16,11 +16,7 @@ const AttachmentOther = ({ id }) => {
       <style jsx>{`
         a {
           display: block;
-          padding: 1px;
           margin-bottom: 0.5rem;
-          min-width: 36px;
-          min-height: 1rem;
-          font-size: 0.8rem;
         }
         
       `}</style>

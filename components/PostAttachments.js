@@ -39,6 +39,7 @@ const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
       <style jsx>{`
         section {
           grid-area: attachments;
+          
           display: block;
           padding: 0.15rem 0;
           margin-right: -0.5rem;
