@@ -14,25 +14,25 @@ const PostAttachments = ({ postId }) => {
 
 const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
   const attachments = useSelector(state => state.attachments);
-  let attachmentsAudio = [];
-  let attachmentsPicture = [];
+  const imageAttachments = [];
+  const otherAttachments = [];
 
   for (let attachmentId of attachmentIds) {
-    if (attachments[attachmentId].mediaType && attachments[attachmentId].mediaType === 'audio') {
-      attachmentsAudio.push(attachmentId);
+    if (attachments[attachmentId].mediaType && attachments[attachmentId].mediaType === 'image') {
+      imageAttachments.push(attachmentId);
     } else {
-      attachmentsPicture.push(attachmentId);
+      otherAttachments.push(attachmentId);
     }
   }
 
   return (
     <section>
-      {attachmentsAudio.map(attId => (
-        <a href={attachments[attId].url} title={attachments[attId].fileSize + ' b'}>{attachments[attId].fileName}</a>
+      {imageAttachments.map(attId => (
+        <AttachmentImage id={attId} key={attId}/>
       ))}
 
-      {attachmentsPicture.map(attId => (
-        <AttachmentImage id={attId} key={attId}/>
+      {otherAttachments.map(attId => (
+        <a href={attachments[attId].url} title={attachments[attId].fileSize + ' b'} target="_blank" rel="noopener">{attachments[attId].fileName}</a>
       ))}
 
       <style jsx>{`
