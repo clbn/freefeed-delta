@@ -18,7 +18,6 @@ const AttachmentOther = ({ id }) => {
           display: block;
           margin-bottom: 0.5rem;
         }
-        
       `}</style>
     </a>
   );

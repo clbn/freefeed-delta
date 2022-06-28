@@ -9,7 +9,6 @@ const PostAttachments = ({ postId }) => {
   if (attachmentIds.length === 0) {
     return false;
   }
-
   return <PostAttachmentsNotEmpty attachmentIds={attachmentIds}/>
 };
 
@@ -18,8 +17,8 @@ const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
   const imageAttachments = [];
   const otherAttachments = [];
 
-  for (let attachmentId of attachmentIds) {
-    if (attachments[attachmentId].mediaType && attachments[attachmentId].mediaType === 'image') {
+  for (const attachmentId of attachmentIds) {
+    if (attachments[attachmentId].mediaType === 'image') {
       imageAttachments.push(attachmentId);
     } else {
       otherAttachments.push(attachmentId);
@@ -39,7 +38,6 @@ const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
       <style jsx>{`
         section {
           grid-area: attachments;
-          
           display: block;
           padding: 0.15rem 0;
           margin-right: -0.5rem;
