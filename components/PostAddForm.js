@@ -1,6 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Textarea from 'react-textarea-autosize';
+
+import { addPost } from '../store/actions';
 
 const PostAddForm = () => {
   const { query: { offset } } = useRouter();
@@ -14,6 +17,10 @@ const PostAddForm = () => {
 
 const PostAddFormNotEmpty = () => {
   const [isExpanded, setExpanded] = useState(false);
+  // const [isSendingPost, setSendingPost] = useState(false);
+  const myUsername = useSelector(state => state.me.username);
+
+  const dispatch = useDispatch();
   const handleFocus = useCallback(() => setExpanded(true), []);
   const handleCancel = useCallback(() => setExpanded(false), []);
   const handleKeyUp = useCallback(event => {
@@ -22,22 +29,42 @@ const PostAddFormNotEmpty = () => {
     }
   }, [handleCancel]);
 
+  const textarea = useRef({}); // Textarea DOM element
+
+  const textareaCallbackRef = useCallback(textareaElement => {
+    textarea.current = textareaElement;
+  }, []);
+
+  const sendPost = useCallback(() => {
+    // TODO: check if already sending, send request, handle the response (collapse the form)
+    dispatch(addPost({ body: textarea.current.value, feeds: [myUsername] }));
+  }, []);
+
+  const handleKeyDown = useCallback(event => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      setTimeout(sendPost, 0);
+    }
+  }, []);
+
   return (
     <div>
       {!isExpanded ? (
         <textarea rows="3" onFocus={handleFocus}/>
       ) : <>
         <Textarea
+          ref={textareaCallbackRef}
           minRows={3}
           maxRows={10}
           maxLength={3000}
           defaultValue=""
           autoFocus
           onKeyUp={handleKeyUp}
+          onKeyDown={handleKeyDown}
         />
         <div className="actions">
           <button className="cancel" onClick={handleCancel}>Cancel</button>
-          <button className="post">Post to my feed</button>
+          <button className="post" onClick={sendPost}>Post to my feed</button>
         </div>
       </>}
 
