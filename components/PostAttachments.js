@@ -5,7 +5,6 @@ import AttachmentOther from './AttachmentOther';
 
 const PostAttachments = ({ postId }) => {
   const attachmentIds = useSelector(state => state.posts[postId].attachmentIds);
-
   if (attachmentIds.length === 0) {
     return false;
   }
@@ -38,6 +37,7 @@ const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
       <style jsx>{`
         section {
           grid-area: attachments;
+
           display: block;
           padding: 0.15rem 0;
           margin-right: -0.5rem;
