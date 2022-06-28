@@ -1,9 +1,9 @@
-import {useState, useCallback, useRef} from 'react';
+import { useState, useCallback, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Textarea from 'react-textarea-autosize';
 
-import {addComment, addPost} from '../store/actions';
-import {useDispatch, useSelector} from 'react-redux';
+import { addPost } from '../store/actions';
 
 const PostAddForm = () => {
   const { query: { offset } } = useRouter();
