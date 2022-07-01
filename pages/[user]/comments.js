@@ -71,7 +71,7 @@ const CommentedPostsPage = () => {
               <a>{user.statistics.comments} comments</a>
             </Link>
             {' '}
-            <Link href={''}>
+            <Link href={'/' + username + '/likes'}>
               <a>{user.statistics.likes} likes</a>
             </Link>
           </>}
