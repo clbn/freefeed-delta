@@ -33,7 +33,7 @@ export const loadUserCommentsPage = createAsyncThunk('loadUserCommentsPage', asy
 
 export const loadUserLikesPage = createAsyncThunk('loadUserLikesPage', async (ctx, { rejectWithValue }) => {
   const { user: username, offset } = ctx.query;
-  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/userlikesspage/${username}?offset=${offset || 0}`, {}, ctx);
+  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/userlikespage/${username}?offset=${offset || 0}`, {}, ctx);
   const data = await response.json();
   if (!response.ok) return rejectWithValue(data);
   return data;

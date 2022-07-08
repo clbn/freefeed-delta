@@ -59,19 +59,17 @@ const CommentedPostsPage = () => {
           <a>{user.statistics.subscribers} subscribers</a>{' '}
 
           {user.type === 'user' && <>
-            <Link href={''}>
-              <a>{user.statistics.subscriptions} subscriptions</a>
-            </Link>
+            <a>{user.statistics.subscriptions} subscriptions</a>
             {' '}
-            <Link href={'/' + username}>
+            <Link href={`/${username}`}>
               <a>{user.statistics.posts} posts</a>
             </Link>
             {' '}
-            <Link href={'/' + username + '/comments'}>
+            <Link href={`/${username}/comments`}>
               <a>{user.statistics.comments} comments</a>
             </Link>
             {' '}
-            <Link href={'/' + username + '/likes'}>
+            <Link href={`/${username}/likes`}>
               <a>{user.statistics.likes} likes</a>
             </Link>
           </>}

@@ -61,15 +61,15 @@ const UserPage = () => {
           {user.type === 'user' && <>
             <a>{user.statistics.subscriptions} subscriptions</a>
             {' '}
-            <Link href={'/' + username}>
+            <Link href={`/${username}`}>
               <a>{user.statistics.posts} posts</a>
             </Link>
             {' '}
-            <Link href={'/' + username + '/comments'}>
+            <Link href={`/${username}/comments`}>
               <a>{user.statistics.comments} comments</a>
             </Link>
             {' '}
-            <Link href={'/' + username + '/likes'}>
+            <Link href={`/${username}/likes`}>
               <a>{user.statistics.likes} likes</a>
             </Link>
           </>}
@@ -80,13 +80,13 @@ const UserPage = () => {
         <UserFeedStatus {...user}/>
       </p>
 
-      <PaginationLinks pathname={'/' + username} hideOnFirst/>
+      <PaginationLinks pathname={`/${username}`} hideOnFirst/>
 
       {postIds.map(postId => (
         <Post id={postId} key={postId}/>
       ))}
 
-      <PaginationLinks pathname={'/' + username}/>
+      <PaginationLinks pathname={`/${username}`}/>
 
       <style jsx>{`
         .info {
