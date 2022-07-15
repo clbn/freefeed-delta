@@ -1,4 +1,4 @@
-import {shallowEqual, useSelector} from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -80,9 +80,9 @@ const CommentedPostsPage = () => {
         <UserFeedStatus {...user}/>
       </p>
 
-      <p className="feedHeader">
-          Comments
-      </p>
+      <h2>
+        Comments
+      </h2>
 
       <PaginationLinks pathname={'/' + username + '/comments'} hideOnFirst/>
 
@@ -121,14 +121,16 @@ const CommentedPostsPage = () => {
         .user-description {
           padding: 0.9rem 0 0 0;
         }
-        .statistics, .statuses, .feedHeader {
+        .statistics, .statuses {
           border-top: 1px solid #eee;
           line-height: 2.1rem;
           padding: 0.8rem 0;
           margin: 0;
         }
-        .feedHeader {
-        font-weight: bold;
+        h2 {
+          border-top: 1px solid #eee;
+          padding: 0.8rem 0;
+          margin: 0;
         }
         a {
           white-space: nowrap;
