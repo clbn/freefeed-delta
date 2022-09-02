@@ -12,7 +12,9 @@ const Userpic = ({ id, size }) => {
   }
 
   return <>
-    <img src={url} width={size} height={size} alt="Userpic"/>
+    <picture>
+      <img src={url} width={size} height={size} alt="Userpic"/>
+    </picture>
 
     <style jsx>{`
       img {

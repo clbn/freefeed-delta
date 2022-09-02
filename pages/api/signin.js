@@ -2,7 +2,7 @@ import fetch from 'isomorphic-unfetch';
 import { setCookie } from 'nookies';
 import { formatUser } from '../../utils/data-formatters';
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   res.setHeader('Content-Type', 'application/json');
 
   if (req.method !== 'POST') {
@@ -47,4 +47,4 @@ export default async (req, res) => {
 
   res.statusCode = 200;
   res.end(JSON.stringify({ user }));
-};
+}

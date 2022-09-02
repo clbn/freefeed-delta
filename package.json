@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
+    "lint": "next lint",
     "build": "next build",
     "start": "next start"
   },
@@ -22,5 +23,9 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "react-textarea-autosize": "^8.3.4"
+  },
+  "devDependencies": {
+    "eslint": "8.18.0",
+    "eslint-config-next": "12.2.0"
   }
 }

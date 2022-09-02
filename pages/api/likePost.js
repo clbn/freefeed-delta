@@ -1,6 +1,6 @@
 import fetcher from '../../utils/fetcher';
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.statusCode = 405;
     res.end(JSON.stringify({ err: 'Method Not Allowed' }));
@@ -30,4 +30,4 @@ export default async (req, res) => {
   res.statusCode = 303;
   res.setHeader('Location', returnUrl);
   res.end();
-};
+}

@@ -10,7 +10,7 @@ const AttachmentOther = ({ id }) => {
   const { url, fileName, fileSize } = attachment;
 
   return (
-    <a href={url} title={fileSize + ' b'} target="_blank" rel="noopener">
+    <a href={url} title={fileSize + ' b'} target="_blank" rel="noopener noreferrer">
       {fileName}
 
       <style jsx>{`

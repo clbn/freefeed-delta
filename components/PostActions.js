@@ -20,7 +20,7 @@ const PostActions = ({ postId, postUrl }) => {
   const isSendingLike = useSelector(state => state.posts[postId].isSendingLike);
 
   const dispatch = useDispatch();
-  const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [postId]);
+  const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [dispatch, postId]);
   const likePost = useCallback(preventDefault(() => dispatch(likeUnlikePost({ postId, verb: 'like' }))), [postId]);
   const unlikePost = useCallback(preventDefault(() => dispatch(likeUnlikePost({ postId, verb: 'unlike' }))), [postId]);
 

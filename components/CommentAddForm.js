@@ -20,7 +20,7 @@ const CommentAddForm = ({ postId }) => {
   const commentErrorMessage = useSelector(state => state.posts[postId].commentErrorMessage);
 
   const dispatch = useDispatch();
-  const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [postId]);
+  const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [dispatch, postId]);
 
   const textarea = useRef({}); // Textarea DOM element
 
@@ -87,7 +87,7 @@ const CommentAddForm = ({ postId }) => {
 
           {commentErrorMessage && (
             <div className="comment-error-message" role="alert">
-              Comment has not been saved. Server response: "{commentErrorMessage}"
+              Comment has not been saved. Server response: &quot;{commentErrorMessage}&quot;
             </div>
           )}
         </> : (isIndividual) ? (

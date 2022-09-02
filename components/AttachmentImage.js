@@ -10,8 +10,10 @@ const AttachmentImage = ({ id }) => {
   const { url, nameAndSize, src, srcSet, width, height } = attachment;
 
   return (
-    <a href={url} title={nameAndSize} target="_blank" rel="noopener">
-      <img alt={nameAndSize} src={src} srcSet={srcSet} width={width} height={height}/>
+    <a href={url} title={nameAndSize} target="_blank" rel="noopener noreferrer">
+      <picture>
+        <img alt={nameAndSize} src={src} srcSet={srcSet} width={width} height={height}/>
+      </picture>
 
       <style jsx>{`
         a {

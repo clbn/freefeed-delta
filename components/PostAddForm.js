@@ -38,14 +38,14 @@ const PostAddFormNotEmpty = () => {
   const sendPost = useCallback(() => {
     // TODO: check if already sending, send request, handle the response (collapse the form)
     dispatch(addPost({ body: textarea.current.value, feeds: [myUsername] }));
-  }, []);
+  }, [dispatch, myUsername]);
 
   const handleKeyDown = useCallback(event => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
       setTimeout(sendPost, 0);
     }
-  }, []);
+  }, [sendPost]);
 
   return (
     <div>

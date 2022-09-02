@@ -16,7 +16,7 @@ const CommentLikes = ({ commentId }) => {
     if (!canILike) return;
     if (isSendingLike) return;
     return dispatch(likeUnlikeComment({ commentId, verb: haveILiked ? 'unlike' : 'like' }));
-  }, [commentId, canILike, isSendingLike, haveILiked]);
+  }, [canILike, isSendingLike, dispatch, commentId, haveILiked]);
 
   return (
     <section>
