@@ -2,19 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import { setStoreState } from './actions';
 import { rootReducer } from './reducers';
+import { initialState, RootState } from './state';
 
 let store;
 
-const initialState = {
-  attachments: {},
-  comments: {},
-  feeds: {},
-  me: {},
-  posts: {},
-  users: {},
-};
-
-const createStore = (preloadedState) => configureStore({
+const createStore = (preloadedState: RootState) => configureStore({
   reducer: rootReducer,
   preloadedState,
 });
@@ -25,7 +17,7 @@ export const initServerStore = () => {
   return store;
 };
 
-export function useStore(preloadedState) {
+export function useStore(preloadedState?: RootState) {
   // Server-side
   // The store is already created and filled with data in getServerSideProps/getInitialProps
   if (typeof window === 'undefined') {
