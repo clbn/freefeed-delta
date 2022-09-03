@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
+import { useSelector, useDispatch } from '../store';
 import { loadMoreComments } from '../store/actions';
 import { preventDefault } from '../utils/events';
 import { pluralForm } from '../utils/plural';

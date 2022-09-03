@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import Link from 'next/link';
 
+import { useSelector, useDispatch } from '../store';
 import { loadMoreLikes } from '../store/actions';
 import { preventDefault } from '../utils/events';
 import Throbber from './Throbber';

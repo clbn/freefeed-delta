@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../store';
 
 const Userpic = ({ id, size }) => {
   let url = useSelector(state => id && state.users[id] && state.users[id].userpicUrl);

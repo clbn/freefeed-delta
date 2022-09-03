@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
+import { useSelector, useDispatch } from '../store';
 import { likeUnlikeComment } from '../store/actions';
 import Icon from './Icon';
 import Throbber from './Throbber';

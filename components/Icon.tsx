@@ -5,7 +5,13 @@ const iconWidths = {
   'lock': 10 / 16,
 };
 
-const Icon = ({ name, title, className }) => {
+type IconProps = {
+  name: string;
+  title?: string;
+  className?: string;
+};
+
+const Icon = ({ name, title, className }: IconProps) => {
   const width = (Math.round(iconWidths[name] * 1000.1) / 1000) || 1;
 
   return (

@@ -60,7 +60,7 @@ const addSpoilers = (chunk) => {
     return [chunk];
   }
 
-  const spoilers = [...chunk.matchAll(spoilerRegex)];
+  const spoilers = Array.from(chunk.matchAll(spoilerRegex));
 
   if (spoilers.length === 0) {
     return [chunk];
@@ -207,7 +207,14 @@ const formatText = (text, expanded, expandFn) => {
   return chunks.map(prepareForRendering);
 };
 
-const PieceOfText = ({ children, isExpanded, userHover, arrowHover }) => {
+type PieceOfTextProps = {
+  children: any;
+  isExpanded?: boolean;
+  userHover?: any;
+  arrowHover?: any;
+};
+
+const PieceOfText = ({ children, isExpanded, userHover, arrowHover }: PieceOfTextProps) => {
   const [expanded, setExpanded] = useState(!!isExpanded);
   const handleExpand = useCallback(() => setExpanded(true), []);
 

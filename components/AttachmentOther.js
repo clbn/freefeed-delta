@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../store';
 
 const AttachmentOther = ({ id }) => {
   const attachment = useSelector(state => state.attachments[id]);

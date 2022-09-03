@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
+import { useSelector, useDispatch } from '../store';
 import { likeUnlikePost, toggleCommentingPost } from '../store/actions';
 import { selectCanIModeratePost } from '../utils/data-selectors';
 import { preventDefault } from '../utils/events';

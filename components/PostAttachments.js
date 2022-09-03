@@ -1,5 +1,4 @@
-import { useSelector } from 'react-redux';
-
+import { useSelector } from '../store';
 import AttachmentImage from './AttachmentImage';
 import AttachmentOther from './AttachmentOther';
 

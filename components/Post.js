@@ -1,7 +1,7 @@
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+import { useSelector } from '../store';
 import Userpic from './Userpic';
 import PostAuthorship from './PostAuthorship';
 import PieceOfText from './PieceOfText';
@@ -15,7 +15,7 @@ const Post = ({ id }) => {
   const isPostMissing = useSelector(state => state.posts[id] === undefined);
   const errorMessage = useSelector(state => state.posts[id]?.errorMessage);
   if (isPostMissing) {
-    return false;
+    return null;
   }
   if (errorMessage) {
     return <div>{errorMessage}</div>;

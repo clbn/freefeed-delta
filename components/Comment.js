@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
+import { useSelector } from '../store';
 import Icon from './Icon';
 import PieceOfText from './PieceOfText';
 import Time from './Time';

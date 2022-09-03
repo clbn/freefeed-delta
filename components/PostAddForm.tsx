@@ -1,15 +1,15 @@
 import { useState, useCallback, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Textarea from 'react-textarea-autosize';
 
+import { useSelector, useDispatch } from '../store';
 import { addPost } from '../store/actions';
 
 const PostAddForm = () => {
   const { query: { offset } } = useRouter();
 
   if (offset) {
-    return false;
+    return null;
   }
 
   return <PostAddFormNotEmpty/>
@@ -29,7 +29,7 @@ const PostAddFormNotEmpty = () => {
     }
   }, [handleCancel]);
 
-  const textarea = useRef({}); // Textarea DOM element
+  const textarea = useRef<HTMLTextAreaElement>(null); // Textarea DOM element
 
   const textareaCallbackRef = useCallback(textareaElement => {
     textarea.current = textareaElement;
@@ -50,7 +50,7 @@ const PostAddFormNotEmpty = () => {
   return (
     <div>
       {!isExpanded ? (
-        <textarea rows="3" onFocus={handleFocus}/>
+        <textarea rows={3} onFocus={handleFocus}/>
       ) : <>
         <Textarea
           ref={textareaCallbackRef}

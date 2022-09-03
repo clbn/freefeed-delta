@@ -1,7 +1,12 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-const PaginationLinks = ({ pathname, hideOnFirst }) => {
+type PaginationLinksProps = {
+  pathname: string;
+  hideOnFirst?: boolean;
+};
+
+const PaginationLinks = ({ pathname, hideOnFirst }: PaginationLinksProps) => {
   const { query: { offset } } = useRouter();
 
   const normalOffset = +(offset || 0); // normalize offset which can be empty string or undefined
@@ -12,7 +17,7 @@ const PaginationLinks = ({ pathname, hideOnFirst }) => {
   const olderLink = pathname + '?offset=' + olderOffset;
 
   if (hideOnFirst && !offset) {
-    return false;
+    return null;
   }
 
   return (

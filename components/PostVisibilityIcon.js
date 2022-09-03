@@ -1,5 +1,6 @@
-import { useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 
+import { useSelector } from '../store';
 import { selectPostRecipients } from '../utils/data-selectors';
 import { visibilityLevels, getPostVisibilityLevel } from '../utils/visibility';
 import Icon from './Icon';

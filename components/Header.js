@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Router from 'next/router';
 import fetch from 'isomorphic-unfetch';
+
+import { useSelector } from '../store';
 import Throbber from './Throbber';
 
 const Header = () => {

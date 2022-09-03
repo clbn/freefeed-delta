@@ -1,9 +1,9 @@
 import { useCallback, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { selectCanIModeratePost } from '../utils/data-selectors';
+import { useSelector, useDispatch } from '../store';
 import { toggleCommentingPost, addComment } from '../store/actions';
+import { selectCanIModeratePost } from '../utils/data-selectors';
 import Icon from './Icon';
 import Throbber from './Throbber';
 

@@ -1,8 +1,9 @@
 import { Fragment } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+import { useSelector } from '../store';
 import { selectPostRecipients } from '../utils/data-selectors';
 
 const getRecipientDisplayName = function(recipient, authorId) {
