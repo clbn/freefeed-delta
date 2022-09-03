@@ -1,8 +1,8 @@
-import { useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { getIsomorphicDataPopulation } from '../store';
+import { useSelector, getIsomorphicDataPopulation } from '../store';
 import { loadUserPage } from '../store/actions';
 import Userpic from '../components/Userpic';
 import UserFeedStatus from '../components/UserFeedStatus';

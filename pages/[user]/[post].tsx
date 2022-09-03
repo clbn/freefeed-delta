@@ -1,7 +1,6 @@
-import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 
-import { getIsomorphicDataPopulation } from '../../store';
+import { useSelector, getIsomorphicDataPopulation } from '../../store';
 import { loadPostPage } from '../../store/actions';
 import DummyPost from '../../components/DummyPost';
 import Post from '../../components/Post';

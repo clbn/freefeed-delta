@@ -1,3 +1,4 @@
+import type { AppProps } from 'next/app'
 import Head from 'next/head';
 import { Provider } from 'react-redux';
 
@@ -6,7 +7,7 @@ import IconDefinitions from '../components/IconDefinitions';
 import Header from '../components/Header';
 import '../styles/global.css';
 
-function App({ Component, pageProps }) {
+const App = ({ Component, pageProps }: AppProps) => {
   const store = useStore(pageProps.preloadedState);
 
   return <>
@@ -25,6 +26,6 @@ function App({ Component, pageProps }) {
       <Component {...pageProps}/>
     </Provider>
   </>;
-}
+};
 
 export default App;

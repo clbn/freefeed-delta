@@ -1,6 +1,6 @@
-import { useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 
-import { getIsomorphicDataPopulation } from '../store';
+import { useSelector, getIsomorphicDataPopulation } from '../store';
 import { loadHomePage } from '../store/actions';
 import SignIn from '../components/SignIn';
 import DummyPost from '../components/DummyPost';
