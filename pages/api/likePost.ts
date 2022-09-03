@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next';
 import fetcher from '../../utils/fetcher';
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     res.statusCode = 405;
     res.end(JSON.stringify({ err: 'Method Not Allowed' }));

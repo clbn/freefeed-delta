@@ -1,8 +1,9 @@
+import { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'isomorphic-unfetch';
 import { setCookie } from 'nookies';
 import { formatUser } from '../../utils/data-formatters';
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   res.setHeader('Content-Type', 'application/json');
 
   if (req.method !== 'POST') {
