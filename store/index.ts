@@ -1,15 +1,30 @@
+import { useDispatch as originalDispatch, useSelector as originalSelector } from 'react-redux';
+import type { TypedUseSelectorHook } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
+import { initialState, RootState } from './state';
 import { setStoreState } from './actions';
 import { rootReducer } from './reducers';
-import { initialState, RootState } from './state';
 
-let store;
+/*
+ * Baseline store and its typed hooks
+ */
 
 const createStore = (preloadedState: RootState) => configureStore({
   reducer: rootReducer,
   preloadedState,
 });
+
+// Use these typed hooks throughout the app instead of plain `useDispatch` and `useSelector`
+type AppDispatch = ReturnType<typeof createStore>['dispatch'];
+export const useDispatch: () => AppDispatch = originalDispatch;
+export const useSelector: TypedUseSelectorHook<RootState> = originalSelector;
+
+/*
+ * Isomorphic store magic
+ */
+
+let store;
 
 export const initServerStore = () => {
   // Create new server-side store
@@ -17,7 +32,7 @@ export const initServerStore = () => {
   return store;
 };
 
-export function useStore(preloadedState?: RootState) {
+export const useStore = (preloadedState?: RootState) => {
   // Server-side
   // The store is already created and filled with data in getServerSideProps/getInitialProps
   if (typeof window === 'undefined') {

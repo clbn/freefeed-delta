@@ -5,6 +5,7 @@ export type RootState = {
   feeds: object;
   me: {
     id?: string;
+    username?: string;
   };
   posts: object;
   users: object;
