@@ -1,4 +1,6 @@
-export const selectPostRecipients = postId => state => {
+import { RootState } from '../store/state';
+
+export const selectPostRecipients = (postId: string) => (state: RootState) => {
   const post = state.posts[postId];
 
   return post.recipientFeedIds
@@ -11,7 +13,7 @@ export const selectPostRecipients = postId => state => {
     .filter(user => user);
 };
 
-export const selectCanIModeratePost = postId => state => {
+export const selectCanIModeratePost = (postId: string) => (state: RootState) => {
   const post = state.posts[postId];
   const myId = state.me.id;
 

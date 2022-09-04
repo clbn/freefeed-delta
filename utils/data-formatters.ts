@@ -1,7 +1,44 @@
-export const formatComment = comment => {
+type Comment = {
+  body: string;
+  authorId: string;
+  createdAt: number;
+  seqNumber: number;
+  hideType?: number;
+  likes?: number;
+  haveILiked?: boolean;
+};
+
+type Post = {
+  body: string;
+  authorId: string;
+  createdAt: number;
+  recipientFeedIds: string[];
+  attachmentIds: string[];
+  likerIds: string[];
+  omittedLikes: number;
+  commentIds: string[];
+  omittedComments: number;
+  omittedCommentLikes: number;
+  areCommentsDisabled: boolean;
+};
+
+type User = {
+  id: string;
+  username: string;
+  type: 'user' | 'group';
+  displayName: string;
+  userpicUrl: string;
+  isGone: boolean;
+  isPrivate: boolean;
+  isProtected: boolean;
+  administrators: string[];
+  description?: string;
+};
+
+export const formatComment = (comment): Comment => {
   if (!comment) return null;
 
-  const formattedComment = {
+  const formattedComment: Comment = {
     body: comment.body,
     authorId: comment.createdBy,
     createdAt: +comment.createdAt,
@@ -15,7 +52,7 @@ export const formatComment = comment => {
   return formattedComment;
 };
 
-export const formatPost = post => {
+export const formatPost = (post): Post => {
   if (!post) return null;
 
   return {
@@ -33,10 +70,10 @@ export const formatPost = post => {
   };
 };
 
-export const formatUser = (user, full) => {
+export const formatUser = (user, full): User => {
   if (!user) return null;
 
-  const formattedUser = {
+  const formattedUser: User = {
     id: user.id,
     username: user.username,
     type: user.type, // 'user' or 'group'

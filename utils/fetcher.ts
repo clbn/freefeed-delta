@@ -1,8 +1,8 @@
+import { NextPageContext } from 'next';
 import fetch from 'isomorphic-unfetch';
 import { parseCookies } from 'nookies';
 
-const fetcher = (url, options, ctx) => {
-  if (!options) options = {};
+const fetcher = (url: string, options: any = {}, ctx: NextPageContext = null) => {
   if (!options.headers) options.headers = {};
   options.headers['Content-Type'] = 'application/json';
 
