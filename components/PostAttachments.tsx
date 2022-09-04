@@ -5,7 +5,7 @@ import AttachmentOther from './AttachmentOther';
 const PostAttachments = ({ postId }) => {
   const attachmentIds = useSelector(state => state.posts[postId].attachmentIds);
   if (attachmentIds.length === 0) {
-    return false;
+    return null;
   }
   return <PostAttachmentsNotEmpty attachmentIds={attachmentIds}/>
 };

@@ -11,7 +11,7 @@ import Icon from './Icon';
 const PostLikes = ({ postId, postUrl }) => {
   const likerIds = useSelector(state => state.posts[postId].likerIds);
   if (likerIds.length === 0) {
-    return false;
+    return null;
   }
   return <PostLikesNotEmpty postId={postId} postUrl={postUrl} likerIds={likerIds}/>
 };

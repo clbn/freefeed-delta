@@ -10,7 +10,7 @@ import Throbber from './Throbber';
 const PostComments = ({ postId, postUrl }) => {
   const commentIds = useSelector(state => state.posts[postId].commentIds);
   if (commentIds.length === 0) {
-    return false;
+    return null;
   }
   return <PostCommentsNotEmpty postId={postId} postUrl={postUrl} commentIds={commentIds}/>
 };

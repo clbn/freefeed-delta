@@ -22,7 +22,7 @@ const CommentAddForm = ({ postId }) => {
   const dispatch = useDispatch();
   const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [dispatch, postId]);
 
-  const textarea = useRef({}); // Textarea DOM element
+  const textarea = useRef<HTMLTextAreaElement>(null); // Textarea DOM element
 
   const textareaCallbackRef = useCallback(textareaElement => {
     textarea.current = textareaElement;
@@ -62,7 +62,7 @@ const CommentAddForm = ({ postId }) => {
   const needsAddCommentLink = existingComments > 2 && !omittedComments;
 
   if (!isWritingComment && !isIndividual && !needsAddCommentLink) {
-    return false;
+    return null;
   }
 
   return (
@@ -81,7 +81,7 @@ const CommentAddForm = ({ postId }) => {
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
             rows={2}
-            maxLength="3000"/>
+            maxLength={3000}/>
 
           {isSendingComment && <Throbber/>}
 
