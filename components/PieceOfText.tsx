@@ -123,7 +123,7 @@ const shortenText = (chunks, expandFn) => {
     const chunk = chunks[i];
     const chunkLength = getLength(chunk);
 
-    // Keep pushing chunks until it doesn't fit anymore
+    // Keep pushing chunks until it doesn't fit anymore.
     // Also, push non-text chunks under any conditions (we can't shorten them)
     if (aggLength + chunkLength <= shortenedTextLength
       || (typeof chunk !== 'string' && !chunk.content)) {
@@ -142,7 +142,7 @@ const shortenText = (chunks, expandFn) => {
     // Note, we only let an inside-word cut happen in the very first chunk (i === 0).
     let cutIndex = lastSpacePosition > -1 ? lastSpacePosition : (i === 0 ? maxLengthLeft : 0);
 
-    const newText = text.substr(0, cutIndex);
+    const newText = text.slice(0, cutIndex);
 
     if (newText.length > 0) {
       const newChunk = (typeof chunk === 'string' ? newText : { ...chunk, content: newText, closingTag: null });
