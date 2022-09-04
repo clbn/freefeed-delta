@@ -25,7 +25,7 @@ const Comment = ({ id, postUrl }) => {
         <PieceOfText>{comment.body}</PieceOfText>
 
         {authorUsername && (
-          <span className="author">
+          <span className="author" dir="ltr">
             {' -\u00a0'}
             <Link href={`/${authorUsername}`}>
               <a>{authorDisplayName}</a>
