@@ -55,10 +55,15 @@ const splitLink = (linkToken, maxLength) => {
 // then include Text tokens in between
 const tokenize = withText(combine(hashTags(), emails(), mentions(), foreignMentions(), links(), arrows(/\u2191+|\^([1-9]\d*|\^*)/g)));
 
-const Linkify = ({ userHover, arrowHover, children }) => tokenize(children).map((token, i) => {
+type LinkProps = {
+  key: number;
+  [key: string]: any
+};
+
+const Linkify = ({ userHover, arrowHover, children }) => <>{tokenize(children).map((token, i) => {
   if (token instanceof TLink) {
     let Component;
-    const props = { key: i };
+    const props: LinkProps = { key: i };
     const { visiblePart, hiddenPart } = splitLink(token, MAX_URL_LENGTH);
 
     const localURL = getLocalPart(token.text);
@@ -110,6 +115,6 @@ const Linkify = ({ userHover, arrowHover, children }) => tokenize(children).map(
   }
 
   return token.text;
-});
+})}</>;
 
 export default Linkify;
