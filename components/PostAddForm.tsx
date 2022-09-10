@@ -75,7 +75,7 @@ const PostAddFormNotEmpty = () => {
           font-family: inherit;
           font-size: 1rem;
           padding: 0.25rem;
-          margin: 0.125rem 0 0.5rem 0;
+          margin: 0.125rem 0 1rem 0;
         }
         .actions {
           display: flex;
