@@ -70,7 +70,7 @@ export const formatPost = (post): Post => {
   };
 };
 
-export const formatUser = (user, full): User => {
+export const formatUser = (user, full = false): User => {
   if (!user) return null;
 
   const formattedUser: User = {
