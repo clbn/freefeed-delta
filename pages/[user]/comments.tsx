@@ -2,16 +2,16 @@ import { shallowEqual } from 'react-redux';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { useSelector, getIsomorphicDataPopulation } from '../store';
-import { loadUserPage } from '../store/actions';
-import Userpic from '../components/Userpic';
-import UserFeedStatus from '../components/UserFeedStatus';
-import DummyPost from '../components/DummyPost';
-import PieceOfText from '../components/PieceOfText';
-import Post from '../components/Post';
-import PaginationLinks from '../components/PaginationLinks';
+import { useSelector, getIsomorphicDataPopulation } from '../../store';
+import { loadUserCommentsPage } from '../../store/actions';
+import Userpic from '../../components/Userpic';
+import UserFeedStatus from '../../components/UserFeedStatus';
+import DummyPost from '../../components/DummyPost';
+import PieceOfText from '../../components/PieceOfText';
+import Post from '../../components/Post';
+import PaginationLinks from '../../components/PaginationLinks';
 
-const UserPage = () => {
+const CommentedPostsPage = () => {
   const { query: { user: username } } = useRouter();
   const isLoadingPage = useSelector(state => state.isLoadingPage);
   const user = useSelector(state => Object.values(state.users).find(u => u.username === username));
@@ -80,13 +80,17 @@ const UserPage = () => {
         <UserFeedStatus {...user}/>
       </p>
 
-      <PaginationLinks pathname={`/${username}`} hideOnFirst/>
+      <h2>
+        Comments
+      </h2>
+
+      <PaginationLinks pathname={`/${username}/comments`} hideOnFirst/>
 
       {postIds.map(postId => (
         <Post id={postId} key={postId}/>
       ))}
 
-      <PaginationLinks pathname={`/${username}`}/>
+      <PaginationLinks pathname={`/${username}/comments`}/>
 
       <style jsx>{`
         .info {
@@ -123,6 +127,11 @@ const UserPage = () => {
           padding: 0.8rem 0;
           margin: 0;
         }
+        h2 {
+          border-top: 1px solid #eee;
+          padding: 0.8rem 0;
+          margin: 0;
+        }
         a {
           white-space: nowrap;
           margin-right: 1rem;
@@ -137,6 +146,6 @@ const UserPage = () => {
   );
 };
 
-UserPage.getInitialProps = getIsomorphicDataPopulation(loadUserPage);
+CommentedPostsPage.getInitialProps = getIsomorphicDataPopulation(loadUserCommentsPage);
 
-export default UserPage;
+export default CommentedPostsPage;
