@@ -40,30 +40,30 @@ export const rootReducer = createReducer(initialState, {
     console.log('loadUserPage/rejected', aborted ? error : payload);
   },
 
-  [actions.loadUserCommentsPage.pending]: (state) => {
+  [actions.loadUserCommentsPage.pending.type]: (state) => {
     state.isLoadingPage = true;
   },
 
-  [actions.loadUserCommentsPage.fulfilled]: (state, { payload }) => {
+  [actions.loadUserCommentsPage.fulfilled.type]: (state, { payload }) => {
     return payload;
   },
 
-  [actions.loadUserCommentsPage.rejected]: (state, { meta: { aborted }, error, payload }) => {
+  [actions.loadUserCommentsPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
     if (!aborted) {
       state.isLoadingPage = false;
     }
     console.log('loadUserCommentsPage/rejected', aborted ? error : payload);
   },
 
-  [actions.loadUserLikesPage.pending]: (state) => {
+  [actions.loadUserLikesPage.pending.type]: (state) => {
     state.isLoadingPage = true;
   },
 
-  [actions.loadUserLikesPage.fulfilled]: (state, { payload }) => {
+  [actions.loadUserLikesPage.fulfilled.type]: (state, { payload }) => {
     return payload;
   },
 
-  [actions.loadUserLikesPage.rejected]: (state, { meta: { aborted }, error, payload }) => {
+  [actions.loadUserLikesPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
     if (!aborted) {
       state.isLoadingPage = false;
     }

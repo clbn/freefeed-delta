@@ -23,7 +23,7 @@ export const loadUserPage = createAsyncThunk('loadUserPage', async (ctx: NextPag
   return data;
 });
 
-export const loadUserCommentsPage = createAsyncThunk('loadUserCommentsPage', async (ctx, { rejectWithValue }) => {
+export const loadUserCommentsPage = createAsyncThunk('loadUserCommentsPage', async (ctx: NextPageContext, { rejectWithValue }) => {
   const { user: username, offset } = ctx.query;
   const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/usercommentspage/${username}?offset=${offset || 0}`, {}, ctx);
   const data = await response.json();
@@ -31,7 +31,7 @@ export const loadUserCommentsPage = createAsyncThunk('loadUserCommentsPage', asy
   return data;
 });
 
-export const loadUserLikesPage = createAsyncThunk('loadUserLikesPage', async (ctx, { rejectWithValue }) => {
+export const loadUserLikesPage = createAsyncThunk('loadUserLikesPage', async (ctx: NextPageContext, { rejectWithValue }) => {
   const { user: username, offset } = ctx.query;
   const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/userlikespage/${username}?offset=${offset || 0}`, {}, ctx);
   const data = await response.json();
