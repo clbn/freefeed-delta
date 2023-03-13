@@ -56,10 +56,10 @@ const LikedPostsPage = () => {
 
       {user.statistics && (
         <p className="statistics">
-          <a>{user.statistics.subscribers} subscribers</a>{' '}
+          <a className="disabled">{user.statistics.subscribers} subscribers</a>{' '}
 
           {user.type === 'user' && <>
-            <a>{user.statistics.subscriptions} subscriptions</a>
+            <a className="disabled">{user.statistics.subscriptions} subscriptions</a>
             {' '}
             <Link href={`/${username}`}>
               <a>{user.statistics.posts} posts</a>
@@ -135,6 +135,11 @@ const LikedPostsPage = () => {
         a {
           white-space: nowrap;
           margin-right: 1rem;
+        }
+        a.disabled {
+          cursor: inherit;
+          color: inherit;
+          text-decoration: inherit;
         }
       `}</style>
     </main>
