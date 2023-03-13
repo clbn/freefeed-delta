@@ -84,13 +84,13 @@ const CommentedPostsPage = () => {
         Comments
       </h2>
 
-      <PaginationLinks pathname={'/' + username + '/comments'} hideOnFirst/>
+      <PaginationLinks pathname={`/${username}/comments`} hideOnFirst/>
 
       {postIds.map(postId => (
         <Post id={postId} key={postId}/>
       ))}
 
-      <PaginationLinks pathname={'/' + username + '/comments'}/>
+      <PaginationLinks pathname={`/${username}/comments`}/>
 
       <style jsx>{`
         .info {

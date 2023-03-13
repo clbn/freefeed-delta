@@ -84,13 +84,13 @@ const LikedPostsPage = () => {
           Likes
       </h2>
 
-      <PaginationLinks pathname={'/' + username + '/likes'} hideOnFirst/>
+      <PaginationLinks pathname={`/${username}/likes`} hideOnFirst/>
 
       {postIds.map(postId => (
         <Post id={postId} key={postId}/>
       ))}
 
-      <PaginationLinks pathname={'/' + username + '/likes'}/>
+      <PaginationLinks pathname={`/${username}/likes`}/>
 
       <style jsx>{`
         .info {
