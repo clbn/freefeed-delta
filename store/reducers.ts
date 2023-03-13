@@ -25,6 +25,36 @@ export const rootReducer = createReducer(initialState, {
     console.log('loadHomePage/rejected', aborted ? error : payload);
   },
 
+  [actions.loadDiscussionsPage.pending.type]: (state) => {
+    state.isLoadingPage = true;
+  },
+
+  [actions.loadDiscussionsPage.fulfilled.type]: (state, { payload }) => {
+    return payload;
+  },
+
+  [actions.loadDiscussionsPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
+    if (!aborted) {
+      state.isLoadingPage = false;
+    }
+    console.log('loadDiscussionsPage/rejected', aborted ? error : payload);
+  },
+
+  [actions.loadDirectsPage.pending.type]: (state) => {
+    state.isLoadingPage = true;
+  },
+
+  [actions.loadDirectsPage.fulfilled.type]: (state, { payload }) => {
+    return payload;
+  },
+
+  [actions.loadDirectsPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
+    if (!aborted) {
+      state.isLoadingPage = false;
+    }
+    console.log('loadDirectsPage/rejected', aborted ? error : payload);
+  },
+
   [actions.loadUserPage.pending.type]: (state) => {
     state.isLoadingPage = true;
   },

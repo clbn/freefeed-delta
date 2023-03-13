@@ -38,6 +38,14 @@ const Header = () => {
             <a>{myUsername}</a>
           </Link>
           <form onSubmit={handleSignout} action="/api/signout" method="POST">
+            <Link href="/filter/discussions">
+              <a>Md</a>
+            </Link>
+            {' '}
+            <Link href="/filter/directs">
+              <a>Dm</a>
+            </Link>
+            {' '}
             <input type="hidden" name="redirect" value="1"/>
             <button type="submit">Sign out</button>
           </form>
@@ -93,6 +101,10 @@ const Header = () => {
           box-shadow: none;
           padding: 0;
           margin: 0.5rem 0 0 0;
+        }
+        form a {
+          white-space: nowrap;
+          margin-right: 1rem;
         }
         button {
           display: inline;
