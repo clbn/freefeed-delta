@@ -20,7 +20,7 @@ const DirectsPage = () => {
     <main>
       <h1>Direct messages</h1>
 
-      <PaginationLinks pathname="/" hideOnFirst/>
+      <PaginationLinks pathname="/filter/directs" hideOnFirst/>
 
       {isLoadingPage ? <>
         <DummyPost/>
@@ -32,7 +32,7 @@ const DirectsPage = () => {
         ))
       )}
 
-      <PaginationLinks pathname="/"/>
+      <PaginationLinks pathname="/filter/directs"/>
     </main>
   );
 };

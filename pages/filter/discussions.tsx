@@ -20,7 +20,7 @@ const DiscussionsPage = () => {
     <main>
       <h1>My discussions</h1>
 
-      <PaginationLinks pathname="/" hideOnFirst/>
+      <PaginationLinks pathname="/filter/discussions" hideOnFirst/>
 
       {isLoadingPage ? <>
         <DummyPost/>
@@ -32,7 +32,7 @@ const DiscussionsPage = () => {
         ))
       )}
 
-      <PaginationLinks pathname="/"/>
+      <PaginationLinks pathname="/filter/discussions"/>
     </main>
   );
 };
