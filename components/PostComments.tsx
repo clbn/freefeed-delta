@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from '../store';
 import { loadMoreComments } from '../store/actions';
@@ -6,6 +6,7 @@ import { preventDefault } from '../utils/events';
 import { pluralForm } from '../utils/plural';
 import Comment from './Comment';
 import Throbber from './Throbber';
+import { useRouter } from 'next/router';
 
 const PostComments = ({ postId, postUrl }) => {
   const commentIds = useSelector(state => state.posts[postId].commentIds);
@@ -23,11 +24,29 @@ const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
   const dispatch = useDispatch();
   const loadMoreCommentsAction = useCallback(preventDefault(() => dispatch(loadMoreComments(postId))), [postId]);
 
+  const router = useRouter();
+  const [currentCommentId, setCurrentCommentId] = useState(null);
+
+  useEffect(() => {
+    const onHashChangeStart = (url = null) => {
+      const hash = (url ?? router.asPath).split('#comment-')[1];
+      setCurrentCommentId(hash);
+    };
+
+    onHashChangeStart();
+
+    router.events.on('hashChangeStart', onHashChangeStart);
+
+    return () => {
+      router.events.off('hashChangeStart', onHashChangeStart);
+    };
+  }, [router.events]);
+
   return (
     <ul>
       {commentIds.slice(0, 1).map(commentId => (
         <li key={commentId}>
-          <Comment id={commentId} postUrl={postUrl}/>
+          <Comment id={commentId} postUrl={postUrl} highlighted={commentId === currentCommentId}/>
         </li>
       ))}
 
@@ -48,7 +67,7 @@ const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
 
       {commentIds.slice(1).map(commentId => (
         <li key={commentId}>
-          <Comment id={commentId} postUrl={postUrl}/>
+          <Comment id={commentId} postUrl={postUrl} highlighted={commentId === currentCommentId}/>
         </li>
       ))}
 
@@ -61,17 +80,21 @@ const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
           margin-top: 0;
           margin-bottom: 0.5rem;
         }
+
         .more-comments {
           font-style: italic;
           padding-left: 1.4rem;
           margin-bottom: 0.5rem;
         }
+
         em {
           color: #bbb;
         }
+
         a:hover {
           text-decoration: none;
         }
+
         a:hover i {
           text-decoration: underline;
         }

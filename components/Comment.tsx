@@ -6,7 +6,7 @@ import PieceOfText from './PieceOfText';
 import Time from './Time';
 import CommentLikes from './CommentLikes';
 
-const Comment = ({ id, postUrl }) => {
+const Comment = ({ id, postUrl, highlighted }) => {
   const comment = useSelector(state => state.comments[id]);
 
   const amISubscribedToAuthor = useSelector(state => state.users[comment.authorId].amISubscribed);
@@ -16,7 +16,7 @@ const Comment = ({ id, postUrl }) => {
   const authorDisplayName = useSelector(state => state.users[comment.authorId]?.displayName);
 
   return (
-    <section>
+    <section id={`comment-${id}`} className={highlighted ? 'highlighted' : ''}>
       <div className="icon">
         <Icon name="comment" className={amISubscribedToAuthor ? 'important' : (canIEdit ? 'mine' : '')}/>
       </div>
@@ -51,6 +51,11 @@ const Comment = ({ id, postUrl }) => {
           justify-content: flex-start; /* horizontal alignment */
           margin-bottom: 0.5rem;
         }
+        
+        .highlighted {
+          background-color: #ffd77a;
+        }
+        
         .icon {
           flex: 0 0 1.35rem; /* don't grow, don't shrink, stay at 1.35rem */
         }
