@@ -31,6 +31,14 @@ const PostCommentsNotEmpty = ({ postId, postUrl, commentIds }) => {
     const onHashChangeStart = (url = null) => {
       const hash = (url ?? router.asPath).split('#comment-')[1];
       setCurrentCommentId(hash);
+      if (hash) {
+        const currComment = document.getElementById(`comment-${hash}`);
+        const distanceFromTopToComment = currComment.offsetTop;
+        const viewportHeight = window.innerHeight;
+        const commentHeight = currComment.offsetHeight;
+        const offsetDistance = Math.round(distanceFromTopToComment - (viewportHeight / 2) + (commentHeight / 2));
+        window.scrollTo(0, offsetDistance);
+      }
     };
 
     onHashChangeStart();
