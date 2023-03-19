@@ -84,6 +84,13 @@ export const likeUnlikePost = createAsyncThunk('likeUnlikePost', async ({ postId
   return verb;
 });
 
+export const loadCommentLikes = createAsyncThunk('loadCommentLikes', async (commentId: string, { rejectWithValue }) => {
+  const response = await fetcher(`https://freefeed.net/v2/comments/${commentId}/likes`);
+  const data = await response.json();
+  if (!response.ok) return rejectWithValue(data);
+  return data;
+});
+
 export const likeUnlikeComment = createAsyncThunk('likeUnlikeComment', async ({ commentId, verb }: { commentId: string; verb: 'unlike' | 'like' }, { rejectWithValue }) => {
   const response = await fetcher(`https://freefeed.net/v2/comments/${commentId}/${verb}`, { method: 'POST' });
   const data = await response.json();

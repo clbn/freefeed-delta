@@ -50,13 +50,7 @@ const PostLikesNotEmpty = ({ postId, postUrl, likerIds }) => {
               </a>
             )}
 
-            {i < users.length - 2 ? (
-              ', '
-            ) : i === users.length - 2 ? (
-              ' and '
-            ) : (
-              ' liked this'
-            )}
+            {i < users.length - 2 ? ', ' : i === users.length - 2 ? ' and ' : ' liked this'}
           </li>
         ))}
 

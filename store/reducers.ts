@@ -181,6 +181,23 @@ export const rootReducer = createReducer(initialState, {
     console.log('likeUnlikePost/rejected', data);
   },
 
+  [actions.loadCommentLikes.pending.type]: (state, { meta: { arg: commentId } }) => {
+    state.comments[commentId].isLoadingLikes = true;
+  },
+
+  [actions.loadCommentLikes.fulfilled.type]: (state, { meta: { arg: commentId }, payload: data }) => {
+    state.comments[commentId].isLoadingLikes = false;
+    state.comments[commentId].likerIds = data.likes.map(l => l.userId);
+    data.users.forEach(user => {
+      state.users[user.id] = state.users[user.id] ?? user
+    });
+  },
+
+  [actions.loadCommentLikes.rejected.type]: (state, { meta: { arg: commentId }, payload: data }) => {
+    state.comments[commentId].isLoadingLikes = false;
+    console.log('loadCommentLikes/rejected', data);
+  },
+
   [actions.likeUnlikeComment.pending.type]: (state, { meta: { arg: { commentId } } }) => {
     state.comments[commentId].isSendingLike = true;
   },
