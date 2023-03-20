@@ -13,12 +13,13 @@ import CommentAddForm from './CommentAddForm';
 
 const Post = ({ id }) => {
   const isPostMissing = useSelector(state => state.posts[id] === undefined);
+  const errorCode = useSelector(state => state.posts[id]?.errorCode);
   const errorMessage = useSelector(state => state.posts[id]?.errorMessage);
   if (isPostMissing) {
     return null;
   }
-  if (errorMessage) {
-    return <div>{errorMessage}</div>;
+  if (errorCode || errorMessage) {
+    return <article><h1>{errorCode}</h1><p>{errorMessage}</p></article>;
   }
   return <PostNotEmpty id={id}/>;
 };
