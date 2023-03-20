@@ -187,6 +187,8 @@ export const rootReducer = createReducer(initialState, {
 
   [actions.loadCommentLikes.fulfilled.type]: (state, { meta: { arg: commentId }, payload: data }) => {
     state.comments[commentId].isLoadingLikes = false;
+
+    state.comments[commentId].likes = data.likes.length;
     state.comments[commentId].likerIds = data.likes.map(l => l.userId);
     data.users.forEach(user => {
       state.users[user.id] = state.users[user.id] ?? user
@@ -205,7 +207,12 @@ export const rootReducer = createReducer(initialState, {
   [actions.likeUnlikeComment.fulfilled.type]: (state, { meta: { arg: { commentId, verb } }, payload: data }) => {
     state.comments[commentId].isSendingLike = false;
     state.comments[commentId].haveILiked = (verb === 'like');
+
     state.comments[commentId].likes = data.likes.length;
+    state.comments[commentId].likerIds = data.likes.map(l => l.userId);
+    data.users.forEach(user => {
+      state.users[user.id] = state.users[user.id] ?? user
+    });
   },
 
   [actions.likeUnlikeComment.rejected.type]: (state, { meta: { arg: { commentId } }, payload: data }) => {
