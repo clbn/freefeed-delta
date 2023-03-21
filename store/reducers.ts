@@ -15,7 +15,10 @@ export const rootReducer = createReducer(initialState, {
   },
 
   [actions.loadHomePage.fulfilled.type]: (state, { payload }) => {
-    return payload;
+    return {
+      ...state, isLoadingPage: false,
+      ...payload, postIds: Object.keys(payload.posts)
+    };
   },
 
   [actions.loadHomePage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
@@ -30,7 +33,10 @@ export const rootReducer = createReducer(initialState, {
   },
 
   [actions.loadDiscussionsPage.fulfilled.type]: (state, { payload }) => {
-    return payload;
+    return {
+      ...state, isLoadingPage: false,
+      ...payload, postIds: Object.keys(payload.posts)
+    };
   },
 
   [actions.loadDiscussionsPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
@@ -45,7 +51,10 @@ export const rootReducer = createReducer(initialState, {
   },
 
   [actions.loadDirectsPage.fulfilled.type]: (state, { payload }) => {
-    return payload;
+    return {
+      ...state, isLoadingPage: false,
+      ...payload, postIds: Object.keys(payload.posts)
+    };
   },
 
   [actions.loadDirectsPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
@@ -60,7 +69,10 @@ export const rootReducer = createReducer(initialState, {
   },
 
   [actions.loadUserPage.fulfilled.type]: (state, { payload }) => {
-    return payload;
+    return {
+      ...state, isLoadingPage: false,
+      ...payload, postIds: Object.keys(payload.posts)
+    };
   },
 
   [actions.loadUserPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
@@ -75,7 +87,10 @@ export const rootReducer = createReducer(initialState, {
   },
 
   [actions.loadUserCommentsPage.fulfilled.type]: (state, { payload }) => {
-    return payload;
+    return {
+      ...state, isLoadingPage: false,
+      ...payload, postIds: Object.keys(payload.posts)
+    };
   },
 
   [actions.loadUserCommentsPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
@@ -90,7 +105,10 @@ export const rootReducer = createReducer(initialState, {
   },
 
   [actions.loadUserLikesPage.fulfilled.type]: (state, { payload }) => {
-    return payload;
+    return {
+      ...state, isLoadingPage: false,
+      ...payload, postIds: Object.keys(payload.posts)
+    };
   },
 
   [actions.loadUserLikesPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
@@ -105,12 +123,16 @@ export const rootReducer = createReducer(initialState, {
   },
 
   [actions.loadPostPage.fulfilled.type]: (state, { payload }) => {
-    return payload;
+    return {
+      ...state, isLoadingPage: false,
+      ...payload, postIds: Object.keys(payload.posts)
+    };
   },
 
   [actions.loadPostPage.rejected.type]: (state, { meta: { aborted, arg: ctx }, error, payload }) => {
     if (!aborted) {
       const { post: postId } = ctx.query;
+      state.postIds = [ postId ];
       state.posts = { [postId]: { errorMessage: payload.err ?? 'Unknown error' } };
       state.isLoadingPage = false;
     }
@@ -253,6 +275,7 @@ export const rootReducer = createReducer(initialState, {
   },
 
   [actions.addPost.fulfilled.type]: (state, { payload: data }) => {
+    state.postIds.unshift(data.posts.id);
     state.posts[data.posts.id] = formatPost(data.posts);
     state.isSendingPost = false;
     state.isWritingPost = false;

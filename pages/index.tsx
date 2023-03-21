@@ -11,7 +11,7 @@ import PaginationLinks from '../components/PaginationLinks';
 const IndexPage = () => {
   const myId = useSelector(state => state.me.id);
   const isLoadingPage = useSelector(state => state.isLoadingPage);
-  const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
+  const postIds = useSelector(state => state.postIds, shallowEqual);
 
   if (!myId) {
     return <SignIn/>;

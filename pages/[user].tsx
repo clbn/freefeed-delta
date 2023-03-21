@@ -15,7 +15,7 @@ const UserPage = () => {
   const { query: { user: username } } = useRouter();
   const isLoadingPage = useSelector(state => state.isLoadingPage);
   const user = useSelector(state => Object.values(state.users).find(u => u.username === username));
-  const postIds = useSelector(state => Object.keys(state.posts), shallowEqual);
+  const postIds = useSelector(state => state.postIds, shallowEqual);
 
   if (isLoadingPage) {
     return (

@@ -2,6 +2,7 @@ export type RootState = {
   isLoadingPage: boolean;
   isWritingPost: boolean;
   isSendingPost: boolean;
+  postIds: string[];
 
   attachments: object;
   comments: object;
@@ -18,6 +19,7 @@ export const initialState: RootState = {
   isLoadingPage: false,
   isWritingPost: false,
   isSendingPost: false,
+  postIds: [],
 
   attachments: {},
   comments: {},
