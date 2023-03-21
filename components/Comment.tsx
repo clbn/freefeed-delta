@@ -7,13 +7,15 @@ import Time from './Time';
 import CommentLikes from './CommentLikes';
 
 const Comment = ({ id, postUrl }) => {
-  const comment = useSelector(state => state.comments[id]);
+  const authorId = useSelector(state => state.comments[id].authorId);
+  const body = useSelector(state => state.comments[id].body);
+  const createdAt = useSelector(state => state.comments[id].createdAt);
 
-  const amISubscribedToAuthor = useSelector(state => state.users[comment.authorId].amISubscribed);
-  const canIEdit = useSelector(state => state.me.id === comment.authorId);
+  const amISubscribedToAuthor = useSelector(state => state.users[authorId].amISubscribed);
+  const canIEdit = useSelector(state => state.me.id === authorId);
 
-  const authorUsername = useSelector(state => state.users[comment.authorId]?.username);
-  const authorDisplayName = useSelector(state => state.users[comment.authorId]?.displayName);
+  const authorUsername = useSelector(state => state.users[authorId]?.username);
+  const authorDisplayName = useSelector(state => state.users[authorId]?.displayName);
 
   return (
     <section>
@@ -22,7 +24,7 @@ const Comment = ({ id, postUrl }) => {
       </div>
 
       <div className="main">
-        <PieceOfText>{comment.body}</PieceOfText>
+        <PieceOfText>{body}</PieceOfText>
 
         {authorUsername && (
           <span className="author" dir="ltr">
@@ -36,7 +38,7 @@ const Comment = ({ id, postUrl }) => {
         <span className="time">
           {' -\u00a0'}
           <Link href={`${postUrl}#comment-${id}`}>
-            <a><Time stamp={comment.createdAt} short/></a>
+            <a><Time stamp={createdAt} short/></a>
           </Link>
         </span>
 
