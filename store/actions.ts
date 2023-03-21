@@ -5,7 +5,8 @@ import fetcher from '../utils/fetcher';
 import { RootState } from './state';
 
 export const setStoreState = createAction<RootState>('setStoreState');
-export const toggleCommentingPost = createAction<string>('toggleCommentingPost');
+export const toggleWritingPost = createAction<string>('toggleWritingPost');
+export const toggleWritingComment = createAction<string>('toggleWritingComment');
 
 export const loadHomePage = createAsyncThunk('loadHomePage', async (ctx: NextPageContext, { rejectWithValue }) => {
   const { offset } = ctx.query;

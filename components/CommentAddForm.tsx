@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 import { useSelector, useDispatch } from '../store';
-import { toggleCommentingPost, addComment } from '../store/actions';
+import { toggleWritingComment, addComment } from '../store/actions';
 import { selectCanIModeratePost } from '../utils/data-selectors';
 import Icon from './Icon';
 import Throbber from './Throbber';
@@ -20,7 +20,7 @@ const CommentAddForm = ({ postId }) => {
   const commentErrorMessage = useSelector(state => state.posts[postId].commentErrorMessage);
 
   const dispatch = useDispatch();
-  const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [dispatch, postId]);
+  const toggleCommenting = useCallback(() => dispatch(toggleWritingComment(postId)), [dispatch, postId]);
 
   const textarea = useRef<HTMLTextAreaElement>(null); // Textarea DOM element
 

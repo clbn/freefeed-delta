@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import Link from 'next/link';
 
 import { useSelector, useDispatch } from '../store';
-import { likeUnlikePost, toggleCommentingPost } from '../store/actions';
+import { likeUnlikePost, toggleWritingComment } from '../store/actions';
 import { selectCanIModeratePost } from '../utils/data-selectors';
 import { preventDefault } from '../utils/events';
 import PostVisibilityIcon from './PostVisibilityIcon';
@@ -20,7 +20,7 @@ const PostActions = ({ postId, postUrl }) => {
   const isSendingLike = useSelector(state => state.posts[postId].isSendingLike);
 
   const dispatch = useDispatch();
-  const toggleCommenting = useCallback(() => dispatch(toggleCommentingPost(postId)), [dispatch, postId]);
+  const toggleCommenting = useCallback(() => dispatch(toggleWritingComment(postId)), [dispatch, postId]);
   const likePost = useCallback(preventDefault(() => dispatch(likeUnlikePost({ postId, verb: 'like' }))), [postId]);
   const unlikePost = useCallback(preventDefault(() => dispatch(likeUnlikePost({ postId, verb: 'unlike' }))), [postId]);
 

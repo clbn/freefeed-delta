@@ -1,5 +1,8 @@
 export type RootState = {
   isLoadingPage: boolean;
+  isWritingPost: boolean;
+  isSendingPost: boolean;
+
   attachments: object;
   comments: object;
   feeds: object;
@@ -13,6 +16,9 @@ export type RootState = {
 
 export const initialState: RootState = {
   isLoadingPage: false,
+  isWritingPost: false,
+  isSendingPost: false,
+
   attachments: {},
   comments: {},
   feeds: {},

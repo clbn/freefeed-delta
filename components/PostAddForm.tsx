@@ -1,9 +1,9 @@
-import { useState, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Textarea from 'react-textarea-autosize';
 
 import { useSelector, useDispatch } from '../store';
-import { addPost } from '../store/actions';
+import { addPost, toggleWritingPost } from '../store/actions';
 
 const PostAddForm = () => {
   const { query: { offset } } = useRouter();
@@ -16,18 +16,11 @@ const PostAddForm = () => {
 };
 
 const PostAddFormNotEmpty = () => {
-  const [isExpanded, setExpanded] = useState(false);
-  // const [isSendingPost, setSendingPost] = useState(false);
   const myUsername = useSelector(state => state.me.username);
+  const isWritingPost = useSelector(state => state.isWritingPost);
+  const isSendingPost = useSelector(state => state.isSendingPost);
 
   const dispatch = useDispatch();
-  const handleFocus = useCallback(() => setExpanded(true), []);
-  const handleCancel = useCallback(() => setExpanded(false), []);
-  const handleKeyUp = useCallback(event => {
-    if (event.key === 'Escape') {
-      handleCancel();
-    }
-  }, [handleCancel]);
 
   const textarea = useRef<HTMLTextAreaElement>(null); // Textarea DOM element
 
@@ -35,10 +28,23 @@ const PostAddFormNotEmpty = () => {
     textarea.current = textareaElement;
   }, []);
 
+  const startWriting = useCallback(() => {
+    if (!isWritingPost) {
+      dispatch(toggleWritingPost());
+    }
+  }, [dispatch, isWritingPost]);
+
+  const cancelWriting = useCallback(() => {
+    if (!textarea.current.value || confirm('Discard changes and close the form?')) {
+      dispatch(toggleWritingPost());
+    }
+  }, [dispatch]);
+
   const sendPost = useCallback(() => {
-    // TODO: check if already sending, send request, handle the response (collapse the form)
-    dispatch(addPost({ body: textarea.current.value, feeds: [myUsername] }));
-  }, [dispatch, myUsername]);
+    if (!isSendingPost) {
+      dispatch(addPost({ body: textarea.current.value, feeds: [myUsername] }));
+    }
+  }, [dispatch, isSendingPost, myUsername]);
 
   const handleKeyDown = useCallback(event => {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -47,10 +53,16 @@ const PostAddFormNotEmpty = () => {
     }
   }, [sendPost]);
 
+  const handleKeyUp = useCallback(event => {
+    if (event.key === 'Escape') {
+      cancelWriting();
+    }
+  }, [cancelWriting]);
+
   return (
     <div>
-      {!isExpanded ? (
-        <textarea rows={3} onFocus={handleFocus}/>
+      {!isWritingPost ? (
+        <textarea rows={3} onFocus={startWriting}/>
       ) : <>
         <Textarea
           ref={textareaCallbackRef}
@@ -63,7 +75,7 @@ const PostAddFormNotEmpty = () => {
           onKeyDown={handleKeyDown}
         />
         <div className="actions">
-          <button className="cancel" onClick={handleCancel}>Cancel</button>
+          <button className="cancel" onClick={cancelWriting}>Cancel</button>
           <button className="post" onClick={sendPost}>Post to my feed</button>
         </div>
       </>}

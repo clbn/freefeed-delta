@@ -220,7 +220,7 @@ export const rootReducer = createReducer(initialState, {
     console.log('likeUnlikeComment/rejected', data);
   },
 
-  [actions.toggleCommentingPost.type]: (state, { payload: postId }) => {
+  [actions.toggleWritingComment.type]: (state, { payload: postId }) => {
     state.posts[postId].isWritingComment = !state.posts[postId].isWritingComment;
     state.posts[postId].commentErrorMessage = null;
   },
@@ -242,20 +242,25 @@ export const rootReducer = createReducer(initialState, {
     state.posts[postId].commentErrorMessage = data.err;
   },
 
+  [actions.toggleWritingPost.type]: (state) => {
+    state.isWritingPost = !state.isWritingPost;
+    // state.postErrorMessage = null;
+  },
+
   [actions.addPost.pending.type]: (state) => {
-    // state.posts[postId].isSendingComment = true;
-    // state.posts[postId].commentErrorMessage = null;
+    state.isSendingPost = true;
+    // state.postErrorMessage = null;
   },
 
   [actions.addPost.fulfilled.type]: (state, { payload: data }) => {
     state.posts[data.posts.id] = formatPost(data.posts);
-    // state.posts[postId].isSendingComment = false;
-    // state.posts[postId].isWritingComment = false;
+    state.isSendingPost = false;
+    state.isWritingPost = false;
   },
 
   [actions.addPost.rejected.type]: (state, { payload: data }) => {
-    // state.posts[postId].isSendingComment = false;
-    // state.posts[postId].commentErrorMessage = data.err;
+    state.isSendingPost = false;
+    // state.postErrorMessage = data.err;
   },
 
 });
