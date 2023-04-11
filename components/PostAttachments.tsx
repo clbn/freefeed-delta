@@ -24,26 +24,18 @@ const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
     }
   }
 
-  const firstRowImageAttachments = imageAttachments.slice(0, 3);
   const [expanded, setExpanded] = useState(false);
-
-  const openCollapse = useCallback(() => {
-    setExpanded(true)
-  }, []);
+  const visibleImageAttachments = expanded ? imageAttachments : imageAttachments.slice(0, 3);
+  const needArrow = imageAttachments.length > 3 && !expanded;
+  const handleExpand = useCallback(() => setExpanded(true), []);
 
   return (
     <section>
-      {imageAttachments.length > 3 && !expanded ?
-        <>
-          {firstRowImageAttachments.map(attId => (
-            <AttachmentImage id={attId} key={attId}/>
-          ))}
-          <a onClick={openCollapse}> ➡️  </a>
-        </>
-        :
-      imageAttachments.map(attId => (
+      {visibleImageAttachments.map(attId => (
         <AttachmentImage id={attId} key={attId}/>
       ))}
+
+      {needArrow && <a onClick={handleExpand}>➡️</a>}
 
       {otherAttachments.map(attId => (
         <AttachmentOther id={attId} key={attId}/>
