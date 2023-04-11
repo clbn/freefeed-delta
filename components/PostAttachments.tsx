@@ -1,7 +1,7 @@
 import { useSelector } from '../store';
 import AttachmentImage from './AttachmentImage';
 import AttachmentOther from './AttachmentOther';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const PostAttachments = ({ postId }) => {
   const attachmentIds = useSelector(state => state.posts[postId].attachmentIds);
@@ -25,20 +25,20 @@ const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
   }
 
   const firstRowImageAttachments = imageAttachments.slice(0, 3);
-  const [collapsedImages, setCollapsedImages] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
-  function openCollapse(collapsedImages) {
-    setCollapsedImages(!collapsedImages);
-  }
+  const openCollapse = useCallback(() => {
+    setExpanded(true)
+  }, []);
 
   return (
     <section>
-      {imageAttachments.length > 3 && collapsedImages ?
+      {imageAttachments.length > 3 && !expanded ?
         <>
-          {firstRowImageAttachments.map(firstRowAttId => (
-            <AttachmentImage id={firstRowAttId} key={firstRowAttId}/>
+          {firstRowImageAttachments.map(attId => (
+            <AttachmentImage id={attId} key={attId}/>
           ))}
-          <a onClick={() => openCollapse(collapsedImages)}> ➡️  </a>
+          <a onClick={openCollapse}> ➡️  </a>
         </>
         :
       imageAttachments.map(attId => (
