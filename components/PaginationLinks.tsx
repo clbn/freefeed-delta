@@ -3,18 +3,24 @@ import Link from 'next/link';
 
 type PaginationLinksProps = {
   pathname: string;
+  params?: {
+    [key: string]: any;
+  };
   hideOnFirst?: boolean;
 };
 
-const PaginationLinks = ({ pathname, hideOnFirst }: PaginationLinksProps) => {
+const PaginationLinks = ({ pathname, params, hideOnFirst }: PaginationLinksProps) => {
   const { query: { offset } } = useRouter();
 
   const normalOffset = +(offset || 0); // normalize offset which can be empty string or undefined
   const newerOffset = Math.max(normalOffset - 30, 0);
   const olderOffset = normalOffset + 30;
 
-  const newerLink = pathname + (newerOffset ? '?offset=' + newerOffset : '');
-  const olderLink = pathname + '?offset=' + olderOffset;
+  const newerOffsetParam = newerOffset ? { offset: newerOffset } : undefined;
+  const olderOffsetParam = { offset: olderOffset };
+
+  const newerLink = { pathname, query: { ...params, ...newerOffsetParam } };
+  const olderLink = { pathname, query: { ...params, ...olderOffsetParam } };
 
   if (hideOnFirst && !offset) {
     return null;
