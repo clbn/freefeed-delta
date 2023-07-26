@@ -1,4 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import { config } from '../../config';
 import fetcher from '../../utils/fetcher';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -17,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return;
   }
 
-  const response = await fetcher(`https://freefeed.net/v1/posts/${postId}/${verb}`, { method: 'POST' }, { req });
+  const response = await fetcher(`${config.api.host}/v1/posts/${postId}/${verb}`, { method: 'POST' }, { req });
   const data = await response.json();
 
   if (!response.ok) {

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Router from 'next/router'
 import fetch from 'isomorphic-unfetch';
 
+import { config } from '../config';
+
 const SignIn = () => {
   const [token, setToken] = useState('');
   const [error, setError] = useState('');
@@ -31,7 +33,7 @@ const SignIn = () => {
       <form onSubmit={handleSubmit} action="/api/signin" method="POST">
         <p style={{ marginTop: 0 }}>
           You can generate a token at FreeFeed.net
-          using <a href="https://freefeed.net/settings/app-tokens/create?title=Delta&scopes=read-my-info%20read-feeds%20read-users-info%20read-realtime%20manage-subscription-requests%20manage-groups%20manage-profile%20manage-my-feeds%20manage-posts%20manage-notifications&return_url=https%3A%2F%2Fdelta.applied.creagenics.com%2F">this magic link</a>,
+          using <a href={`${config.api.host}/settings/app-tokens/create?title=Delta&scopes=read-my-info%20read-feeds%20read-users-info%20read-realtime%20manage-subscription-requests%20manage-groups%20manage-profile%20manage-my-feeds%20manage-posts%20manage-notifications&return_url=https%3A%2F%2Fdelta.applied.creagenics.com%2F`}>this magic link</a>,
           then return to this page and enter the token in the form below.
         </p>
         <input type="text" placeholder="API token" name="token" value={token} onChange={handleChange}/>

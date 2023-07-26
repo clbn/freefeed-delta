@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import fetch from 'isomorphic-unfetch';
 import { setCookie } from 'nookies';
+
+import { config } from '../../config';
 import { formatUser } from '../../utils/data-formatters';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -21,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const headers = { 'Authorization': `Bearer ${token}` };
-  const data = await fetch('https://freefeed.net/v2/users/whoami', { headers }).then(r => r.json());
+  const data = await fetch(`${config.api.host}/v2/users/whoami`, { headers }).then(r => r.json());
 
   if (data.err) {
     res.statusCode = 401;
