@@ -16,6 +16,15 @@ export const loadHomePage = createAsyncThunk('loadHomePage', async (ctx: NextPag
   return data;
 });
 
+export const loadSearchPage = createAsyncThunk('loadSearchPage', async (ctx: NextPageContext, { rejectWithValue }) => {
+  const { q, offset } = ctx.query;
+  const normQ = encodeURIComponent((q || '').toString());
+  const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/searchpage?q=${normQ}&offset=${offset || 0}`, {}, ctx);
+  const data = await response.json();
+  if (!response.ok) return rejectWithValue(data);
+  return data;
+});
+
 export const loadDiscussionsPage = createAsyncThunk('loadDiscussionsPage', async (ctx: NextPageContext, { rejectWithValue }) => {
   const { offset } = ctx.query;
   const response = await fetcher(`https://freefeed-api-proxy.applied.creagenics.com/discussionspage?offset=${offset || 0}`, {}, ctx);

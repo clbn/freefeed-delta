@@ -28,6 +28,24 @@ export const rootReducer = createReducer(initialState, {
     console.log('loadHomePage/rejected', aborted ? error : payload);
   },
 
+  [actions.loadSearchPage.pending.type]: (state) => {
+    state.isLoadingPage = true;
+  },
+
+  [actions.loadSearchPage.fulfilled.type]: (state, { payload }) => {
+    return {
+      ...state, isLoadingPage: false,
+      ...payload, postIds: Object.keys(payload.posts)
+    };
+  },
+
+  [actions.loadSearchPage.rejected.type]: (state, { meta: { aborted }, error, payload }) => {
+    if (!aborted) {
+      state.isLoadingPage = false;
+    }
+    console.log('loadSearchPage/rejected', aborted ? error : payload);
+  },
+
   [actions.loadDiscussionsPage.pending.type]: (state) => {
     state.isLoadingPage = true;
   },

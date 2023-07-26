@@ -38,6 +38,10 @@ const Header = () => {
             <a>{myUsername}</a>
           </Link>
           <form onSubmit={handleSignout} action="/api/signout" method="POST">
+            <Link href="/search">
+              <a>Se</a>
+            </Link>
+            {' '}
             <Link href="/filter/discussions">
               <a>Md</a>
             </Link>
@@ -47,7 +51,7 @@ const Header = () => {
             </Link>
             {' '}
             <input type="hidden" name="redirect" value="1"/>
-            <button type="submit">Sign out</button>
+            <button type="submit">So</button>
           </form>
         </div>
       ) : (
