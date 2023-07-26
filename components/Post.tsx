@@ -8,6 +8,7 @@ import PieceOfText from './PieceOfText';
 import PostAttachments from './PostAttachments';
 import PostActions from './PostActions';
 import PostLikes from './PostLikes';
+import PostBacklinks from './PostBacklinks';
 import PostComments from './PostComments';
 import CommentAddForm from './CommentAddForm';
 
@@ -57,6 +58,8 @@ const PostNotEmpty = ({ id }) => {
 
       <PostLikes postId={id} postUrl={postUrl}/>
 
+      <PostBacklinks postId={id}/>
+
       <PostComments postId={id} postUrl={postUrl}/>
 
       <CommentAddForm postId={id}/>
@@ -69,6 +72,7 @@ const PostNotEmpty = ({ id }) => {
                                "userpics attachments"
                                "userpics actions"
                                "userpics likes"
+                               "userpics backlinks"
                                "userpics comments"
                                "userpics comment-add-form";
           grid-template-columns: auto 1fr; /* left column size is by content, right one takes the rest */

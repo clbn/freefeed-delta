@@ -16,6 +16,7 @@ type Post = {
   attachmentIds: string[];
   likerIds: string[];
   omittedLikes: number;
+  backlinksCount: number;
   commentIds: string[];
   omittedComments: number;
   omittedCommentLikes: number;
@@ -63,6 +64,7 @@ export const formatPost = (post): Post => {
     attachmentIds: post.attachments,
     likerIds: post.likes,
     omittedLikes: +post.omittedLikes,
+    backlinksCount: +post.backlinksCount,
     commentIds: post.comments,
     omittedComments: +post.omittedComments,
     omittedCommentLikes: +post.omittedCommentLikes,
