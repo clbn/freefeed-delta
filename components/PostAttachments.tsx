@@ -1,6 +1,7 @@
 import { useSelector } from '../store';
 import AttachmentImage from './AttachmentImage';
 import AttachmentOther from './AttachmentOther';
+import { useCallback, useState } from 'react';
 
 const PostAttachments = ({ postId }) => {
   const attachmentIds = useSelector(state => state.posts[postId].attachmentIds);
@@ -23,11 +24,18 @@ const PostAttachmentsNotEmpty = ({ attachmentIds }) => {
     }
   }
 
+  const [expanded, setExpanded] = useState(false);
+  const visibleImageAttachments = expanded ? imageAttachments : imageAttachments.slice(0, 3);
+  const needArrow = imageAttachments.length > 3 && !expanded;
+  const handleExpand = useCallback(() => setExpanded(true), []);
+
   return (
     <section>
-      {imageAttachments.map(attId => (
+      {visibleImageAttachments.map(attId => (
         <AttachmentImage id={attId} key={attId}/>
       ))}
+
+      {needArrow && <a onClick={handleExpand}>➡️</a>}
 
       {otherAttachments.map(attId => (
         <AttachmentOther id={attId} key={attId}/>
